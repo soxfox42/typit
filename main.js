@@ -66,6 +66,21 @@ for (const [i, row] of KEYBOARD_LAYOUT.entries()) {
     }
 }
 
+// ==== MODALS ====
+const containers = document.getElementsByClassName("container");
+for (const el of containers) {
+    el.addEventListener("click", () => {
+        el.classList.add("hide");
+    })
+    el.children[0].addEventListener("click", ev => {
+       ev.stopPropagation(); 
+    })
+}
+
+document.getElementById("dismiss").addEventListener("click", ev => {
+    ev.target.parentElement.parentElement.classList.add("hide");
+})
+
 // ==== GAME LOGIC ====
 let row, guess, win, target;
 
