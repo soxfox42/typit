@@ -4,10 +4,18 @@
 }
 
 h1 {
+    font-size: 40px;
+    margin: 12px;
+}
+
+h2 {
     font-size: 32px;
+    margin: 16px;
+}
+
+h1, h2 {
     font-weight: normal;
     line-height: 1.0;
-    margin: 16px;
     text-align: center;
 }
 
@@ -39,6 +47,19 @@ body {
     gap: 4px;
     height: calc(100% / 6 - 12px);
     margin-bottom: 12px;
+}
+
+.sample-row {
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+    height: 50px;
+    margin-top: 8px;
+    margin-bottom: 20px;
+}
+
+.sample-row .cell {
+    font-size: 35px;
 }
 
 .row.shake .cell {
@@ -157,7 +178,7 @@ body {
     color: #444;
 }
 
-#end-container {
+.container {
     position: absolute;
     top: 0;
     bottom: 0;
@@ -170,30 +191,33 @@ body {
     display: none;
 }
 
-#end-message {
-    font-weight: 600;
+.popup {
     background: white;
     box-shadow: 0 6px 8px rgba(0, 0, 0, 0.4);
-    text-align: center;
 
     border-radius: 12px;
+    padding: 0 20px;
 
-    width: 80%;
-    max-width: 400px;
+    width: 90%;
+    max-width: 500px;
     position: absolute;
-    top: 25%;
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
 
-#end-message button {
+.center {
+    text-align: center;
+}
+
+button {
+    display: block;
     background: #DDD;
     border: none;
 
     padding: 15px 30px;
     border-radius: 12px;
-    
-    margin: 10px;
+    margin: 10px auto;
 
     cursor: pointer;
 }

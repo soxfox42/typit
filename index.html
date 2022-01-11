@@ -15,13 +15,36 @@
     <h1>Typit</h1>
     <div id="board"></div>
     <div id="keyboard"></div>
-    <div id="end-container" class="hide">
-        <span id="end-message">
-            <h1 id="win">You Win!</h1>
-            <h1 id="lose">Game Over</h1>
+    <div id="end-container" class="container hide">
+        <span class="popup center">
+            <h2 id="win">You Win!</h2>
+            <h2 id="lose">Game Over</h2>
             The word was: <span id="word"></span>
             <br>
             <button id="play-again">Play again</button>
+        </span>
+    </div>
+    <div class="container hide">
+        <span class="popup">
+            <h2>How to Play</h2>
+            You have 6 chances to guess the secret word.
+            To guess, enter a real 5 letter word.
+            You will see feedback like this:<br>
+            <div class="sample-row">
+                <div class="cell filled correct">W</div>
+                <div class="cell filled incorrect">O</div>
+                <div class="cell filled close">R</div>
+                <div class="cell filled incorrect">D</div>
+                <div class="cell filled incorrect">S</div>
+            </div>
+            <strong>Green letters are correct.</strong><br>
+            They appear in the same spot in the secret word.<br>
+            <strong>Yellow letters are close.</strong><br>
+            They appear in the secret word, but in another spot.<br>
+            <strong>Grey letters are incorrect.</strong><br>
+            They do not appear in the secret word.<br>
+            <strong>In this case, the secret word could be WRECK.</strong>
+            <button id="dismiss">Got it!</button>
         </span>
     </div>
     <script src="main.js" type="module"></script>
