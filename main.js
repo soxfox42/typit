@@ -67,6 +67,11 @@ for (const [i, row] of KEYBOARD_LAYOUT.entries()) {
 }
 
 // ==== MODALS ====
+if (!window.localStorage.getItem("read-help")) {
+    document.getElementById("help-container").classList.remove("hide");
+    window.localStorage.setItem("read-help", true);
+}
+
 const containers = document.getElementsByClassName("container");
 for (const el of containers) {
     el.addEventListener("click", () => {
@@ -80,6 +85,17 @@ for (const el of containers) {
 document.getElementById("dismiss").addEventListener("click", ev => {
     ev.target.parentElement.parentElement.classList.add("hide");
 })
+
+// ==== TOOLBAR BUTTONS ====
+document.getElementById("new").addEventListener("click", ev => {
+    resetGame();
+    ev.target.blur();
+});
+
+document.getElementById("help").addEventListener("click", ev => {
+    document.getElementById("help-container").classList.remove("hide");
+    ev.target.blur();
+});
 
 // ==== GAME LOGIC ====
 let row, guess, win, target;

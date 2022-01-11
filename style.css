@@ -36,6 +36,14 @@ body {
     user-select: none;
 }
 
+header {
+    max-width: 400px;
+    width: 100%;
+    margin: auto;
+    display: grid;
+    grid: auto / 64px auto 64px;
+}
+
 #board {
     margin-bottom: 6px;
     max-height: calc(100vw / 5 * 6);
@@ -211,13 +219,19 @@ body {
 }
 
 button {
-    display: block;
+    font-size: 1.2rem;
     background: #DDD;
     border: none;
 
+    display: block;
     padding: 15px 30px;
     border-radius: 12px;
     margin: 10px auto;
 
     cursor: pointer;
+}
+
+button.minimal {
+    padding: 0;
+    margin: 0;
 }

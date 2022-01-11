@@ -12,7 +12,11 @@
 </head>
 
 <body>
-    <h1>Typit</h1>
+    <header>
+        <button id="new" class="minimal">New</button>
+        <h1>Typit</h1>
+        <button id="help" class="minimal">Help</button>
+    </header>
     <div id="board"></div>
     <div id="keyboard"></div>
     <div id="end-container" class="container hide">
@@ -24,7 +28,7 @@
             <button id="play-again">Play again</button>
         </span>
     </div>
-    <div class="container hide">
+    <div id="help-container" class="container hide">
         <span class="popup">
             <h2>How to Play</h2>
             You have 6 chances to guess the secret word.
