@@ -75,10 +75,18 @@ header {
 }
 
 @keyframes shake {
-    0%, 100% {transform: translateX(0);} 
-    20%, 60% {transform: translateX(-10%);} 
-    40%, 80% {transform: translateX(10%);} 
- } 
+    0%, 100% {
+        transform: translateX(0);
+    }
+
+    20%, 60% {
+        transform: translateX(-10%);
+    }
+
+    40%, 80% {
+        transform: translateX(10%);
+    }
+}
 
 .cell {
     font-size: min(calc(10vh - 30px), calc(18vw - 25px));
@@ -100,9 +108,18 @@ header {
     align-items: center;
     justify-content: center;
 
-    aspect-ratio: 1;
+    width: calc(20% - 8px);
+    max-width: 100px;
 
     transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+}
+
+@supports (aspect-ratio: 1) {
+    .cell {
+        aspect-ratio: 1;
+        width: auto;
+        max-width: none;
+    }
 }
 
 .height-fix .cell {
@@ -159,16 +176,23 @@ header {
     line-height: 0;
 
     height: 100%;
-    aspect-ratio: 0.6;
-    max-width: calc(10% - 2px);
+    width: 8%;
     border-radius: 8px;
 
     cursor: pointer;
 }
 
-.key.wide {
-    aspect-ratio: 0.9;
-    max-width: calc(15% - 2px);
+@supports (aspect-ratio: 1) {
+    .key {
+        aspect-ratio: 0.6;
+        max-width: calc(10% - 2px);
+        width: auto;
+    }
+
+    .key.wide {
+        aspect-ratio: 0.9;
+        max-width: calc(15% - 2px);
+    }
 }
 
 .key.incorrect {
