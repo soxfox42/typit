@@ -67,8 +67,10 @@ for (const [i, row] of KEYBOARD_LAYOUT.entries()) {
 }
 
 // ==== MODALS ====
+const helpContainer = document.getElementById("help-container");
+
 if (!window.localStorage.getItem("read-help")) {
-    document.getElementById("help-container").classList.remove("hide");
+    helpContainer.classList.remove("hide");
     window.localStorage.setItem("read-help", true);
 }
 
@@ -93,7 +95,7 @@ document.getElementById("new").addEventListener("click", ev => {
 });
 
 document.getElementById("help").addEventListener("click", ev => {
-    document.getElementById("help-container").classList.remove("hide");
+    helpContainer.classList.remove("hide");
     ev.target.blur();
 });
 
@@ -144,6 +146,7 @@ function resetGame() {
 document.getElementById("play-again").addEventListener("click", resetGame);
 
 document.addEventListener("keydown", e => {
+    if (!helpContainer.classList.contains("hide")) return;
     if (row >= 6 || win) return;
     if (e.key == "Backspace" && guess.length > 0) {
         guess = guess.slice(0, -1);
