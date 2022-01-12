@@ -228,7 +228,7 @@ header {
     box-shadow: 0 6px 8px rgba(0, 0, 0, 0.4);
 
     border-radius: 12px;
-    padding: 0 20px;
+    padding: 20px;
 
     width: 90%;
     max-width: 500px;
@@ -245,6 +245,21 @@ header {
     text-align: center;
 }
 
+details {
+    margin-bottom: 10px;
+}
+
+input[type="checkbox"] {
+    margin-left: 0;
+    margin-right: 6px;
+    vertical-align: top;
+}
+
+.small {
+    color: #555;
+    font-size: smaller;
+}
+
 button {
     font-size: 1.2rem;
     background: #DDD;
@@ -253,7 +268,6 @@ button {
     display: block;
     padding: 15px 30px;
     border-radius: 12px;
-    margin: 10px auto;
 
     cursor: pointer;
 }

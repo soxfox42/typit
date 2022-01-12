@@ -67,10 +67,10 @@ for (const [i, row] of KEYBOARD_LAYOUT.entries()) {
 }
 
 // ==== MODALS ====
-const helpContainer = document.getElementById("help-container");
+const menuContainer = document.getElementById("menu-container");
 
 if (!window.localStorage.getItem("read-help")) {
-    helpContainer.classList.remove("hide");
+    menuContainer.classList.remove("hide");
     window.localStorage.setItem("read-help", true);
 }
 
@@ -94,13 +94,32 @@ document.getElementById("new").addEventListener("click", ev => {
     ev.target.blur();
 });
 
-document.getElementById("help").addEventListener("click", ev => {
-    helpContainer.classList.remove("hide");
+document.getElementById("show-menu").addEventListener("click", ev => {
+    menuContainer.classList.remove("hide");
     ev.target.blur();
 });
 
+// ==== OPTIONS ====
+let animTime = 300;
+
+if (window.localStorage.getItem("fast-mode") == "true") {
+    document.getElementById("fast-mode").checked = true;
+    animTime = 0;
+}
+
+document.getElementById("fast-mode").addEventListener("change", ev => {
+    window.localStorage.setItem("fast-mode", ev.target.checked);
+    if (ev.target.checked) {
+        animTime = 0;
+    } else {
+        animTime = 300;
+    }
+    console.log(animTime);
+})
+
 // ==== GAME LOGIC ====
 let row, guess, win, target;
+let scoring = false;
 
 function scoreGuess(target, guess) {
     target = target.split("");
@@ -146,8 +165,7 @@ function resetGame() {
 document.getElementById("play-again").addEventListener("click", resetGame);
 
 document.addEventListener("keydown", e => {
-    if (!helpContainer.classList.contains("hide")) return;
-    if (row >= 6 || win) return;
+    if (!menuContainer.classList.contains("hide") || row >= 6 || win || scoring) return;
     if (e.key == "Backspace" && guess.length > 0) {
         guess = guess.slice(0, -1);
         board.children[row].children[guess.length].classList.remove("filled");
@@ -159,23 +177,32 @@ document.addEventListener("keydown", e => {
             setTimeout(() => board.children[row].classList.remove("shake"), 400);
             return;
         }
+        scoring = true;
+        setTimeout(() => scoring = false, animTime * 4);
         let scores = scoreGuess(target, guess);
+        for (let i = 0; i < 5; i++) {
+            const savedRow = row, savedGuess = guess;
+            setTimeout(() => {
+                board.children[savedRow].children[i].classList.add(scores[i]);
+                keyboardEls[savedGuess[i]].classList.add(scores[i]);
+            }, animTime * i);
+        }
         if (scores.every(s => s == "correct")) {
             win = true;
-            document.getElementById("end-container").classList.remove("hide");
-            document.getElementById("win").classList.remove("hide");
-            document.getElementById("lose").classList.add("hide");
-        }
-        for (let i = 0; i < 5; i++) {
-            board.children[row].children[i].classList.add(scores[i]);
-            keyboardEls[guess[i]].classList.add(scores[i]);
+            setTimeout(() => {
+                document.getElementById("end-container").classList.remove("hide");
+                document.getElementById("win").classList.remove("hide");
+                document.getElementById("lose").classList.add("hide");
+            }, animTime * 5)
         }
         row++;
         guess = "";
         if (row >= 6 && !win) {
-            document.getElementById("end-container").classList.remove("hide");
-            document.getElementById("win").classList.add("hide");
-            document.getElementById("lose").classList.remove("hide"); 
+            setTimeout(() => {
+                document.getElementById("end-container").classList.remove("hide");
+                document.getElementById("win").classList.add("hide");
+                document.getElementById("lose").classList.remove("hide");
+            }, animTime * 5)
         }
         return;
     }

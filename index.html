@@ -26,7 +26,7 @@
     <header>
         <button id="new" class="minimal">New</button>
         <h1>Typit</h1>
-        <button id="help" class="minimal">Help</button>
+        <button id="show-menu" class="minimal">Menu</button>
     </header>
     <div id="board"></div>
     <div id="keyboard"></div>
@@ -39,35 +39,45 @@
             <button id="play-again">Play again</button>
         </span>
     </div>
-    <div id="help-container" class="container hide">
+    <div id="menu-container" class="container hide">
         <span class="popup">
-            <h2>How to Play</h2>
-            <p>
-                You have 6 chances to guess the secret word.
-                To guess, enter a real 5 letter word.
-                US and UK spellings are both accepted.
-                You will see feedback like this:<br>
-            </p>
-            <div class="sample-row">
-                <div class="cell filled correct">W</div>
-                <div class="cell filled incorrect">O</div>
-                <div class="cell filled close">R</div>
-                <div class="cell filled incorrect">D</div>
-                <div class="cell filled incorrect">S</div>
-            </div>
-            <p>
-                <strong>Green letters are correct.</strong><br>
-                They appear in the same spot in the secret word.<br>
-                <strong>Yellow letters are close.</strong><br>
-                They appear in the secret word, but in another spot.<br>
-                <strong>Grey letters are incorrect.</strong><br>
-                They do not appear in the secret word.<br>
-                <strong>In this case, the secret word could be WRECK.</strong><br>
-            </p>
-            <p>
-                Hint: Letters may appear more than once in a word.
-            </p>
-            <button id="dismiss">Got it!</button>
+            <details open>
+                <summary>How to Play</summary>
+                <p>
+                    You have 6 chances to guess the secret word.
+                    To guess, enter a real 5 letter word.
+                    US and UK spellings are both accepted.
+                    You will see feedback like this:<br>
+                </p>
+                <div class="sample-row">
+                    <div class="cell filled correct">W</div>
+                    <div class="cell filled incorrect">O</div>
+                    <div class="cell filled close">R</div>
+                    <div class="cell filled incorrect">D</div>
+                    <div class="cell filled incorrect">S</div>
+                </div>
+                <p>
+                    <strong>Green letters are correct.</strong><br>
+                    They appear in the same spot in the secret word.<br>
+                    <strong>Yellow letters are close.</strong><br>
+                    They appear in the secret word, but in another spot.<br>
+                    <strong>Grey letters are incorrect.</strong><br>
+                    They do not appear in the secret word.<br>
+                    <strong>In this case, the secret word could be WRECK.</strong><br>
+                </p>
+                <p>
+                    Hint: Letters may appear more than once in a word.
+                </p>
+            </details>
+            <details>
+                <summary>Options</summary>
+                <p>
+                    <label for="fast-mode"><input type="checkbox" id="fast-mode">Fast Mode</label>
+                    <br>
+                    <span class="small">Show feedback instantly</span>
+                </p>
+            </details>
+            <button id="dismiss">Done</button>
         </span>
     </div>
     <script src="main.js" type="module"></script>
