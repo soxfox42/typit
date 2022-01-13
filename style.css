@@ -168,7 +168,7 @@ header {
     font-size: 20px;
     background: #BBB;
     color: #444;
-    transition: background-color 0.2s, color 0.2s;
+    transition: background-color 0.2s, color 0.2s, transform 50ms;
 
     display: inline-flex;
     align-items: center;
@@ -180,6 +180,10 @@ header {
     border-radius: 8px;
 
     cursor: pointer;
+}
+
+.key.pressed {
+    transform: scale(0.9);
 }
 
 @supports (aspect-ratio: 1) {

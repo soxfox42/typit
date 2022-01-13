@@ -27,10 +27,14 @@ if (board.children[0].children[0].getBoundingClientRect().width == 0) {
 
 // ==== TOUCH KEYBOARD ====
 const KEYBOARD_LAYOUT = [
-    "QWERTYUIOP",
-    "ASDFGHJKL",
-    "ZXCVBNM"
+    "Q,W,E,R,T,Y,U,I,O,P",
+    "A,S,D,F,G,H,J,K,L",
+    "Enter,Z,X,C,V,B,N,M,Backspace",
 ]
+const SPECIAL = {
+    "Enter": "➔",
+    "Backspace": "⌫",
+}
 
 const keyboard = document.getElementById("keyboard");
 let keyboardEls = {};
@@ -38,31 +42,29 @@ for (const [i, row] of KEYBOARD_LAYOUT.entries()) {
     const rowEl = document.createElement("div");
     rowEl.classList.add("key-row");
     keyboard.appendChild(rowEl);
-    for (const char of row) {
+    for (const key of row.split(",")) {
         const keyEl = document.createElement("div");
-        keyEl.innerText = char;
+        if (SPECIAL[key]) {
+            keyEl.innerText = SPECIAL[key];
+            keyEl.classList.add("wide");
+        } else {
+            keyEl.innerText = key;
+        }
         keyEl.classList.add("key");
-        keyEl.addEventListener("click", () => {
-            document.dispatchEvent(new KeyboardEvent("keydown", { key: char }))
-        });
+        ["touchstart", "mousedown"].forEach(eventName => 
+            keyEl.addEventListener(eventName, evt => {
+                evt.preventDefault();
+                document.dispatchEvent(new KeyboardEvent("keydown", { key }))
+                evt.target.classList.add("pressed");
+            })
+        );
+        ["touchend", "mouseup", "mouseout"].forEach(eventName => 
+            keyEl.addEventListener(eventName, evt => {
+                evt.target.classList.remove("pressed");
+            })
+        );
         rowEl.appendChild(keyEl);
-        keyboardEls[char.toLowerCase()] = keyEl;
-    }
-    if (i == 2) {
-        const enterEl = document.createElement("div");
-        enterEl.innerText = "➔"
-        enterEl.classList.add("key", "wide");
-        enterEl.addEventListener("click", () => {
-            document.dispatchEvent(new KeyboardEvent("keydown", { key: "Enter" }));
-        });
-        rowEl.insertBefore(enterEl, rowEl.firstChild);
-        const backspaceEl = document.createElement("div");
-        backspaceEl.innerText = "⌫"
-        backspaceEl.classList.add("key", "wide");
-        backspaceEl.addEventListener("click", () => {
-            document.dispatchEvent(new KeyboardEvent("keydown", { key: "Backspace" }));
-        });
-        rowEl.appendChild(backspaceEl);
+        keyboardEls[key.toLowerCase()] = keyEl;
     }
 }
 
