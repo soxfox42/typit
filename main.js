@@ -29,11 +29,11 @@ if (board.children[0].children[0].getBoundingClientRect().width == 0) {
 }
 
 // ==== TOUCH KEYBOARD ====
-const KEYBOARD_LAYOUT = config.keyboardLayout[config.language]
+const KEYBOARD_LAYOUT = config.keyboardLayout[config.language];
 const SPECIAL = {
     "Enter": "➔",
     "Backspace": "⌫",
-}
+};
 
 const keyboard = document.getElementById("keyboard");
 let keyboardEls = {};
