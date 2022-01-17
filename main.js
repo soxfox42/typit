@@ -141,11 +141,33 @@ function scoreGuess(target, guess) {
     return scores;
 }
 
+// Random number generator with a seed
+// Kudos: https://stackoverflow.com/a/47593316/8369030 and https://gist.github.com/blixt/f17b47c62508be59987b
+function mulberry32(a) {
+    var t = a += 0x6D2B79F5;
+    t = Math.imul(t ^ t >>> 15, t | 1);
+    t ^= t + Math.imul(t ^ t >>> 7, t | 61);
+    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+}
+
+
+function getTodaysIndex() {
+    let now = new Date();
+    let today = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0, 0).getTime()/1000;
+    let rand = mulberry32(today);
+    let index = Math.floor(rand * words.targets.length);
+    console.log("Todays Index: " + index);
+    return index;
+}
+
 function resetGame() {
     row = 0;
     guess = "";
     win = false;
-    target = words.targets[Math.floor(Math.random() * words.targets.length)];
+
+    let todaysIndex = getTodaysIndex();
+    target = words.targets[todaysIndex];
+    console.log("New target: " + target);
     document.getElementById("word").innerText = target.toUpperCase();
     for (const rowEl of board.children) {
         for (const cell of rowEl.children) {
@@ -163,7 +185,7 @@ function resetGame() {
     }
     document.getElementById("end-container").classList.add("hide");
 
-    localStorage.setItem('target', target);
+    localStorage.setItem('index', todaysIndex);
     storeProgess();
 }
 
@@ -172,11 +194,22 @@ function loadGame() {
     guess = "";
     win = false;
 
-    target = localStorage.getItem("target");
-    if (target == null) { // No data in local storage, start a new game
+    let todaysIndex = getTodaysIndex();
+    let indexFromStore = localStorage.getItem("index");
+    console.log(todaysIndex, indexFromStore);
+    if (todaysIndex != indexFromStore) {
+        console.log("New Day, new game");
         resetGame();
         return;
     }
+
+    if (indexFromStore == null) { // No data in local storage, start a new game
+        resetGame();
+        return;
+    }
+
+    target = words.targets[todaysIndex];
+
     document.getElementById("word").innerText = target.toUpperCase();
 
     for (let r = 0; r < 6; r++) {
