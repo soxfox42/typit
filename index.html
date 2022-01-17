@@ -5,83 +5,93 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-    <meta name="description" content="A quick word game, based on Josh Wardle's Wordle.">
+    <meta name="description" content="Errate ein Wort in 6 Versuchen. Jeden Tag ein neues Rätsel">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?cacheid=047b8677">
+    <link rel="stylesheet" href="style.css">
 
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-RJFEXDEJFT"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-
-        gtag('config', 'G-RJFEXDEJFT');
-    </script>
-
-    <title>Typit - Word Game</title>
+    <title>WORDLE in Deutsch</title>
 </head>
 
 <body>
     <header>
-        <button id="new" class="minimal">New</button>
-        <h1>Typit</h1>
-        <button id="show-menu" class="minimal">Menu</button>
+        <button id="help" class="minimal"></button>
+        <h1><b><span style="font-size: 120%">W</span>ORDLE</b> auf Deutsch</h1>
+<!--         <button id="show-menu" class="minimal"><span style="font-size: 200%">&#x2699;</span></button> -->
+        <button id="show-menu" class="minimal"><span style="font-size: 200%">&#x2630;</span></button>
     </header>
+    
     <div id="board"></div>
     <div id="keyboard"></div>
     <div id="end-container" class="container hide">
         <span class="popup center">
-            <h2 id="win">You Win!</h2>
-            <h2 id="lose">Game Over</h2>
+            <h2 id="win">Du hast gewonnen!</h2>
+            <h2 id="lose">Du hast verloren!</h2>
             <p>
                 The word was: <span id="word"></span>
             </p>
-            <button id="play-again">Play again</button>
+<!--             <button id="play-again">Play again</button> -->
         </span>
     </div>
     <div id="menu-container" class="container hide">
         <span class="popup">
             <details open>
-                <summary>How to Play</summary>
+                <summary><strong>Anleitung</strong></summary>
                 <p>
-                    You have 6 chances to guess the secret word.
-                    To guess, enter a real 5 letter word.
-                    US and UK spellings are both accepted.
-                    You will see feedback like this:<br>
+                    Du hast sechs Versuche, um das geheime Wort zu erraten.
+                    Wenn eine Zeile voll ist, kannst Du <span class="key" style="width: 20px;">➔</span> drücken.
+                    Wenn das Wort in der Datenbank enthalten ist, wirst Du ein Feedback erhalten, z.B.:<br>
                 </p>
                 <div class="sample-row">
-                    <div class="cell filled correct">W</div>
-                    <div class="cell filled incorrect">O</div>
-                    <div class="cell filled close">R</div>
-                    <div class="cell filled incorrect">D</div>
-                    <div class="cell filled incorrect">S</div>
+                    <div class="cell filled correct">B</div>
+                    <div class="cell filled incorrect">Ä</div>
+                    <div class="cell filled close">U</div>
+                    <div class="cell filled incorrect">M</div>
+                    <div class="cell filled incorrect">E</div>
                 </div>
                 <p>
-                    <strong>Green letters are correct.</strong><br>
-                    They appear in the same spot in the secret word.<br>
-                    <strong>Yellow letters are close.</strong><br>
-                    They appear in the secret word, but in another spot.<br>
-                    <strong>Grey letters are incorrect.</strong><br>
-                    They do not appear in the secret word.<br>
-                    <strong>In this case, the secret word could be WRECK.</strong><br>
-                </p>
+                    <strong>Grüne Buchstaben sich richtig.</strong><br>
+                    Sie sind auch im geheimen Wort an dieser Stelle.<br>
+                    <strong>Gelbe Buchstaben sind fast richtig.</strong><br>
+                    Sie sind im geheimen Wort enthalten, aber an einer anderen Stelle.<br>
+                    <strong>Graue Buchstaben sind falsch.</strong><br>
+                    Sie kommen im geheimen Wort nicht vor.</p>
+                <p><strong>Im Beispiel wäre das geheime Wort "BRUCH".</strong></p>
+                
+            </details>
+            <details>
+                <summary><strong>Hinweise</strong></summary>
+                <ul>
+                <li><p>Buchstaben können mehr als einmal im Wort vorkommen.</p></li>
+                <li><p>Umlaute (äöü) als Ganzes schreiben (nicht als "ae", "oe" oder "ue").</p></li>
+                <li><p>Anstatt "&szlig;" "ss" verwenden.</p></li>
+                </ul>
+            </details>
+            <details>
+                <summary><strong>Optionen</strong></summary>
                 <p>
-                    Hint: Letters may appear more than once in a word.
+                    <label for="fast-mode"><input type="checkbox" id="fast-mode">Animationen auschalten.</label>
+                    <br>
+                    <span class="small">Zeigt das Feedback schneller an.</span>
                 </p>
             </details>
             <details>
-                <summary>Options</summary>
-                <p>
-                    <label for="fast-mode"><input type="checkbox" id="fast-mode">Fast Mode</label>
-                    <br>
-                    <span class="small">Show feedback instantly</span>
-                </p>
+                <summary><strong>Copyright</strong></summary>
+                <p>Copyright &copy; 2022 by <a href=https://github.com/caco3/wordle-de>George Ruinelli</a>,<br>wordle [at] ruinelli.ch</p>
+                <p>Source Code: <a href=https://github.com/caco3/wordle-de>https://github.com/caco3/wordle-de</a>, basierend auf der Vorarbeit von <a href=https://github.com/soxfox42/typit>https://github.com/soxfox42/typit</a></p>
+                <p>Lizenz: <a href=https://github.com/caco3/wordle-de/blob/main/LICENSE.md>MIT</a>.</p>
+                <p>Das Spiel ist inspiriert von <a href=https://www.powerlanguage.co.uk/wordle>https://www.powerlanguage.co.uk/wordle</a>.</p>
+                <p>Wortschatz:</p>
+                <ul>
+                <li><p><a href=https://wikipedia.de>Deutsche Wikipedia</a>, aufbereitet durch <a href=http://www.aaabbb.de/WordList/WordList.php>http://www.aaabbb.de/WordList/WordList.php</a></p></li>
+                <li><a href=https://www.openthesaurus.de/about/download>https://www.openthesaurus.de/about/download</a></li>
+                </ul>
             </details>
-            <button id="dismiss">Done</button>
+            <button id="dismiss">Schliessen</button>
         </span>
     </div>
-    <script src="main.js?cacheid=1be1e030" type="module"></script>
+<!--     <script src="main.js?cacheid=1be1e030" type="module"></script> -->
+    <script src="main.js" type="module"></script>
+<!--     <script src="config.js" type="module"></script> -->
     <!-- musi tan jan Sopo -->
 </body>
 
