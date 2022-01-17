@@ -11,7 +11,7 @@ let keyboardLayout = {
 };
 
 let keyboardValidation = {
-    ["EN"]: /^[a-za]$/i,
+    ["EN"]: /^[a-z]$/i,
     ["DE"]: /^[a-zäöü]$/i
 };
 
