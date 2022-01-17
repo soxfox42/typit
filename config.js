@@ -1,4 +1,4 @@
-// ==== Input Layouts ====
+// ==== INPUT LAYOUTS ====
 let language = "EN";  // Pick one of "EN, "DE" 
     
 let keyboardLayout = {
@@ -12,7 +12,7 @@ let keyboardLayout = {
 
 let keyboardValidation = {
     ["EN"]: /^[a-za]$/i,
-    ["DE"]: /^[a-zaäöü]$/i
+    ["DE"]: /^[a-zäöü]$/i
 }
 
 export default {
