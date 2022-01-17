@@ -173,6 +173,10 @@ function loadGame() {
     win = false;
 
     target = localStorage.getItem("target");
+    if (target == null) { // No data in local storage, start a new game
+        resetGame();
+        return;
+    }
     document.getElementById("word").innerText = target.toUpperCase();
 
     for (let r = 0; r < 6; r++) {
