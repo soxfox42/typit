@@ -29,7 +29,7 @@ if (board.children[0].children[0].getBoundingClientRect().width == 0) {
 }
 
 // ==== TOUCH KEYBOARD ====
-const KEYBOARD_LAYOUT = config.keyboard_layout[config.language]
+const KEYBOARD_LAYOUT = config.keyboardLayout[config.language]
 const SPECIAL = {
     "Enter": "➔",
     "Backspace": "⌫",
@@ -207,7 +207,7 @@ document.addEventListener("keydown", e => {
         }
         return;
     }
-    if (!(config.keyboard_validation[config.language]).test(e.key) || guess.length >= 5) return;
+    if (!(config.keyboardValidation[config.language]).test(e.key) || guess.length >= 5) return;
     let cell = board.children[row].children[guess.length];
     cell.innerText = e.key.toUpperCase();
     cell.classList.add("filled");
