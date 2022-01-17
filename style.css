@@ -176,7 +176,7 @@ header {
     line-height: 0;
 
     height: 100%;
-    width: 8%;
+    width: 10px;
     border-radius: 8px;
 
     cursor: pointer;
@@ -189,7 +189,7 @@ header {
 @supports (aspect-ratio: 1) {
     .key {
         aspect-ratio: 0.6;
-        max-width: calc(10% - 2px);
+        max-width: calc(9% - 2px);
         width: auto;
     }
 
