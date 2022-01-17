@@ -90,8 +90,9 @@ document.getElementById("dismiss").addEventListener("click", ev => {
 })
 
 // ==== TOOLBAR BUTTONS ====
-document.getElementById("new").addEventListener("click", ev => {
-    resetGame();
+document.getElementById("help").addEventListener("click", ev => {
+//     resetGame();
+//     menuContainer.classList.remove("hide");
     ev.target.blur();
 });
 
@@ -247,7 +248,7 @@ function storeProgess() {
     }
 }
 
-document.getElementById("play-again").addEventListener("click", resetGame);
+// document.getElementById("play-again").addEventListener("click", resetGame);
 
 document.addEventListener("keydown", e => {
     if (!menuContainer.classList.contains("hide") || row >= 6 || win || scoring) return;
