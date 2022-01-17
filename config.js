@@ -1,5 +1,5 @@
 // ==== INPUT LAYOUTS ====
-let language = "EN";  // Pick one of "EN, "DE" 
+let language = "DE";  // Pick one of "EN, "DE"
     
 let keyboardLayout = {
     ["EN"]: ["Q,W,E,R,T,Y,U,I,O,P",

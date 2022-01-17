@@ -153,6 +153,7 @@ function resetGame() {
             cell.classList.remove("incorrect");
             cell.classList.remove("close");
             cell.classList.remove("correct");
+            cell.innerText = "";
         }
     }
     for (const keyID in keyboardEls) {
@@ -161,6 +162,56 @@ function resetGame() {
         keyboardEls[keyID].classList.remove("correct");
     }
     document.getElementById("end-container").classList.add("hide");
+
+    localStorage.setItem('target', target);
+    storeProgess();
+}
+
+function loadGame() {
+    row = 0;
+    guess = "";
+    win = false;
+
+    target = localStorage.getItem("target");
+    if (target == null) { // No data in local storage, start a new game
+        resetGame();
+        return;
+    }
+    document.getElementById("word").innerText = target.toUpperCase();
+
+    for (let r = 0; r < 6; r++) {
+        if (localStorage.getItem("row" + r) != null && localStorage.getItem("row" + r) != "") {
+            guess = localStorage.getItem("row" + r).toLowerCase();
+            let scores = scoreGuess(target, guess);
+            for (let c = 0; c < 5; c++) {
+                if( c < localStorage.getItem("row" + r).length) {
+                    let cell = board.children[r].children[c];
+                    cell.innerText = localStorage.getItem("row" + r)[c];
+                    cell.classList.add("filled");
+                    if (localStorage.getItem("row" + r).length == 5) {
+                        cell.classList.add(scores[c]);
+                        keyboardEls[guess[c]].classList.add(scores[c]);
+                    }
+                }
+            }
+
+            if (localStorage.getItem("row" + r).length == 5) {
+                row++;
+                guess = "";
+            }
+        }
+    }
+}
+
+function storeProgess() {
+    for (let r = 0; r < 6; r++) {
+        let line = "";
+        for (let c = 0; c < 5; c++) {
+            let cell = board.children[r].children[c];
+            line = line + cell.innerText;
+        }
+        localStorage.setItem('row' + r, line);
+    }
 }
 
 document.getElementById("play-again").addEventListener("click", resetGame);
@@ -170,6 +221,8 @@ document.addEventListener("keydown", e => {
     if (e.key == "Backspace" && guess.length > 0) {
         guess = guess.slice(0, -1);
         board.children[row].children[guess.length].classList.remove("filled");
+        board.children[row].children[guess.length].innerText = "";
+        storeProgess();
         return;
     }
     if (e.key == "Enter") {
@@ -212,6 +265,8 @@ document.addEventListener("keydown", e => {
     cell.innerText = e.key.toUpperCase();
     cell.classList.add("filled");
     guess += e.key.toLowerCase();
+
+    storeProgess();
 });
 
-resetGame();
+loadGame();

@@ -4,7 +4,7 @@
 }
 
 h1 {
-    font-size: 40px;
+    font-size: 30px;
     margin: 12px;
 }
 
@@ -20,7 +20,7 @@ h1, h2 {
 }
 
 body {
-    background: #DDD;
+    background: #EEE;
 
     margin: 0;
     height: 100vh;
@@ -37,15 +37,17 @@ body {
 }
 
 header {
-    max-width: 400px;
+/*     max-width: 400px; */
     width: 100%;
     margin: auto;
     display: grid;
+/*     height: 00px; */
     grid: auto / 64px auto 64px;
 }
 
 #board {
-    margin-bottom: 6px;
+    margin-bottom: 0px;
+    margin-top: 20px;
     max-height: calc(100vw / 5 * 6);
 }
 
@@ -53,7 +55,7 @@ header {
     display: flex;
     justify-content: center;
     gap: 4px;
-    height: calc(100% / 6 - 12px);
+    height: calc(100% / 6 - 18px);
     margin-bottom: 12px;
 }
 
@@ -154,14 +156,14 @@ header {
 #keyboard {
     display: grid;
     grid: repeat(3, 1fr) / auto;
-    gap: 2px;
+    gap: 4px;
     margin-bottom: 6px;
 }
 
 .key-row {
     display: flex;
     justify-content: center;
-    gap: 2px;
+    gap: 4px;
 }
 
 .key {
@@ -176,7 +178,7 @@ header {
     line-height: 0;
 
     height: 100%;
-    width: 8%;
+    width: 10px;
     border-radius: 8px;
 
     cursor: pointer;
@@ -189,7 +191,7 @@ header {
 @supports (aspect-ratio: 1) {
     .key {
         aspect-ratio: 0.6;
-        max-width: calc(10% - 2px);
+        max-width: calc(8% - 2px);
         width: auto;
     }
 
@@ -280,4 +282,5 @@ button {
 button.minimal {
     padding: 0;
     margin: 0;
+    height: 60px;
 }
