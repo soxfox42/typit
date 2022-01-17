@@ -1,4 +1,4 @@
-// ====Config ====
+// ==== CONFIG ====
 import config from './config.js';
 
 // ==== WORD LIST ====
