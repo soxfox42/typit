@@ -1,3 +1,6 @@
+// ====Config ====
+import config from './config.js';
+
 // ==== WORD LIST ====
 import words from './words.js';
 
@@ -26,11 +29,7 @@ if (board.children[0].children[0].getBoundingClientRect().width == 0) {
 }
 
 // ==== TOUCH KEYBOARD ====
-const KEYBOARD_LAYOUT = [
-    "Q,W,E,R,T,Y,U,I,O,P",
-    "A,S,D,F,G,H,J,K,L",
-    "Enter,Z,X,C,V,B,N,M,Backspace",
-]
+const KEYBOARD_LAYOUT = config.keyboardLayout[config.language]
 const SPECIAL = {
     "Enter": "➔",
     "Backspace": "⌫",
@@ -208,7 +207,7 @@ document.addEventListener("keydown", e => {
         }
         return;
     }
-    if (!(/^[a-z]$/i).test(e.key) || guess.length >= 5) return;
+    if (!(config.keyboardValidation[config.language]).test(e.key) || guess.length >= 5) return;
     let cell = board.children[row].children[guess.length];
     cell.innerText = e.key.toUpperCase();
     cell.classList.add("filled");
