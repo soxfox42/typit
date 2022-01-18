@@ -304,6 +304,9 @@ function evaluate() {
             document.getElementById("end-container").classList.remove("hide");
             document.getElementById("win").classList.remove("hide");
             document.getElementById("lose").classList.add("hide");
+            document.getElementById("lose2").classList.add("hide");
+            timeToNextWord();
+            setInterval(timeToNextWord, 1000);
         }, animTime * 5)
     }
     row++;
@@ -313,13 +316,41 @@ function evaluate() {
             document.getElementById("end-container").classList.remove("hide");
             document.getElementById("win").classList.add("hide");
             document.getElementById("lose").classList.remove("hide");
+            timeToNextWord();
+            setInterval(timeToNextWord, 1000);
         }, animTime * 5)
     }
+    
+}
+
+
+function timeToNextWord() {
+    var midnight = new Date();
+    midnight.setHours( 24 );
+    midnight.setMinutes( 0 );
+    midnight.setSeconds( 0 );
+    midnight.setMilliseconds( 0 );
+    
+    let secondsUntilMidnight = (midnight - new Date()) / 1000;
+    
+    let hours = Math.floor(secondsUntilMidnight / 3600);
+    let minutes = Math.floor(secondsUntilMidnight / 60 - hours * 60);
+    let seconds = Math.floor(secondsUntilMidnight - 60 * minutes - 3600 * hours, 0);
+    
+    if (hours == 0 && minutes == 0 && seconds == 0) {
+        console.log("New Day");
+        location.reload(); 
+    }
+    
+    if (hours < 10) { hours = "0" + hours; }
+    if (minutes < 10) { minutes = "0" + minutes; }
+    if (seconds < 10) { seconds = "0" + seconds; }
+    
+    document.getElementById("next-word").innerText = hours + ":" + minutes + ":" + seconds;
 }
 
 
 document.addEventListener("keydown", e => {
-    console.log(e.key);
     if (!menuContainer.classList.contains("hide") || row >= 6 || win || scoring) return;
     if (e.key == "Backspace" && guess.length > 0) {
         guess = guess.slice(0, -1);
