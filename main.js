@@ -161,14 +161,28 @@ function getTodaysIndex() {
     return index;
 }
 
+
+function initGame() {
+    let targetForToday = words.targets[getTodaysIndex()];
+    targetForToday = "panik"; // Test
+    let targetFromStore = localStorage.getItem("target");
+    if (targetForToday != targetFromStore) {
+        console.log("New Day, new game");
+        target = targetForToday;
+        resetGame();
+    }
+    else {
+        target = targetFromStore;
+        loadGame();
+    }
+}
+
+
 function resetGame() {
     row = 0;
     guess = "";
     win = false;
 
-    let todaysIndex = getTodaysIndex();
-    target = words.targets[todaysIndex];
-    console.log("New target: " + target);
     document.getElementById("word").innerText = target.toUpperCase();
     for (const rowEl of board.children) {
         for (const cell of rowEl.children) {
@@ -186,7 +200,7 @@ function resetGame() {
     }
     document.getElementById("end-container").classList.add("hide");
 
-    localStorage.setItem('index', todaysIndex);
+    localStorage.setItem("target", target);
     storeProgess();
 }
 
@@ -194,22 +208,6 @@ function loadGame() {
     row = 0;
     guess = "";
     win = false;
-
-    let todaysIndex = getTodaysIndex();
-    let indexFromStore = localStorage.getItem("index");
-    console.log(todaysIndex, indexFromStore);
-    if (todaysIndex != indexFromStore) {
-        console.log("New Day, new game");
-        resetGame();
-        return;
-    }
-
-    if (indexFromStore == null) { // No data in local storage, start a new game
-        resetGame();
-        return;
-    }
-
-    target = words.targets[todaysIndex];
 
     document.getElementById("word").innerText = target.toUpperCase();
 
@@ -303,4 +301,5 @@ document.addEventListener("keydown", e => {
     storeProgess();
 });
 
-loadGame();
+
+initGame();
