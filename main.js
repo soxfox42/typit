@@ -178,7 +178,15 @@ function initGame() {
     let targetFromStore = localStorage.getItem("target");
     let todaysTimestamp = getTodaysTimestamp();
     
-    if ((targetFromStore != "") && (targetFromStore != null) && (timestampFromStore != "") && (timestampFromStore != null)) {
+    // Debug: Append "?random" to the URL to get a random word on each reload
+    if (window.location.href.includes("random")) {
+        console.log("Use random word");
+        todaysTimestamp = Math.ceil(Math.random() * 2e10);
+//         console.log(todaysTimestamp);
+    }
+
+    if ((targetFromStore != "") && (targetFromStore != null) && 
+        (timestampFromStore != "") && (timestampFromStore != null)) {
         if (todaysTimestamp != timestampFromStore) {
             console.log("New Day, new game");
             resetGame(todaysTimestamp);
@@ -201,6 +209,7 @@ function resetGame(timestamp) {
     win = false;
 
     target = words.targets[getIndex(timestamp)];
+//     console.log("New target: " + target + "(" + timestamp + ")");
 
     document.getElementById("word").innerText = target.toUpperCase();
     for (const rowEl of board.children) {
@@ -230,6 +239,7 @@ function loadGame(loadedTarget) {
     win = false;
 
     target = loadedTarget;
+    console.log("Loaded target: " + target);
 
     document.getElementById("word").innerText = target.toUpperCase();
 
