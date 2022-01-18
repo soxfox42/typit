@@ -323,6 +323,24 @@ document.addEventListener("keydown", e => {
     storeProgess();
 });
 
+
+// Automatically close all the other <details> tags after opening another <details> tag
+// Kudos: https://stackoverflow.com/a/36994802/8369030
+const details = document.querySelectorAll("details");
+
+// Add the onclick listeners.
+details.forEach((targetDetail) => {
+  targetDetail.addEventListener("click", () => {
+    // Close all the details that are not targetDetail.
+    details.forEach((detail) => {
+      if (detail !== targetDetail) {
+        detail.removeAttribute("open");
+      }
+    });
+  });
+});
+
+
 // localStorage.clear(); // Testing
 
 initGame();
