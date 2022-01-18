@@ -90,8 +90,9 @@ document.getElementById("dismiss").addEventListener("click", ev => {
 })
 
 // ==== TOOLBAR BUTTONS ====
-document.getElementById("new").addEventListener("click", ev => {
-    resetGame();
+document.getElementById("help").addEventListener("click", ev => {
+//     resetGame();
+//     menuContainer.classList.remove("hide");
     ev.target.blur();
 });
 
@@ -141,11 +142,66 @@ function scoreGuess(target, guess) {
     return scores;
 }
 
-function resetGame() {
+// Random number generator with a seed
+// Kudos: https://stackoverflow.com/a/47593316/8369030 and https://gist.github.com/blixt/f17b47c62508be59987b
+function mulberry32(a) {
+    var t = a += 0x6D2B79F5;
+    t = Math.imul(t ^ t >>> 15, t | 1);
+    t ^= t + Math.imul(t ^ t >>> 7, t | 61);
+    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+}
+
+
+function getTodaysTimestamp() {
+    let now = new Date();
+    let timestamp = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0, 0).getTime()/1000; 
+    return timestamp;
+}
+
+
+function getIndex(timestamp) {
+    let rand = mulberry32(timestamp);
+    let index = Math.floor(rand * words.targets.length);
+//     console.log("Todays Index: " + index);
+    return index;
+}
+
+
+// Kudos: https://hellodevworld.com/365-days-of-coding/rot13-cipher-javascript-solution
+function rot13(message) {
+    return message.replace(/[a-z]/gi, letter => String.fromCharCode(letter.charCodeAt(0) + (letter.toLowerCase() <= 'm' ? 13 : -13)));
+}
+
+
+function initGame() {
+    let timestampFromStore = localStorage.getItem("timestamp");
+    let targetFromStore = localStorage.getItem("target");
+    let todaysTimestamp = getTodaysTimestamp();
+    
+    if ((targetFromStore != "") && (targetFromStore != null) && (timestampFromStore != "") && (timestampFromStore != null)) {
+        if (todaysTimestamp != timestampFromStore) {
+            console.log("New Day, new game");
+            resetGame(todaysTimestamp);
+        }
+        else {
+            console.log("Timestamp match, keep target");
+            loadGame(rot13(targetFromStore));
+        }
+    }
+    else {
+        console.log("No timestamp+target in store");
+        resetGame(todaysTimestamp);
+    }
+}
+
+
+function resetGame(timestamp) {
     row = 0;
     guess = "";
     win = false;
-    target = words.targets[Math.floor(Math.random() * words.targets.length)];
+
+    target = words.targets[getIndex(timestamp)];
+
     document.getElementById("word").innerText = target.toUpperCase();
     for (const rowEl of board.children) {
         for (const cell of rowEl.children) {
@@ -163,20 +219,18 @@ function resetGame() {
     }
     document.getElementById("end-container").classList.add("hide");
 
-    localStorage.setItem('target', target);
+    localStorage.setItem("target", rot13(target));
+    localStorage.setItem("timestamp", timestamp);
     storeProgess();
 }
 
-function loadGame() {
+function loadGame(loadedTarget) {
     row = 0;
     guess = "";
     win = false;
 
-    target = localStorage.getItem("target");
-    if (target == null) { // No data in local storage, start a new game
-        resetGame();
-        return;
-    }
+    target = loadedTarget;
+
     document.getElementById("word").innerText = target.toUpperCase();
 
     for (let r = 0; r < 6; r++) {
@@ -214,7 +268,7 @@ function storeProgess() {
     }
 }
 
-document.getElementById("play-again").addEventListener("click", resetGame);
+// document.getElementById("play-again").addEventListener("click", resetGame);
 
 document.addEventListener("keydown", e => {
     if (!menuContainer.classList.contains("hide") || row >= 6 || win || scoring) return;
@@ -269,4 +323,24 @@ document.addEventListener("keydown", e => {
     storeProgess();
 });
 
-loadGame();
+
+// Automatically close all the other <details> tags after opening another <details> tag
+// Kudos: https://stackoverflow.com/a/36994802/8369030
+const details = document.querySelectorAll("details");
+
+// Add the onclick listeners.
+details.forEach((targetDetail) => {
+  targetDetail.addEventListener("click", () => {
+    // Close all the details that are not targetDetail.
+    details.forEach((detail) => {
+      if (detail !== targetDetail) {
+        detail.removeAttribute("open");
+      }
+    });
+  });
+});
+
+
+// localStorage.clear(); // Testing
+
+initGame();
