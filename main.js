@@ -157,31 +157,44 @@ function getTodaysIndex() {
     let today = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0, 0).getTime()/1000;
     let rand = mulberry32(today);
     let index = Math.floor(rand * words.targets.length);
-    console.log("Todays Index: " + index);
+//     console.log("Todays Index: " + index);
     return index;
 }
 
 
+// Kudos: https://hellodevworld.com/365-days-of-coding/rot13-cipher-javascript-solution
+function rot13(message) {
+    return message.replace(/[a-z]/gi, letter => String.fromCharCode(letter.charCodeAt(0) + (letter.toLowerCase() <= 'm' ? 13 : -13)));
+}
+
+
 function initGame() {
-    let targetForToday = words.targets[getTodaysIndex()];
-    targetForToday = "panik"; // Test
-    let targetFromStore = localStorage.getItem("target");
-    if (targetForToday != targetFromStore) {
-        console.log("New Day, new game");
-        target = targetForToday;
-        resetGame();
+    let tar = localStorage.getItem("target");
+    if ((tar != "") && (tar != null)) {
+        let targetFromStore = rot13(tar);
+        let targetForToday = words.targets[getTodaysIndex()];
+        if (targetForToday != targetFromStore) {
+            console.log("New Day, new game");
+            resetGame(targetForToday);
+        }
+        else {
+            loadGame(targetFromStore);
+        }
     }
     else {
-        target = targetFromStore;
-        loadGame();
+        console.log("No target in store");
+        let targetForToday = words.targets[getTodaysIndex()];
+        resetGame(targetForToday);
     }
 }
 
 
-function resetGame() {
+function resetGame(newTarget) {
     row = 0;
     guess = "";
     win = false;
+
+    target = newTarget;
 
     document.getElementById("word").innerText = target.toUpperCase();
     for (const rowEl of board.children) {
@@ -200,14 +213,16 @@ function resetGame() {
     }
     document.getElementById("end-container").classList.add("hide");
 
-    localStorage.setItem("target", target);
+    localStorage.setItem("target", rot13(target));
     storeProgess();
 }
 
-function loadGame() {
+function loadGame(loadedTarget) {
     row = 0;
     guess = "";
     win = false;
+
+    target = loadedTarget;
 
     document.getElementById("word").innerText = target.toUpperCase();
 
