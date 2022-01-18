@@ -63,7 +63,7 @@ header {
     display: flex;
     justify-content: center;
     gap: 4px;
-    height: 50px;
+    height: 35px;
     margin-top: 8px;
     margin-bottom: 20px;
 }
@@ -118,9 +118,9 @@ header {
 
 @supports (aspect-ratio: 1) {
     .cell {
-        aspect-ratio: 1;
+        aspect-ratio: 1.5;
         width: auto;
-        max-width: none;
+        max-width: 100px;
     }
 }
 
