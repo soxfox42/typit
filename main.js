@@ -152,10 +152,15 @@ function mulberry32(a) {
 }
 
 
-function getTodaysIndex() {
+function getTodaysTimestamp() {
     let now = new Date();
-    let today = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0, 0).getTime()/1000;
-    let rand = mulberry32(today);
+    let timestamp = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0, 0).getTime()/1000; 
+    return timestamp;
+}
+
+
+function getIndex(timestamp) {
+    let rand = mulberry32(timestamp);
     let index = Math.floor(rand * words.targets.length);
 //     console.log("Todays Index: " + index);
     return index;
@@ -169,32 +174,33 @@ function rot13(message) {
 
 
 function initGame() {
-    let tar = localStorage.getItem("target");
-    if ((tar != "") && (tar != null)) {
-        let targetFromStore = rot13(tar);
-        let targetForToday = words.targets[getTodaysIndex()];
-        if (targetForToday != targetFromStore) {
+    let timestampFromStore = localStorage.getItem("timestamp");
+    let targetFromStore = localStorage.getItem("target");
+    let todaysTimestamp = getTodaysTimestamp();
+    
+    if ((targetFromStore != "") && (targetFromStore != null) && (timestampFromStore != "") && (timestampFromStore != null)) {
+        if (todaysTimestamp != timestampFromStore) {
             console.log("New Day, new game");
-            resetGame(targetForToday);
+            resetGame(todaysTimestamp);
         }
         else {
-            loadGame(targetFromStore);
+            console.log("Timestamp match, keep target");
+            loadGame(rot13(targetFromStore));
         }
     }
     else {
-        console.log("No target in store");
-        let targetForToday = words.targets[getTodaysIndex()];
-        resetGame(targetForToday);
+        console.log("No timestamp+target in store");
+        resetGame(todaysTimestamp);
     }
 }
 
 
-function resetGame(newTarget) {
+function resetGame(timestamp) {
     row = 0;
     guess = "";
     win = false;
 
-    target = newTarget;
+    target = words.targets[getIndex(timestamp)];
 
     document.getElementById("word").innerText = target.toUpperCase();
     for (const rowEl of board.children) {
@@ -214,6 +220,7 @@ function resetGame(newTarget) {
     document.getElementById("end-container").classList.add("hide");
 
     localStorage.setItem("target", rot13(target));
+    localStorage.setItem("timestamp", timestamp);
     storeProgess();
 }
 
@@ -316,5 +323,6 @@ document.addEventListener("keydown", e => {
     storeProgess();
 });
 
+// localStorage.clear(); // Testing
 
 initGame();
