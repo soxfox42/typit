@@ -5,18 +5,17 @@
 
 h1 {
     font-size: 40px;
-    margin: 12px;
 }
 
 h2 {
     font-size: 32px;
-    margin: 16px;
 }
 
 h1, h2 {
     font-weight: normal;
     line-height: 1.0;
     text-align: center;
+    margin: 0;
 }
 
 body {
