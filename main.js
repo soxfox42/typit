@@ -239,11 +239,11 @@ function loadGame(loadedTarget) {
     win = false;
 
     target = loadedTarget;
-    console.log("Loaded target: " + target);
+//     console.log("Loaded target: " + target);
 
     document.getElementById("word").innerText = target.toUpperCase();
 
-    for (let r = 0; r < 6; r++) {
+    for (let r = 0; r <= 6; r++) {
         if (localStorage.getItem("row" + r) != null && localStorage.getItem("row" + r) != "") {
             guess = localStorage.getItem("row" + r).toLowerCase();
             let scores = scoreGuess(target, guess);
@@ -252,19 +252,22 @@ function loadGame(loadedTarget) {
                     let cell = board.children[r].children[c];
                     cell.innerText = localStorage.getItem("row" + r)[c];
                     cell.classList.add("filled");
-                    if (localStorage.getItem("row" + r).length == 5) {
+
+                    if ((r < row) && 
+                        (localStorage.getItem("row" + r).length == 5)) {
                         cell.classList.add(scores[c]);
                         keyboardEls[guess[c]].classList.add(scores[c]);
                     }
                 }
             }
 
-            if (localStorage.getItem("row" + r).length == 5) {
-                row++;
-                guess = "";
+            if ((r < localStorage.getItem("row")) && 
+                (localStorage.getItem("row" + r).length == 5)) {
+                evaluate();
             }
         }
     }
+    row = localStorage.getItem("row");
 }
 
 function storeProgess() {
@@ -276,11 +279,47 @@ function storeProgess() {
         }
         localStorage.setItem('row' + r, line);
     }
+    localStorage.setItem('row', row);
+    localStorage.setItem('guess', guess);
 }
 
 // document.getElementById("play-again").addEventListener("click", resetGame);
 
+
+function evaluate() {
+//     console.log("target: " + target, ", guess: " + guess, "row: ", row);
+    scoring = true;
+    setTimeout(() => scoring = false, animTime * 4);
+    let scores = scoreGuess(target, guess);
+    for (let i = 0; i < 5; i++) {
+        const savedRow = row, savedGuess = guess;
+        setTimeout(() => {
+            board.children[savedRow].children[i].classList.add(scores[i]);
+            keyboardEls[savedGuess[i]].classList.add(scores[i]);
+        }, animTime * i);
+    }
+    if (scores.every(s => s == "correct")) {
+        win = true;
+        setTimeout(() => {
+            document.getElementById("end-container").classList.remove("hide");
+            document.getElementById("win").classList.remove("hide");
+            document.getElementById("lose").classList.add("hide");
+        }, animTime * 5)
+    }
+    row++;
+    guess = "";
+    if (row >= 6 && !win) {
+        setTimeout(() => {
+            document.getElementById("end-container").classList.remove("hide");
+            document.getElementById("win").classList.add("hide");
+            document.getElementById("lose").classList.remove("hide");
+        }, animTime * 5)
+    }
+}
+
+
 document.addEventListener("keydown", e => {
+    console.log(e.key);
     if (!menuContainer.classList.contains("hide") || row >= 6 || win || scoring) return;
     if (e.key == "Backspace" && guess.length > 0) {
         guess = guess.slice(0, -1);
@@ -295,35 +334,11 @@ document.addEventListener("keydown", e => {
             setTimeout(() => board.children[row].classList.remove("shake"), 400);
             return;
         }
-        scoring = true;
-        setTimeout(() => scoring = false, animTime * 4);
-        let scores = scoreGuess(target, guess);
-        for (let i = 0; i < 5; i++) {
-            const savedRow = row, savedGuess = guess;
-            setTimeout(() => {
-                board.children[savedRow].children[i].classList.add(scores[i]);
-                keyboardEls[savedGuess[i]].classList.add(scores[i]);
-            }, animTime * i);
-        }
-        if (scores.every(s => s == "correct")) {
-            win = true;
-            setTimeout(() => {
-                document.getElementById("end-container").classList.remove("hide");
-                document.getElementById("win").classList.remove("hide");
-                document.getElementById("lose").classList.add("hide");
-            }, animTime * 5)
-        }
-        row++;
-        guess = "";
-        if (row >= 6 && !win) {
-            setTimeout(() => {
-                document.getElementById("end-container").classList.remove("hide");
-                document.getElementById("win").classList.add("hide");
-                document.getElementById("lose").classList.remove("hide");
-            }, animTime * 5)
-        }
+        evaluate();
+        storeProgess();
         return;
     }
+
     if (!(config.keyboardValidation[config.language]).test(e.key) || guess.length >= 5) return;
     let cell = board.children[row].children[guess.length];
     cell.innerText = e.key.toUpperCase();
