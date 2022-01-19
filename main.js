@@ -87,13 +87,52 @@ for (const el of containers) {
 }
 
 document.getElementById("dismiss-info").addEventListener("click", ev => {
-    console.log(ev);
     ev.target.parentElement.parentElement.classList.add("hide");
 })
 
 document.getElementById("dismiss-stats").addEventListener("click", ev => {
-    console.log(ev);
     ev.target.parentElement.parentElement.classList.add("hide");
+})
+
+document.getElementById("share").addEventListener("click", ev => {
+    let yellowBox = "🟨";
+    let greenBox = "🟩";
+    let grayBox = "⬛";
+    
+    let letterMap = "";
+    
+    for (let r = 0; r <= 6; r++) {
+        if (localStorage.getItem("row" + r) != null) {
+            let g = localStorage.getItem("row" + r).toLowerCase();
+            let scores = scoreGuess(target, g);
+            for (let c = 0; c < 5; c++) {
+                if( c < localStorage.getItem("row" + r).length) {
+                    if ((r < row) && (localStorage.getItem("row" + r).length == 5)) {                        
+                        if (scores[c] == "correct") {
+                            letterMap += greenBox;
+                        }
+                        else if (scores[c] == "close") {
+                            letterMap += yellowBox;
+                        }
+                        else {
+                            letterMap += grayBox;
+                        }
+                    }
+                }
+                else {
+                    letterMap += greenBox;
+                }
+            }
+        }
+        letterMap += "\r\n";
+    }
+
+    let text = "Ich habe das heutige Wort auf https://wordle-deutsch.ch nach nur " + row + " Versuchen erraten!\r\n" + letterMap;
+
+    var t = document.createElement("textarea");
+    t.textContent = text, document.body.appendChild(t), t.select(), document.execCommand("copy"), document.body.removeChild(t)
+    
+    document.getElementById("share").innerText = "In die Zwischenablage kopiert";
 })
 
 // ==== TOOLBAR BUTTONS ====
@@ -322,6 +361,7 @@ function evaluate() {
             document.getElementById("end-container").classList.remove("hide");
             document.getElementById("win").classList.add("hide");
             document.getElementById("lose").classList.remove("hide");
+            document.getElementById("share").classList.add("hide");
             timeToNextWord();
             setInterval(timeToNextWord, 1000);
         }, animTime * 5)
