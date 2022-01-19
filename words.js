@@ -263,8 +263,6 @@ export default {
 "walze",
 "barke",
 "husar",
-"jaffa",
-"wotan",
 "hyäne",
 "arier",
 "kader",
@@ -284,7 +282,6 @@ export default {
 "faser",
 "genre",
 "sekte",
-"garbo",
 "mokka",
 "kranz",
 "hauer",
@@ -754,7 +751,6 @@ export default {
 "gelee",
 "narbe",
 "forst",
-"anbot",
 "papas",
 "nähen",
 "locke",
@@ -778,7 +774,6 @@ export default {
 "anbei",
 "abtun",
 "takel",
-"piepe",
 "gatte",
 "pinne",
 "salon",
@@ -788,16 +783,41 @@ export default {
 "rumor",
 "odium",
 "sinai",
-"jumbo"
-    ],
+"jumbo",
+
+],
     
     
     
     
     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     
     
-    other: [
+other: [
 "haute",
 "wuchs",
 "strom",
