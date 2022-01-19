@@ -127,7 +127,7 @@ document.getElementById("share").addEventListener("click", ev => {
         letterMap += "\r\n";
     }
 
-    let text = "Ich habe das heutige Wort auf https://wordle-deutsch.ch nach nur " + row + " Versuchen erraten!\r\n" + letterMap;
+    let text = "Ich habe das heutige Wort auf https://wordle-deutsch.ch mit nur " + row + " Versuchen erraten!\r\n" + letterMap;
 
     var t = document.createElement("textarea");
     t.textContent = text, document.body.appendChild(t), t.select(), document.execCommand("copy"), document.body.removeChild(t)
