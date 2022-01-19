@@ -4,8 +4,10 @@
 }
 
 h1 {
-    font-size: 30px;
-    margin: 12px;
+    font-size: 20px;
+/*     font-size: max(2px, 1vh); */
+    margin-left: 12px;
+    right: 12px;
 }
 
 h2 {
@@ -26,7 +28,11 @@ body {
     height: 100vh;
 
     display: grid;
-    grid: 64px 3fr minmax(180px, 1fr) / auto;
+/*     grid: 64px 3fr minmax(180px, 1fr) / auto; */
+
+    
+/*     grid-template-rows:64px max(1fr, 500px) 150px;  */
+    grid-template-rows:64px 1fr 150px; 
 
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -39,24 +45,27 @@ body {
 header {
 /*     max-width: 400px; */
     width: 100%;
-    margin: auto;
+    margin: 4px;
     display: grid;
 /*     height: 00px; */
-    grid: auto / 64px auto 64px;
+    grid: auto / 54px auto 54px;
 }
 
 #board {
     margin-bottom: 0px;
-    margin-top: 20px;
-    max-height: calc(100vw / 5 * 6);
+    margin-top: 0px;
+/*     max-height: calc(100vw / 5 * 6); */
+    
+/*     background: #AAA; */
 }
 
 .row {
     display: flex;
     justify-content: center;
     gap: 4px;
-    height: calc(100% / 6 - 18px);
+    height: calc(100% / 6 - 14px);
     margin-bottom: 12px;
+/*     background: #A00; */
 }
 
 .sample-row {
@@ -164,6 +173,9 @@ header {
     display: flex;
     justify-content: center;
     gap: 4px;
+/*     background: #A00; */
+    margin-left: 4px;
+    margin-right: 4px;
 }
 
 .key {
@@ -178,7 +190,8 @@ header {
     line-height: 0;
 
     height: 100%;
-    width: 10px;
+/*     height: 40px; */
+/*     width: 10px; */
     border-radius: 8px;
 
     cursor: pointer;
@@ -190,13 +203,14 @@ header {
 
 @supports (aspect-ratio: 1) {
     .key {
-        aspect-ratio: 0.6;
-        max-width: calc(8% - 2px);
-        width: auto;
+/*         aspect-ratio: 0.90; */
+        width: 100%;
+        max-width: 50px;
+/*         width: auto; */
     }
 
     .key.wide {
-        aspect-ratio: 0.9;
+/*         aspect-ratio: 0.9; */
         max-width: calc(15% - 2px);
     }
 }
@@ -267,7 +281,7 @@ input[type="checkbox"] {
 }
 
 button {
-    font-size: 1.2rem;
+    font-size: 25px;
     background: #DDD;
     border: none;
 
@@ -282,5 +296,6 @@ button {
 button.minimal {
     padding: 0;
     margin: 0;
-    height: 60px;
+    height: 50px;
+    width: 50px;
 }

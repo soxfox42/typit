@@ -17,11 +17,10 @@
 
 <body>
     <header>
-        <button id="help" class="minimal"></button>
+        <button id="show-stats" class="minimal">🏁</button>
         <h1><b><span style="font-size: 120%">W</span>ORDLE</b> auf Deutsch</h1>
-<!--         <button id="show-menu" class="minimal"><span style="font-size: 200%">&#x2699;</span></button> -->
-<!--         <button id="show-menu" class="minimal"><span style="font-size: 200%">&#x2630;</span></button> -->
-        <button id="show-menu" class="minimal"><span style="font-size: 200%"><strong>&#9432;</strong></span></button>
+<!--         <button id="show-info" class="minimal"><span style="font-size: 200%"><strong>&#8505;&#65039;</strong></span></button> -->
+        <button id="show-info" class="minimal">&#8505;&#65039;</button>
     </header>
     
     <div id="board"></div>
@@ -32,10 +31,19 @@
             <h2 id="lose">Du hast verloren!</h2>
             <p id="lose2">Das Wort ist: <span id="word"></span></p>
             <p>Nächstes Wort in: <span id="next-word"></span></p>
-<!--             <button id="play-again">Play again</button> -->
         </span>
     </div>
-    <div id="menu-container" class="container hide">
+
+    <div id="stats-container" class="container hide">
+        <span class="popup">
+            <summary><strong>Statistik</strong></summary>
+            <p>Du bist einer/eine der Besten!</p>
+            <p>Mehr kommt bald...</p>
+            <button id="dismiss-stats">Schliessen</button>
+        </span>
+    </div>
+
+    <div id="info-container" class="container hide">
         <span class="popup">
             <details open>
                 <summary><strong>Anleitung</strong></summary>
@@ -98,10 +106,11 @@
                 <li><a href=https://www.openthesaurus.de/about/download>https://www.openthesaurus.de/about/download</a></li>
                 </ul>
             </details>
-            <button id="dismiss">Schliessen</button>
+            <button id="dismiss-info">Schliessen</button>
         </span>
     </div>
 <!--     <script src="main.js?cacheid=1be1e030" type="module"></script> -->
+    <script src="zipson.min.js"></script>
     <script src="main.js" type="module"></script>
 <!--     <script src="config.js" type="module"></script> -->
     <!-- musi tan jan Sopo -->

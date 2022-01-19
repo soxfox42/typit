@@ -68,10 +68,11 @@ for (const [i, row] of KEYBOARD_LAYOUT.entries()) {
 }
 
 // ==== MODALS ====
-const menuContainer = document.getElementById("menu-container");
+const statsContainer = document.getElementById("stats-container");
+const infoContainer = document.getElementById("info-container");
 
 if (!window.localStorage.getItem("read-help")) {
-    menuContainer.classList.remove("hide");
+    infoContainer.classList.remove("hide");
     window.localStorage.setItem("read-help", true);
 }
 
@@ -85,19 +86,24 @@ for (const el of containers) {
     })
 }
 
-document.getElementById("dismiss").addEventListener("click", ev => {
+document.getElementById("dismiss-info").addEventListener("click", ev => {
+    console.log(ev);
+    ev.target.parentElement.parentElement.classList.add("hide");
+})
+
+document.getElementById("dismiss-stats").addEventListener("click", ev => {
+    console.log(ev);
     ev.target.parentElement.parentElement.classList.add("hide");
 })
 
 // ==== TOOLBAR BUTTONS ====
-document.getElementById("help").addEventListener("click", ev => {
-//     resetGame();
-//     menuContainer.classList.remove("hide");
+document.getElementById("show-stats").addEventListener("click", ev => {
+    statsContainer.classList.remove("hide");
     ev.target.blur();
 });
 
-document.getElementById("show-menu").addEventListener("click", ev => {
-    menuContainer.classList.remove("hide");
+document.getElementById("show-info").addEventListener("click", ev => {
+    infoContainer.classList.remove("hide");
     ev.target.blur();
 });
 
@@ -351,7 +357,8 @@ function timeToNextWord() {
 
 
 document.addEventListener("keydown", e => {
-    if (!menuContainer.classList.contains("hide") || row >= 6 || win || scoring) return;
+    if (!infoContainer.classList.contains("hide") || row >= 6 || win || scoring) return;
+    if (!statsContainer.classList.contains("hide") || row >= 6 || win || scoring) return;
     if (e.key == "Backspace" && guess.length > 0) {
         guess = guess.slice(0, -1);
         board.children[row].children[guess.length].classList.remove("filled");
