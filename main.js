@@ -245,6 +245,11 @@ function initGame() {
         console.log("No timestamp+target in store");
         resetGame(todaysTimestamp);
     }
+    
+    // Debug: Append "?cheat" to the URL to show the word in the console
+    if (window.location.href.includes("cheat")) {
+        console.log("Target: " + target);
+    }
 }
 
 
