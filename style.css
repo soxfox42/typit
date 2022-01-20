@@ -40,6 +40,8 @@ body {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+
+    overflow: hidden; /* Hide scrollbars */
 }
 
 header {
@@ -212,6 +214,8 @@ header {
     .key.wide {
 /*         aspect-ratio: 0.9; */
         max-width: calc(15% - 2px);
+        
+        background: #afd8ff;
     }
 }
 
