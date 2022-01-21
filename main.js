@@ -50,14 +50,14 @@ for (const [i, row] of KEYBOARD_LAYOUT.entries()) {
             keyEl.innerText = key;
         }
         keyEl.classList.add("key");
-        ["touchstart", "mousedown"].forEach(eventName => 
+        ["touchstart", "mousedown"].forEach(eventName =>
             keyEl.addEventListener(eventName, evt => {
                 evt.preventDefault();
                 document.dispatchEvent(new KeyboardEvent("keydown", { key }))
                 evt.target.classList.add("pressed");
             })
         );
-        ["touchend", "mouseup", "mouseout"].forEach(eventName => 
+        ["touchend", "mouseup", "mouseout"].forEach(eventName =>
             keyEl.addEventListener(eventName, evt => {
                 evt.target.classList.remove("pressed");
             })
@@ -81,12 +81,22 @@ for (const el of containers) {
         el.classList.add("hide");
     })
     el.children[0].addEventListener("click", ev => {
-       ev.stopPropagation(); 
+        ev.stopPropagation();
     })
 }
 
 document.getElementById("dismiss").addEventListener("click", ev => {
     ev.target.parentElement.parentElement.classList.add("hide");
+})
+
+document.getElementById("share").addEventListener("click", () => {
+    copyGameResults();
+    document.getElementById("share").innerText = "Copied!";
+    document.getElementById("share").classList.add("confirm");
+    setTimeout(() => {
+        document.getElementById("share").innerText = "Share";
+        document.getElementById("share").classList.remove("confirm");
+    }, 2000);
 })
 
 // ==== TOOLBAR BUTTONS ====
@@ -119,7 +129,7 @@ document.getElementById("fast-mode").addEventListener("change", ev => {
 })
 
 // ==== GAME LOGIC ====
-let row, guess, win, target;
+let row, guess, win, target, shareData;
 let scoring = false;
 
 function scoreGuess(target, guess) {
@@ -141,11 +151,38 @@ function scoreGuess(target, guess) {
     return scores;
 }
 
+function copyGameResults() {
+    let results = "";
+    if (win) {
+        results += `Typit ${row}/6\n`;
+    } else {
+        results += "Typit X/6\n";
+    }
+    for (let scores of shareData) {
+        for (let score of scores) {
+            switch (score) {
+                case "correct":
+                    results += "🟩";
+                    break;
+                case "close":
+                    results += "🟨";
+                    break;
+                case "incorrect":
+                    results += "⬜️";
+                    break;
+            }
+        }
+        results += "\n";
+    }
+    navigator.clipboard.writeText(results);
+}
+
 function resetGame() {
     row = 0;
     guess = "";
     win = false;
     target = words.targets[Math.floor(Math.random() * words.targets.length)];
+    shareData = [];
     document.getElementById("word").innerText = target.toUpperCase();
     for (const rowEl of board.children) {
         for (const cell of rowEl.children) {
@@ -182,6 +219,7 @@ document.addEventListener("keydown", e => {
         scoring = true;
         setTimeout(() => scoring = false, animTime * 4);
         let scores = scoreGuess(target, guess);
+        shareData.push(scores);
         for (let i = 0; i < 5; i++) {
             const savedRow = row, savedGuess = guess;
             setTimeout(() => {

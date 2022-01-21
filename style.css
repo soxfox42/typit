@@ -275,7 +275,15 @@ button {
     cursor: pointer;
 }
 
+button.confirm {
+    background: #5C0;    
+}
+
 button.minimal {
     padding: 0;
     margin: 0;
+}
+
+.button-row button {
+    display: inline-block;
 }
