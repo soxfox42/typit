@@ -37,7 +37,7 @@ const SPECIAL = {
 
 const keyboard = document.getElementById("keyboard");
 let keyboardEls = {};
-for (const [i, row] of KEYBOARD_LAYOUT.entries()) {
+for (const row of KEYBOARD_LAYOUT) {
     const rowEl = document.createElement("div");
     rowEl.classList.add("key-row");
     keyboard.appendChild(rowEl);
