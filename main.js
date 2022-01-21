@@ -171,7 +171,7 @@ function copyGameResults() {
                     results += "🟨";
                     break;
                 case "incorrect":
-                    results += "⬜️";
+                    results += "⬜";
                     break;
             }
         }
