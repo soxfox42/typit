@@ -173,7 +173,8 @@ document.addEventListener("keydown", e => {
         return;
     }
     if (e.key == "Enter") {
-        if (guess.length != 5 || !(words.targets.includes(guess) || words.other.includes(guess))) {
+        let realWord = words.targets.includes(guess) || words.other.includes(guess) || guess == "typit";
+        if (guess.length != 5 || !realWord) {
             board.children[row].classList.add("shake");
             setTimeout(() => board.children[row].classList.remove("shake"), 400);
             return;
