@@ -148,6 +148,7 @@ document.getElementById("show-info").addEventListener("click", ev => {
 
 // ==== OPTIONS ====
 let animTime = 300;
+let todaysTimestamp;
 
 if (window.localStorage.getItem("fast-mode") == "true") {
     document.getElementById("fast-mode").checked = true;
@@ -221,7 +222,7 @@ function rot13(message) {
 function initGame() {
     let timestampFromStore = localStorage.getItem("timestamp");
     let targetFromStore = localStorage.getItem("target");
-    let todaysTimestamp = getTodaysTimestamp();
+    todaysTimestamp = getTodaysTimestamp();
     
     // Debug: Append "?random" to the URL to get a random word on each reload
     if (window.location.href.includes("random")) {
@@ -333,7 +334,69 @@ function storeProgess() {
     localStorage.setItem('guess', guess);
 }
 
-// document.getElementById("play-again").addEventListener("click", resetGame);
+
+let ctx = null;
+
+function updateShownStats() {
+    let statsWins = [];
+    let statsWinsTotal = 0;
+    for (let r = 0; r < 6; r++) {
+        let w = window.localStorage.getItem("win-row" + r);
+        if (w != null) {
+            w = parseInt(w);
+            statsWins.push(w);
+            statsWinsTotal = statsWinsTotal + w;
+        }
+        else {
+            statsWins.push(0);
+        }
+    }
+    
+    console.log("Wins: " + statsWins);
+    
+    let statsLoses = window.localStorage.getItem("loses");
+    if (statsLoses != null) {
+        statsLoses = parseInt(statsLoses);
+    }
+    else {
+        statsLoses = 0;
+    }
+    
+    console.log(statsWinsTotal, statsLoses);
+
+    document.getElementById("wins").innerText = statsWinsTotal;
+    let percentage = 0
+    if (statsWinsTotal + statsLoses > 0) {
+        percentage = statsWinsTotal / (statsWinsTotal + statsLoses) * 100;
+    }
+    document.getElementById("wins-percent").innerText = Math.round(percentage, 1);
+    
+    let statsChart = Chart.getChart("statsChart"); // <canvas> id
+    if (statsChart != undefined) {
+        statsChart.destroy();
+    }
+
+    ctx = document.getElementById('statsChart').getContext('2d');        
+    statsChart = new Chart(ctx, {
+        type: 'bar',
+        options: {
+            indexAxis: 'y',
+            plugins: {
+                legend: {
+                    display: false
+                }
+            }
+        },
+        data: {
+            labels: ['1', '2', '3', '4', '5', '6'],
+            datasets: [{
+                data: statsWins,                
+                borderWidth: 1,
+                backgroundColor: '#afd8ff'
+            }]
+        }
+    });
+}
 
 
 function evaluate() {
@@ -350,6 +413,19 @@ function evaluate() {
     }
     if (scores.every(s => s == "correct")) {
         win = true;
+        if (todaysTimestamp != window.localStorage.getItem("win-timestamp")) { // Last time we won was before today
+            let w = window.localStorage.getItem("win-row" + row);
+            if (w != null) {
+                w = parseInt(w);
+            }
+            else {
+                w = 0;
+            }
+            window.localStorage.setItem("win-row" + row, w + 1);
+            window.localStorage.setItem("win-timestamp", todaysTimestamp);
+            updateShownStats();
+        }
+        
         setTimeout(() => {
             document.getElementById("end-container").classList.remove("hide");
             document.getElementById("win").classList.remove("hide");
@@ -362,6 +438,12 @@ function evaluate() {
     row++;
     guess = "";
     if (row >= 6 && !win) {
+        if (todaysTimestamp != window.localStorage.getItem("lose-timestamp")) { // Last time we lost was before today
+            window.localStorage.setItem("loses", parseInt(window.localStorage.getItem("loses")) + 1);
+            window.localStorage.setItem("lose-timestamp", todaysTimestamp);
+        }
+        updateShownStats();
+
         setTimeout(() => {
             document.getElementById("end-container").classList.remove("hide");
             document.getElementById("win").classList.add("hide");
@@ -371,7 +453,6 @@ function evaluate() {
             setInterval(timeToNextWord, 1000);
         }, animTime * 5)
     }
-    
 }
 
 
@@ -452,3 +533,4 @@ details.forEach((targetDetail) => {
 // localStorage.clear(); // Testing
 
 initGame();
+updateShownStats();

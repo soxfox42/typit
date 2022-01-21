@@ -8,6 +8,7 @@
     <meta name="description" content="Errate ein Wort in 6 Versuchen. Jeden Tag ein neues Rätsel.">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
 
     <meta name="google-site-verification" content="Dcbf7f83KTs3jWQDAnYApXdS-WoUvXiRBvX1yy5IrSM" />
     <meta name="google-site-verification" content="do6EF9xdaKqcNocyxmRtWJHNpj3Ht1tFuOOEktJGu4Q" />
@@ -37,9 +38,12 @@
 
     <div id="stats-container" class="container hide">
         <span class="popup">
-            <summary><strong>Statistik</strong></summary>
-            <p>Du bist einer/eine der Besten!</p>
-            <p>Mehr kommt bald...</p>
+            <h2>Statistik</h2>
+            <p><strong>Siege:</strong> <span id="wins"></span> (<span id="wins-percent"></span>%)</p>
+
+            <p><strong>Siege nach Zeilen:</strong>
+            <canvas id="statsChart" width="100%" height="60"></canvas>
+            <p></p>
             <button id="dismiss-stats">Schliessen</button>
         </span>
     </div>
