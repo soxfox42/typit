@@ -1,8 +1,11 @@
-// ==== CONFIG ====
+// ==== IMPORTS ====
 import config from './config.js';
-
-// ==== WORD LIST ====
 import words from './words.js';
+import { encode, decode } from './encoder.js';
+
+// ==== PARAMETERS ====
+const urlParams = new URLSearchParams(location.search);
+window.history.pushState("", "", location.pathname);
 
 // ==== VIEWPORT SIZE ====
 document.body.style.height = window.innerHeight + 'px';
@@ -174,6 +177,7 @@ function copyGameResults() {
         }
         results += "\n";
     }
+    results += location.href.split("?")[0] + "?w=" + encode(target);
     navigator.clipboard.writeText(results);
 }
 
@@ -181,7 +185,12 @@ function resetGame() {
     row = 0;
     guess = "";
     win = false;
-    target = words.targets[Math.floor(Math.random() * words.targets.length)];
+    if (urlParams.has("w")) {
+        target = decode(urlParams.get("w"));
+        urlParams.delete("w");
+    } else {
+        target = words.targets[Math.floor(Math.random() * words.targets.length)];
+    }
     shareData = [];
     document.getElementById("word").innerText = target.toUpperCase();
     for (const rowEl of board.children) {

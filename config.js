@@ -15,6 +15,11 @@ let keyboardValidation = {
     ["DE"]: /^[a-zäöü]$/i
 };
 
+let encodingString = {
+    EN: "abcdefghijklmnopqrstuvwxyz",
+    DE: "abcdefghijklmnopqrstuvwxyzäöü",
+}
+
 export default {
-    language, keyboardLayout, keyboardValidation
+    language, keyboardLayout, keyboardValidation, encodingString
 };
