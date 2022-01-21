@@ -100,8 +100,8 @@ document.getElementById("share").addEventListener("click", () => {
 })
 
 // ==== TOOLBAR BUTTONS ====
-document.getElementById("new").addEventListener("click", ev => {
-    resetGame();
+document.getElementById("results").addEventListener("click", ev => {
+    document.getElementById("end-container").classList.remove("hide");
     ev.target.blur();
 });
 
@@ -198,6 +198,7 @@ function resetGame() {
         keyboardEls[keyID].classList.remove("correct");
     }
     document.getElementById("end-container").classList.add("hide");
+    document.getElementById("results").classList.add("hide");
 }
 
 document.getElementById("play-again").addEventListener("click", resetGame);
@@ -231,6 +232,7 @@ document.addEventListener("keydown", e => {
             win = true;
             setTimeout(() => {
                 document.getElementById("end-container").classList.remove("hide");
+                document.getElementById("results").classList.remove("hide");
                 document.getElementById("win").classList.remove("hide");
                 document.getElementById("lose").classList.add("hide");
             }, animTime * 5)
@@ -240,6 +242,7 @@ document.addEventListener("keydown", e => {
         if (row >= 6 && !win) {
             setTimeout(() => {
                 document.getElementById("end-container").classList.remove("hide");
+                document.getElementById("results").classList.remove("hide");
                 document.getElementById("win").classList.add("hide");
                 document.getElementById("lose").classList.remove("hide");
             }, animTime * 5)

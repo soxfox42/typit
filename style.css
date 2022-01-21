@@ -33,7 +33,12 @@ header {
     width: 100%;
     margin: auto;
     display: grid;
-    grid: auto / 64px auto 64px;
+    grid: auto / 80px auto 80px;
+}
+
+header .hide {
+    display: revert;
+    visibility: hidden;
 }
 
 #board {
