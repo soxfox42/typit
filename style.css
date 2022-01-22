@@ -19,6 +19,7 @@ h1, h2 {
     font-weight: normal;
     line-height: 1.0;
     text-align: center;
+    margin-top: 0px;
 }
 
 body {
@@ -41,7 +42,7 @@ body {
     -ms-user-select: none;
     user-select: none;
 
-    overflow: hidden; /* Hide scrollbars */
+/*     overflow: hidden; /* Hide scrollbars */ */
 }
 
 header {
@@ -121,17 +122,19 @@ header {
     align-items: center;
     justify-content: center;
 
-    width: calc(20% - 8px);
-    max-width: 100px;
+/*     width: calc(20% - 8px); */
+    width: calc(100vw / 5 - 5px);
+    max-width: 80px;
+    min-height: 50px;
 
     transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
 }
 
 @supports (aspect-ratio: 1) {
     .cell {
-        aspect-ratio: 1.5;
-        width: auto;
-        max-width: 100px;
+/*         aspect-ratio: 1.5; */
+/*         width: auto; */
+/*         max-width: calc(100vw / 5 - 5px); */
     }
 }
 
