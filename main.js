@@ -352,7 +352,6 @@ function updateShownStats() {
         }
     }
     
-    console.log("Wins: " + statsWins);
     
     let statsLoses = window.localStorage.getItem("loses");
     if (statsLoses != null) {
@@ -531,7 +530,6 @@ details.forEach((targetDetail) => {
 
 
 function checkPortraitMode() {
-        console.log("height: " + window.innerHeight, "width: " + window.innerWidth);
         if(window.innerHeight < window.innerWidth) {
         alert("Das Spiel funktioniert besser im Portrait-Modus!");
     }
