@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-    <meta name="description" content="Errate ein Wort in 6 Versuchen. Jeden Tag ein neues Rätsel. Mit Umlauten (äöü) und kostenlos.">
+    <meta name="description" content="Errate ein Wort in 6 Versuchen. Jeden Tag ein neues R&auml;tsel. Mit Umlauten (&auml;&ouml;&uuml;) und kostenlos.">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
@@ -13,13 +13,13 @@
     <meta name="google-site-verification" content="Dcbf7f83KTs3jWQDAnYApXdS-WoUvXiRBvX1yy5IrSM" />
     <meta name="google-site-verification" content="do6EF9xdaKqcNocyxmRtWJHNpj3Ht1tFuOOEktJGu4Q" />
 
-    <title>WORDLE in Deutsch mit Umlauten (äöü)</title>
+    <title>WORDLE in Deutsch mit Umlauten (&auml;&ouml;&uuml;)</title>
 </head>
 
 <body>
     <header>
         <button id="show-stats" class="minimal">&#127937;</button>
-        <h1><b><span style="font-size: 120%">W</span>ORDLE</b> auf Deutsch mit Umlauten (äöü)</h1>
+        <h1><b><span style="font-size: 120%">W</span>ORDLE</b> auf Deutsch mit Umlauten (&auml;&ouml;&uuml;)</h1>
 <!--         <button id="show-info" class="minimal"><span style="font-size: 200%"><strong>&#8505;&#65039;</strong></span></button> -->
         <button id="show-info" class="minimal">&#8505;&#65039;</button>
     </header>
@@ -32,7 +32,7 @@
             <h2 id="lose">Du hast verloren!</h2>
             <p id="lose2">Das Wort ist: <span id="word"></span></p>
             <button id="share">Teilen</button>
-            <p>Nächstes Wort in: <span id="next-word"></span></p>
+            <p>N&auml;chstes Wort in: <span id="next-word"></span></p>
         </span>
     </div>
 
@@ -50,12 +50,12 @@
 
     <div id="info-container" class="container hide">
         <span class="popup">
-            <h1><b>WORDLE</b> auf Deutsch mit Umlauten (äöü)</h1>
+            <h1><b>WORDLE</b> auf Deutsch mit Umlauten (&auml;&ouml;&uuml;)</h1>
             <details open>
                 <summary><strong>Anleitung</strong></summary>
                 <p>
                     Du hast sechs Versuche, um das geheime Wort zu erraten.
-                    Wenn eine Zeile voll ist, kannst Du <span class="key" style="width: 20px;">➔</span> drücken.
+                    Wenn eine Zeile voll ist, kannst Du <span class="key" style="width: 20px;">➔</span> dr&uuml;cken.
                     Wenn das Wort in der Datenbank enthalten ist, wirst Du ein Feedback erhalten, z.B.:<br>
                 </p>
                 <div class="sample-row">
@@ -66,20 +66,20 @@
                     <div class="cell filled incorrect">E</div>
                 </div>
                 <p>
-                    <strong>Grüne Buchstaben sich richtig.</strong><br>
+                    <strong>Gr&uuml;ne Buchstaben sich richtig.</strong><br>
                     Sie sind auch im geheimen Wort an dieser Stelle.<br>
                     <strong>Gelbe Buchstaben sind fast richtig.</strong><br>
                     Sie sind im geheimen Wort enthalten, aber an einer anderen Stelle.<br>
                     <strong>Graue Buchstaben sind falsch.</strong><br>
                     Sie kommen im geheimen Wort nicht vor.</p>
-                <p><strong>Im Beispiel wäre das geheime Wort "BRUCH".</strong></p>
+                <p><strong>Im Beispiel w&auml;re das geheime Wort "BRUCH".</strong></p>
                 
             </details>
             <details>
                 <summary><strong>Hinweise</strong></summary>
                 <ul>
-                <li><p>Buchstaben können mehr als einmal im Wort vorkommen.</p></li>
-                <li><p>Umlaute (äöü) als Ganzes schreiben (nicht als "ae", "oe" oder "ue").</p></li>
+                <li><p>Buchstaben k&ouml;nnen mehr als einmal im Wort vorkommen.</p></li>
+                <li><p>Umlaute (&auml;&ouml;&uuml;) als Ganzes schreiben (nicht als "ae", "oe" oder "ue").</p></li>
                 <li><p>"ss" anstatt "&szlig;" verwenden.</p></li>                
                 </ul>
             </details>
@@ -93,11 +93,11 @@
             </details>
             <details>
                 <summary><strong>Weiteres</strong></summary>
-                <p>Wieso ist diese Spiel-Seite zu bevorzugen gegenüber den diversen plumpen Kopien von <a href=https://www.powerlanguage.co.uk/wordle>https://www.powerlanguage.co.uk/wordle</a>?</p>
+                <p>Wieso ist diese Spiel-Seite zu bevorzugen gegen&uuml;ber den diversen plumpen Kopien von <a href=https://www.powerlanguage.co.uk/wordle>https://www.powerlanguage.co.uk/wordle</a>?</p>
                 <ul>
-                <li><p>Es unterstützt auch Umlaute (äöü).</p></li>
+                <li><p>Es unterst&uuml;tzt auch Umlaute (&auml;&ouml;&uuml;).</p></li>
                 <li><p>Es basiert auf einer grossen, redigierten Wort-Datenbank.</p></li>
-                <li><p>Im Gegensatz zu den diversen plumpen Kopien von <a href=https://www.powerlanguage.co.uk/wordle>https://www.powerlanguage.co.uk/wordle</a> liegt hier <strong>keine</strong> Verletzung der Urheberrechte vor. Die anderen Seiten haben oft einfach die Webseite kopiert und das Copyright rausgelöscht!</p></li>
+                <li><p>Im Gegensatz zu den diversen plumpen Kopien von <a href=https://www.powerlanguage.co.uk/wordle>https://www.powerlanguage.co.uk/wordle</a> liegt hier <strong>keine</strong> Verletzung der Urheberrechte vor. Die anderen Seiten haben oft einfach die Webseite kopiert und das Copyright rausgel&ouml;scht!</p></li>
                 </ul>
             </details>
             <details>
