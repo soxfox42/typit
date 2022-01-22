@@ -530,7 +530,20 @@ details.forEach((targetDetail) => {
 });
 
 
+function checkPortraitMode() {
+        console.log("height: " + window.innerHeight, "width: " + window.innerWidth);
+        if(window.innerHeight < window.innerWidth) {
+        alert("Das Spiel funktioniert besser im Portrait-Modus!");
+    }
+}
+
+
+window.addEventListener("orientationchange", function(event) {
+    setTimeout(function() { checkPortraitMode(); }, 2000);
+});
+
 // localStorage.clear(); // Testing
 
 initGame();
 updateShownStats();
+checkPortraitMode();
