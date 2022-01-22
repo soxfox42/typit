@@ -361,7 +361,7 @@ function updateShownStats() {
         statsLoses = 0;
     }
     
-    console.log(statsWinsTotal, statsLoses);
+    console.log("Wins: " + statsWinsTotal + " (" + statsWins + "), loses: " + statsLoses);
 
     document.getElementById("wins").innerText = statsWinsTotal;
     let percentage = 0
@@ -369,6 +369,7 @@ function updateShownStats() {
         percentage = statsWinsTotal / (statsWinsTotal + statsLoses) * 100;
     }
     document.getElementById("wins-percent").innerText = Math.round(percentage, 1);
+    document.getElementById("loses").innerText = statsWinsTotal + statsLoses;
     
     let statsChart = Chart.getChart("statsChart"); // <canvas> id
     if (statsChart != undefined) {
