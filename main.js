@@ -369,8 +369,7 @@ function updateShownStats() {
         percentage = statsWinsTotal / (statsWinsTotal + statsLoses) * 100;
     }
     document.getElementById("wins-percent").innerText = Math.round(percentage, 1);
-//     document.getElementById("loses").innerText = statsWinsTotal + statsLoses;
-    document.getElementById("games-total").innerText = window.localStorage.getItem("loses");
+    document.getElementById("games-total").innerText = statsWinsTotal + statsLoses;
     
     let statsChart = Chart.getChart("statsChart"); // <canvas> id
     if (statsChart != undefined) {
