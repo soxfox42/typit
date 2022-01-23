@@ -6,7 +6,7 @@
 h1 {
     font-size: 20px;
 /*     font-size: max(2px, 1vh); */
-    margin-left: 12px;
+/*     margin-left: 12px; */
     right: 12px;
 }
 
@@ -20,6 +20,7 @@ h1, h2 {
     line-height: 1.0;
     text-align: center;
     margin-top: 0px;
+    
 }
 
 body {
@@ -47,7 +48,8 @@ body {
 
 header {
 /*     max-width: 400px; */
-    width: 100%;
+/*     width: calc(100vw - 5px); */
+    width: calc(100vw - 8px);
     margin: 4px;
     display: grid;
 /*     height: 00px; */
@@ -57,7 +59,7 @@ header {
 #board {
     margin-bottom: 0px;
     margin-top: 0px;
-/*     max-height: calc(100vw / 5 * 6); */
+/*     max-height: calc(100vh / 5 * 6); */
     
 /*     background: #AAA; */
 }
@@ -123,8 +125,9 @@ header {
     justify-content: center;
 
 /*     width: calc(20% - 8px); */
-    width: calc(100vw / 5 - 5px);
-    max-width: 80px;
+/*     width: calc(100vw / 5 - 5px); */
+    width: max(calc(100vw / 5 - 50px), 50px);
+/*     max-width: 70px; */
     min-height: 38px;
 
     transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
@@ -200,6 +203,8 @@ header {
     border-radius: 8px;
 
     cursor: pointer;
+    
+    
 }
 
 .key.pressed {
@@ -209,14 +214,20 @@ header {
 @supports (aspect-ratio: 1) {
     .key {
 /*         aspect-ratio: 0.90; */
-        width: 100%;
-        max-width: 50px;
+/*         width: 100%; */
+        width: calc((100vw - 48px) / 11);    
+/*         max-width: 50px; */
 /*         width: auto; */
     }
 
     .key.wide {
 /*         aspect-ratio: 0.9; */
-        max-width: calc(15% - 2px);
+/*         width: calc((100vw - 48px) / 2);   */
+/*         width: calc((100vw - 48px) / 2);   */
+        width: calc((100vw - 48px) / 11 * 2 + 4px);  
+/*         max-width: calc(15% - 2px); */
+/*         width: 104px; */
+/*         max-width: 104px; */
         
         background: #afd8ff;
     }
