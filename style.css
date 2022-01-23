@@ -125,7 +125,7 @@ header {
 /*     width: calc(20% - 8px); */
     width: calc(100vw / 5 - 5px);
     max-width: 80px;
-    min-height: 50px;
+    min-height: 38px;
 
     transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
 }
