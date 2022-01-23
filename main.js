@@ -32,8 +32,8 @@ if (board.children[0].children[0].getBoundingClientRect().width == 0) {
 // ==== TOUCH KEYBOARD ====
 const KEYBOARD_LAYOUT = config.keyboardLayout[config.language]
 const SPECIAL = {
-    "Enter": "➔",
-    "Backspace": "⌫",
+    "Enter": "<strong>✔</strong>",
+    "Backspace": "<strong>⎌</strong>",
 }
 
 const keyboard = document.getElementById("keyboard");
@@ -45,7 +45,7 @@ for (const [i, row] of KEYBOARD_LAYOUT.entries()) {
     for (const key of row.split(",")) {
         const keyEl = document.createElement("div");
         if (SPECIAL[key]) {
-            keyEl.innerText = SPECIAL[key];
+            keyEl.innerHTML = SPECIAL[key];
             keyEl.classList.add("wide");
         } else {
             keyEl.innerText = key;
