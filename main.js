@@ -542,6 +542,23 @@ window.addEventListener("orientationchange", function(event) {
     setTimeout(function() { checkPortraitMode(); }, 2000);
 });
 
+
+// Fixup for bad storage
+if (window.localStorage.getItem("loses") == "NaN") {
+    window.localStorage.setItem("loses", 0);
+}
+
+// Debug: Append "?debug" to the URL to show the localstoirage at the bottom
+if (window.location.href.includes("debug")) {
+    let text = "";
+    console.log("local storage");
+    for (let i = 0; i < localStorage.length; i++)   {
+        text = text + "\n" + localStorage.key(i) + " = " + localStorage.getItem(localStorage.key(i));
+    }
+    document.getElementById("debug").innerText = text;
+}
+
+
 // localStorage.clear(); // Testing
 
 initGame();
