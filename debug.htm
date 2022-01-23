@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="de">
+
+
+<body>
+    <span id=debug></span>
+    <script>
+    
+    let text = "";
+    console.log("local storage");
+    for (let i = 0; i < localStorage.length; i++)   {
+        text = text + "\n" + localStorage.key(i) + " = " + localStorage.getItem(localStorage.key(i));
+    }
+    document.getElementById("debug").innerText = text;
+    
+    </script>
+</body>
+
+</html>
+ 
