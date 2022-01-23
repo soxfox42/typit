@@ -16,7 +16,7 @@ for (let i = 0; i < 6; i++) {
     const row = document.createElement("div");
     row.classList.add("row");
     board.appendChild(row);
-    for (let j = 0; j < 5; j++) {
+    for (let j = 0; j < config.wordLength; j++) {
         const cell = document.createElement("div");
         cell.classList.add("cell");
         row.appendChild(cell);
@@ -142,13 +142,13 @@ let scoring = false;
 function scoreGuess(target, guess) {
     target = target.split("");
     let scores = Array(5).fill("incorrect");
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < config.wordLength; i++) {
         if (target[i] == guess[i]) {
             scores[i] = "correct";
             target[i] = " ";
         }
     }
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < config.wordLength; i++) {
         if (scores[i] == "correct") continue;
         let index = target.indexOf(guess[i]);
         if (index == -1) continue;
@@ -170,9 +170,9 @@ function createLetterMap() {
         if (localStorage.getItem("row" + r) != null) {
             let g = localStorage.getItem("row" + r).toLowerCase();
             let scores = scoreGuess(target, g);
-            for (let c = 0; c < 5; c++) {
+            for (let c = 0; c < config.wordLength; c++) {
                 if( c < localStorage.getItem("row" + r).length) {
-                    if ((r < row) && (localStorage.getItem("row" + r).length == 5)) {
+                    if ((r < row) && (localStorage.getItem("row" + r).length == config.wordLength)) {
                         if (scores[c] == "correct") {
                             letterMap += greenBox;
                         }
@@ -307,14 +307,14 @@ function loadGame(loadedTarget) {
         if (localStorage.getItem("row" + r) != null && localStorage.getItem("row" + r) != "") {
             guess = localStorage.getItem("row" + r).toLowerCase();
             let scores = scoreGuess(target, guess);
-            for (let c = 0; c < 5; c++) {
+            for (let c = 0; c < config.wordLength; c++) {
                 if( c < localStorage.getItem("row" + r).length) {
                     let cell = board.children[r].children[c];
                     cell.innerText = localStorage.getItem("row" + r)[c];
                     cell.classList.add("filled");
 
                     if ((r < row) && 
-                        (localStorage.getItem("row" + r).length == 5)) {
+                        (localStorage.getItem("row" + r).length == config.wordLength)) {
                         cell.classList.add(scores[c]);
                         keyboardEls[guess[c]].classList.add(scores[c]);
                     }
@@ -322,7 +322,7 @@ function loadGame(loadedTarget) {
             }
 
             if ((r < localStorage.getItem("row")) && 
-                (localStorage.getItem("row" + r).length == 5)) {
+                (localStorage.getItem("row" + r).length == config.wordLength)) {
                 evaluate();
             }
         }
@@ -333,7 +333,7 @@ function loadGame(loadedTarget) {
 function storeProgess() {
     for (let r = 0; r < 6; r++) {
         let line = "";
-        for (let c = 0; c < 5; c++) {
+        for (let c = 0; c < config.wordLength; c++) {
             let cell = board.children[r].children[c];
             line = line + cell.innerText;
         }
@@ -421,7 +421,7 @@ function evaluate() {
     scoring = true;
     setTimeout(() => scoring = false, animTime * 4);
     let scores = scoreGuess(target, guess);
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < config.wordLength; i++) {
         const savedRow = row, savedGuess = guess;
         setTimeout(() => {
             board.children[savedRow].children[i].classList.add(scores[i]);
@@ -452,7 +452,7 @@ function evaluate() {
             document.getElementById("lose2").classList.add("hide");
             timeToNextWord();
             setInterval(timeToNextWord, 1000);
-        }, animTime * 5)
+        }, animTime * config.wordLength)
     }
     row++;
     guess = "";
@@ -470,7 +470,7 @@ function evaluate() {
             document.getElementById("share").classList.add("hide");
             timeToNextWord();
             setInterval(timeToNextWord, 1000);
-        }, animTime * 5)
+        }, animTime * config.wordLength)
     }
 }
 
@@ -512,7 +512,7 @@ document.addEventListener("keydown", e => {
         return;
     }
     if (e.key == "Enter") {
-        if (guess.length != 5 || !(words.targets.includes(guess) || words.other.includes(guess))) {
+        if (guess.length != config.wordLength || !(words.targets.includes(guess) || words.other.includes(guess))) {
             board.children[row].classList.add("shake");
             setTimeout(() => board.children[row].classList.remove("shake"), 400);
             return;
@@ -522,7 +522,7 @@ document.addEventListener("keydown", e => {
         return;
     }
 
-    if (!(config.keyboardValidation[config.language]).test(e.key) || guess.length >= 5) return;
+    if (!(config.keyboardValidation[config.language]).test(e.key) || guess.length >= config.wordLength) return;
     let cell = board.children[row].children[guess.length];
     cell.innerText = e.key.toUpperCase();
     cell.classList.add("filled");
