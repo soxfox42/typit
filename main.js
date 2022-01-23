@@ -166,7 +166,7 @@ function createLetterMap() {
 
     let letterMap = "";
 
-    for (let r = 0; r <= 6; r++) {
+    for (let r = 0; r < 6; r++) {
         if (localStorage.getItem("row" + r) != null) {
             let g = localStorage.getItem("row" + r).toLowerCase();
             let scores = scoreGuess(target, g);
@@ -192,6 +192,7 @@ function createLetterMap() {
         letterMap += "\r\n";
     }
 
+    letterMap = letterMap.replace("\r\n\r\n", "\r\n");
     return letterMap;
 }
 
@@ -302,7 +303,7 @@ function loadGame(loadedTarget) {
 
     document.getElementById("word").innerText = target.toUpperCase();
 
-    for (let r = 0; r <= 6; r++) {
+    for (let r = 0; r < 6; r++) {
         if (localStorage.getItem("row" + r) != null && localStorage.getItem("row" + r) != "") {
             guess = localStorage.getItem("row" + r).toLowerCase();
             let scores = scoreGuess(target, guess);
