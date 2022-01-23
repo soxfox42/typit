@@ -166,7 +166,7 @@ function createLetterMap() {
 
     let letterMap = "";
 
-    for (let r = 0; r <= config.maxGuesses; r++) {
+    for (let r = 0; r < config.maxGuesses; r++) {
         if (localStorage.getItem("row" + r) != null) {
             let g = localStorage.getItem("row" + r).toLowerCase();
             let scores = scoreGuess(target, g);
