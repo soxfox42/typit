@@ -15,8 +15,9 @@ let keyboardValidation = {
     ["DE"]: /^[a-zäöü]$/i
 }
 
-let wordLength = 5;
+let wordLength = 7;
+let maxGuesses = 6;
 
 export default {
-    language, keyboardLayout, keyboardValidation, wordLength
+    language, keyboardLayout, keyboardValidation, wordLength, maxGuesses
 }

@@ -12,11 +12,11 @@ window.addEventListener("resize", () => {
 
 // ==== GAME BOARD ====
 const board = document.getElementById("board");
-for (let i = 0; i < 6; i++) {
+for (let r = 0; r < config.maxGuesses; r++) {
     const row = document.createElement("div");
     row.classList.add("row");
     board.appendChild(row);
-    for (let j = 0; j < config.wordLength; j++) {
+    for (let c = 0; c < config.wordLength; c++) {
         const cell = document.createElement("div");
         cell.classList.add("cell");
         row.appendChild(cell);
@@ -166,7 +166,7 @@ function createLetterMap() {
 
     let letterMap = "";
 
-    for (let r = 0; r < 6; r++) {
+    for (let r = 0; r < config.maxGuesses; r++) {
         if (localStorage.getItem("row" + r) != null) {
             let g = localStorage.getItem("row" + r).toLowerCase();
             let scores = scoreGuess(target, g);
@@ -303,7 +303,7 @@ function loadGame(loadedTarget) {
 
     document.getElementById("word").innerText = target.toUpperCase();
 
-    for (let r = 0; r < 6; r++) {
+    for (let r = 0; r < config.maxGuesses; r++) {
         if (localStorage.getItem("row" + r) != null && localStorage.getItem("row" + r) != "") {
             guess = localStorage.getItem("row" + r).toLowerCase();
             let scores = scoreGuess(target, guess);
@@ -331,7 +331,7 @@ function loadGame(loadedTarget) {
 }
 
 function storeProgess() {
-    for (let r = 0; r < 6; r++) {
+    for (let r = 0; r < config.maxGuesses; r++) {
         let line = "";
         for (let c = 0; c < config.wordLength; c++) {
             let cell = board.children[r].children[c];
@@ -349,7 +349,7 @@ let ctx = null;
 function updateShownStats() {
     let statsWins = [];
     let statsWinsTotal = 0;
-    for (let r = 0; r < 6; r++) {
+    for (let r = 0; r < config.maxGuesses; r++) {
         let w = window.localStorage.getItem("win-row" + r);
         if (w != null) {
             w = parseInt(w);
@@ -456,7 +456,7 @@ function evaluate() {
     }
     row++;
     guess = "";
-    if (row >= 6 && !win) {
+    if (row >= config.maxGuesses && !win) {
         if (todaysTimestamp != window.localStorage.getItem("lose-timestamp")) { // Last time we lost was before today
             window.localStorage.setItem("loses", parseInt(window.localStorage.getItem("loses")) + 1);
             window.localStorage.setItem("lose-timestamp", todaysTimestamp);
@@ -502,8 +502,8 @@ function timeToNextWord() {
 
 
 document.addEventListener("keydown", e => {
-    if (!infoContainer.classList.contains("hide") || row >= 6 || win || scoring) return;
-    if (!statsContainer.classList.contains("hide") || row >= 6 || win || scoring) return;
+    if (!infoContainer.classList.contains("hide") || row >= config.maxGuesses || win || scoring) return;
+    if (!statsContainer.classList.contains("hide") || row >= config.maxGuesses || win || scoring) return;
     if (e.key == "Backspace" && guess.length > 0) {
         guess = guess.slice(0, -1);
         board.children[row].children[guess.length].classList.remove("filled");
