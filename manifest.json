@@ -1,0 +1,31 @@
+{
+    "name": "Wordle auf Deutsch mit Umlauten",
+    "description": "Wordle auf Deutsch mit Umlauten (äöü)",
+    "short_name": "wordle",
+    "lang": "de-CH",
+    "start_url": "/",
+    "display": "standalone",
+    "orientation": "portrait",
+    "icons": [
+        {
+            "src": "logo.png",
+            "sizes": "1000x422",
+            "type": "image/png"
+        },
+        {
+            "src": "logo-mid.png",
+            "sizes": "657x281",
+            "type": "image/png"
+        },
+        {
+            "src": "logo-small.png",
+            "sizes": "515x131",
+            "type": "image/png"
+        },
+        {
+            "src": "logo-tiny.png",
+            "sizes": "128x128",
+            "type": "image/png"
+        }
+    ]
+} 
