@@ -1,8 +1,9 @@
 // ==== CONFIG ====
-import config from './config.js';
+import config from './config.js?cacheid=2';
 
 // ==== WORD LIST ====
-import words from './words.js';
+import words from './words.js?cacheid=1';
+
 
 // ==== VIEWPORT SIZE ====
 document.body.style.height = window.innerHeight + 'px';
