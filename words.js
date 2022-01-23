@@ -1874,7 +1874,6 @@ export default {
 "würze",
 "wüste",
 "wüten",
-"yacht",
 "zählt",
 "zahme",
 "zähne",
