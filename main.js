@@ -95,37 +95,7 @@ document.getElementById("dismiss-stats").addEventListener("click", ev => {
 })
 
 document.getElementById("share").addEventListener("click", ev => {
-    let yellowBox = "🟨";
-    let greenBox = "🟩";
-    let grayBox = "⬛";
-    
-    let letterMap = "";
-    
-    for (let r = 0; r <= 6; r++) {
-        if (localStorage.getItem("row" + r) != null) {
-            let g = localStorage.getItem("row" + r).toLowerCase();
-            let scores = scoreGuess(target, g);
-            for (let c = 0; c < 5; c++) {
-                if( c < localStorage.getItem("row" + r).length) {
-                    if ((r < row) && (localStorage.getItem("row" + r).length == 5)) {                        
-                        if (scores[c] == "correct") {
-                            letterMap += greenBox;
-                        }
-                        else if (scores[c] == "close") {
-                            letterMap += yellowBox;
-                        }
-                        else {
-                            letterMap += grayBox;
-                        }
-                    }
-                }
-                else {
-                    letterMap += greenBox;
-                }
-            }
-        }
-        letterMap += "\r\n";
-    }
+    let letterMap = createLetterMap();
 
     let text = "Ich habe das heutige Wort auf https://wordle-deutsch.ch mit nur " + row + " Versuchen erraten!\r\n" + letterMap;
 
@@ -187,6 +157,44 @@ function scoreGuess(target, guess) {
     }
     return scores;
 }
+
+
+function createLetterMap() {
+    let yellowBox = "🟨";
+    let greenBox = "🟩";
+    let grayBox = "⬛";
+
+    let letterMap = "";
+
+    for (let r = 0; r <= 6; r++) {
+        if (localStorage.getItem("row" + r) != null) {
+            let g = localStorage.getItem("row" + r).toLowerCase();
+            let scores = scoreGuess(target, g);
+            for (let c = 0; c < 5; c++) {
+                if( c < localStorage.getItem("row" + r).length) {
+                    if ((r < row) && (localStorage.getItem("row" + r).length == 5)) {
+                        if (scores[c] == "correct") {
+                            letterMap += greenBox;
+                        }
+                        else if (scores[c] == "close") {
+                            letterMap += yellowBox;
+                        }
+                        else {
+                            letterMap += grayBox;
+                        }
+                    }
+                }
+                else {
+                    letterMap += greenBox;
+                }
+            }
+        }
+        letterMap += "\r\n";
+    }
+
+    return letterMap;
+}
+
 
 // Random number generator with a seed
 // Kudos: https://stackoverflow.com/a/47593316/8369030 and https://gist.github.com/blixt/f17b47c62508be59987b
@@ -433,7 +441,9 @@ function evaluate() {
             window.localStorage.setItem("win-timestamp", todaysTimestamp);
             updateShownStats();
         }
-        
+
+        document.getElementById("win2").innerText = createLetterMap();
+
         setTimeout(() => {
             document.getElementById("end-container").classList.remove("hide");
             document.getElementById("win").classList.remove("hide");
