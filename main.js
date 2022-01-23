@@ -165,34 +165,38 @@ function createLetterMap() {
     let grayBox = "⬛";
 
     let letterMap = "";
+    let g = "";
+    for (let r = 0; r < config.maxGuesses; r++) {
+        g = localStorage.getItem("row" + r);
+        if (g == null) { // Row is null, use previous row
+            g = "";
+        }
+        else {
+            g = g.toLowerCase();
+        }
 
-    for (let r = 0; r <= config.maxGuesses; r++) {
-        if (localStorage.getItem("row" + r) != null) {
-            let g = localStorage.getItem("row" + r).toLowerCase();
-            let scores = scoreGuess(target, g);
-            for (let c = 0; c < config.wordLength; c++) {
-                if( c < localStorage.getItem("row" + r).length) {
-                    if ((r < row) && (localStorage.getItem("row" + r).length == config.wordLength)) {
-                        if (scores[c] == "correct") {
-                            letterMap += greenBox;
-                        }
-                        else if (scores[c] == "close") {
-                            letterMap += yellowBox;
-                        }
-                        else {
-                            letterMap += grayBox;
-                        }
+        let scores = scoreGuess(target, g);
+        for (let c = 0; c < config.wordLength; c++) {
+            if( c < g.length) {
+                if ((g.length == config.wordLength)) {
+                    if (scores[c] == "correct") {
+                        letterMap += greenBox;
+                    }
+                    else if (scores[c] == "close") {
+                        letterMap += yellowBox;
+                    }
+                    else {
+                        letterMap += grayBox;
                     }
                 }
-                else {
-                    letterMap += greenBox;
-                }
+            }
+            else {
+                letterMap += greenBox;
             }
         }
         letterMap += "\r\n";
     }
 
-    letterMap = letterMap.replace("\r\n\r\n", "\r\n");
     return letterMap;
 }
 
