@@ -385,7 +385,7 @@ function updateShownStats() {
         statsChart.destroy();
     }
 
-    let statsYAxis = Array.from(Array(config.maxGuesses).keys())
+    let statsYAxis = Array.from({length: config.maxGuesses}, (_, i) => i + 1);
 
     ctx = document.getElementById('statsChart').getContext('2d');        
     statsChart = new Chart(ctx, {
