@@ -141,7 +141,7 @@ let scoring = false;
 
 function scoreGuess(target, guess) {
     target = target.split("");
-    let scores = Array(5).fill("incorrect");
+    let scores = Array(config.wordLength).fill("incorrect");
     for (let i = 0; i < config.wordLength; i++) {
         if (target[i] == guess[i]) {
             scores[i] = "correct";
@@ -454,7 +454,7 @@ function evaluate() {
             document.getElementById("lose2").classList.add("hide");
             timeToNextWord();
             setInterval(timeToNextWord, 1000);
-        }, animTime * config.wordLength)
+        }, animTime * 5)
     }
     row++;
     guess = "";
@@ -472,7 +472,7 @@ function evaluate() {
             document.getElementById("share").classList.add("hide");
             timeToNextWord();
             setInterval(timeToNextWord, 1000);
-        }, animTime * config.wordLength)
+        }, animTime * 5)
     }
 }
 
