@@ -385,6 +385,8 @@ function updateShownStats() {
         statsChart.destroy();
     }
 
+    let statsYAxis = Array.from(Array(config.maxGuesses).keys())
+
     ctx = document.getElementById('statsChart').getContext('2d');        
     statsChart = new Chart(ctx, {
         type: 'bar',
@@ -405,7 +407,7 @@ function updateShownStats() {
             }
         },
         data: {
-            labels: ['1', '2', '3', '4', '5', '6'],
+            labels: statsYAxis,
             datasets: [{
                 data: statsWins,                
                 borderWidth: 1,
