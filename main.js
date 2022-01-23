@@ -385,6 +385,14 @@ function updateShownStats() {
                 legend: {
                     display: false
                 }
+            },
+            scales: {
+                x: {
+                    ticks: {
+                        precision: 0,
+                    },
+                    suggestedMax: Math.ceil(statsWins.reduce(function(a, b) { return Math.max(a, b); }) * 1.1),
+                }
             }
         },
         data: {
