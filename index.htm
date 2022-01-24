@@ -34,7 +34,7 @@
 <body>
     <header>
         <button id="show-stats" class="minimal">&#127937;</button>
-        <h1><b><span style="font-size: 120%">W</span>ORDLE</b> auf Deutsch mit Umlauten (&auml;&ouml;&uuml;)</h1>
+        <h1><b><span style="font-size: 120%; color: #6abe00;">W</span>OR<span style="color: #fbce31;">DL</span>E</b> auf Deutsch mit Umlauten (&auml;&ouml;&uuml;)</h1>
 <!--         <button id="show-info" class="minimal"><span style="font-size: 200%"><strong>&#8505;&#65039;</strong></span></button> -->
         <button id="show-info" class="minimal">&#8505;&#65039;</button>
     </header>
@@ -43,12 +43,13 @@
     <div id="keyboard"></div>
     <div id="end-container" class="container hide">
         <span class="popup center">
-            <h2 id="win">Du hast gewonnen!</h2>
-            <p id="win2"></p>
-            <h2 id="lose">Du hast verloren!</h2>
-            <p id="lose2">Das Wort ist: <span id="word"></span></p>
-            <button id="share">Teilen</button>
+            <h2 id="win">&#129395; Du hast gewonnen! &#129395;</h2>
+            <h2 id="lose">&#128546; Du hast verloren! &#128546;</h2>
+            <p>Das Wort ist: <a id="duden-link" href="" target=_blank><span id="word"></a></span></p>
+            <p id="letter-map"></p>
+            <button id="share"><img src="share.png"></img> Teilen</button>
             <p>N&auml;chstes Wort in: <span id="next-word"></span></p>
+            <button id="show-stats2">&#127937; Statistik</button>
         </span>
     </div>
 

@@ -32,8 +32,8 @@ if (board.children[0].children[0].getBoundingClientRect().width == 0) {
 // ==== TOUCH KEYBOARD ====
 const KEYBOARD_LAYOUT = config.keyboardLayout[config.language]
 const SPECIAL = {
-    "Enter": "<strong>✔</strong>",
-    "Backspace": "<strong>⎌</strong>",
+    "Enter": "<span style=\"font-size: 150%\"><strong>✔</strong></span>",
+    "Backspace": "<span style=\"font-size: 200%\"><strong>⎌</strong></span>",
 }
 
 const keyboard = document.getElementById("keyboard");
@@ -97,8 +97,13 @@ document.getElementById("dismiss-stats").addEventListener("click", ev => {
 
 document.getElementById("share").addEventListener("click", ev => {
     let letterMap = createLetterMap();
-
-    let text = "Ich habe das heutige Wort auf https://wordle-deutsch.ch mit nur " + row + " Versuchen erraten!\r\n" + letterMap;
+//     let dateFormated = new Date(todaysTimestamp).format("%Y-%m-%d %H:%M:%S");
+    
+    
+    const event = new Date(todaysTimestamp * 1000);
+    const options = { weekday: 'short', year: '2-digit', month: 'short', day: 'numeric' };
+    let dateFormated = event.toLocaleDateString('de-CH', options);
+    let text = "Ich habe das heutige Wort auf https://wordle-deutsch.ch mit nur " + row + " Versuchen erraten!\r\n" + dateFormated + "\r\n" + letterMap;
 
     var t = document.createElement("textarea");
     t.textContent = text, document.body.appendChild(t), t.select(), document.execCommand("copy"), document.body.removeChild(t)
@@ -108,6 +113,11 @@ document.getElementById("share").addEventListener("click", ev => {
 
 // ==== TOOLBAR BUTTONS ====
 document.getElementById("show-stats").addEventListener("click", ev => {
+    statsContainer.classList.remove("hide");
+    ev.target.blur();
+});
+
+document.getElementById("show-stats2").addEventListener("click", ev => {
     statsContainer.classList.remove("hide");
     ev.target.blur();
 });
@@ -276,7 +286,6 @@ function resetGame(timestamp) {
     target = words.targets[getIndex(timestamp)];
 //     console.log("New target: " + target + "(" + timestamp + ")");
 
-    document.getElementById("word").innerText = target.toUpperCase();
     for (const rowEl of board.children) {
         for (const cell of rowEl.children) {
             cell.classList.remove("filled");
@@ -305,8 +314,6 @@ function loadGame(loadedTarget) {
 
     target = loadedTarget;
 //     console.log("Loaded target: " + target);
-
-    document.getElementById("word").innerText = target.toUpperCase();
 
     for (let r = 0; r < config.maxGuesses; r++) {
         if (localStorage.getItem("row" + r) != null && localStorage.getItem("row" + r) != "") {
@@ -416,7 +423,7 @@ function updateShownStats() {
             datasets: [{
                 data: statsWins,                
                 borderWidth: 1,
-                backgroundColor: '#afd8ff'
+                backgroundColor: '#6abe00'
             }]
         }
     });
@@ -435,7 +442,7 @@ function evaluate() {
             keyboardEls[savedGuess[i]].classList.add(scores[i]);
         }, animTime * i);
     }
-    if (scores.every(s => s == "correct")) {
+    if (scores.every(s => s == "correct")) { // Win
         win = true;
         if (todaysTimestamp != window.localStorage.getItem("win-timestamp")) { // Last time we won was before today
             let w = window.localStorage.getItem("win-row" + row);
@@ -450,25 +457,33 @@ function evaluate() {
             updateShownStats();
         }
 
-        document.getElementById("win2").innerText = createLetterMap();
+        document.getElementById("word").innerText = target.toUpperCase();
+        document.getElementById('duden-link').href = "https://www.duden.de/suchen/dudenonline/" + target;
+        document.getElementById("letter-map").innerText = createLetterMap();
 
         setTimeout(() => {
             document.getElementById("end-container").classList.remove("hide");
             document.getElementById("win").classList.remove("hide");
             document.getElementById("lose").classList.add("hide");
-            document.getElementById("lose2").classList.add("hide");
+//             document.getElementById("lose2").classList.add("hide");
             timeToNextWord();
             setInterval(timeToNextWord, 1000);
         }, animTime * 5)
     }
+
     row++;
     guess = "";
-    if (row >= config.maxGuesses && !win) {
+
+    if (row >= config.maxGuesses && !win) { // Lose
         if (todaysTimestamp != window.localStorage.getItem("lose-timestamp")) { // Last time we lost was before today
             window.localStorage.setItem("loses", parseInt(window.localStorage.getItem("loses")) + 1);
             window.localStorage.setItem("lose-timestamp", todaysTimestamp);
         }
         updateShownStats();
+        
+        document.getElementById("word").innerText = target.toUpperCase();
+        document.getElementById('duden-link').href = "https://www.duden.de/suchen/dudenonline/" + target;
+        document.getElementById("letter-map").innerText = createLetterMap();
 
         setTimeout(() => {
             document.getElementById("end-container").classList.remove("hide");
