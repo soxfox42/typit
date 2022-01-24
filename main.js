@@ -2,7 +2,7 @@
 import config from './config.js?cacheid=2';
 
 // ==== WORD LIST ====
-import words from './words.js?cacheid=1';
+import words from './words.js?cacheid=2';
 
 
 // ==== VIEWPORT SIZE ====
@@ -97,11 +97,9 @@ document.getElementById("dismiss-stats").addEventListener("click", ev => {
 
 document.getElementById("share").addEventListener("click", ev => {
     let letterMap = createLetterMap();
-//     let dateFormated = new Date(todaysTimestamp).format("%Y-%m-%d %H:%M:%S");
-    
     
     const event = new Date(todaysTimestamp * 1000);
-    const options = { weekday: 'short', year: '2-digit', month: 'short', day: 'numeric' };
+    const options = { weekday: 'short', month: 'short', day: 'numeric' };
     let dateFormated = event.toLocaleDateString('de-CH', options);
     let text = "Ich habe das heutige Wort auf https://wordle-deutsch.ch mit nur " + row + " Versuchen erraten!\r\n" + dateFormated + "\r\n" + letterMap;
 
@@ -534,7 +532,7 @@ document.addEventListener("keydown", e => {
         return;
     }
     if (e.key == "Enter") {
-        if (guess.length != config.wordLength || !(words.targets.includes(guess) || words.other.includes(guess))) {
+        if (guess.length != config.wordLength || !(words.targets.includes(guess) || words.others.includes(guess))) {
             board.children[row].classList.add("shake");
             setTimeout(() => board.children[row].classList.remove("shake"), 400);
             return;

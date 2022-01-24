@@ -1,3 +1,5 @@
+
+
 export default {
     targets: [
 "aalen",
@@ -1956,7 +1958,7 @@ export default {
 
     
     
-other: [
+others: [
 "aales",
 "aalst",
 "aalte",
