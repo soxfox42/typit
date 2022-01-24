@@ -1,7 +1,5 @@
-
-
 export default {
-    targets: [
+targets: [
 "aalen",
 "abart",
 "abbau",
