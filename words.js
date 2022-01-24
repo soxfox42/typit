@@ -1956,7 +1956,7 @@ targets: [
 
     
     
-others: [
+other: [
 "aales",
 "aalst",
 "aalte",

@@ -532,7 +532,7 @@ document.addEventListener("keydown", e => {
         return;
     }
     if (e.key == "Enter") {
-        if (guess.length != config.wordLength || !(words.targets.includes(guess) || words.others.includes(guess))) {
+        if (guess.length != config.wordLength || !(words.targets.includes(guess) || words.other.includes(guess))) {
             board.children[row].classList.add("shake");
             setTimeout(() => board.children[row].classList.remove("shake"), 400);
             return;
