@@ -1922,7 +1922,8 @@ targets: [
 "zwirn",
 "zwist",
 "zwölf",
-"zyste"
+"zyste",
+"hemde"
 ],
     
     
