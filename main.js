@@ -70,12 +70,20 @@ for (const [i, row] of KEYBOARD_LAYOUT.entries()) {
 
 // ==== MODALS ====
 const statsContainer = document.getElementById("stats-container");
+const endContainer = document.getElementById("end-container");
 const infoContainer = document.getElementById("info-container");
 
 if (!window.localStorage.getItem("read-help")) {
     infoContainer.classList.remove("hide");
     window.localStorage.setItem("read-help", true);
 }
+
+
+// Debug: Call once god-menu.htm to unlock useful links in the statistics menu
+if (window.localStorage.getItem("god-menu")) {
+    document.getElementById("god-menu").classList.remove("hide");
+}
+
 
 const containers = document.getElementsByClassName("container");
 for (const el of containers) {
@@ -122,6 +130,21 @@ document.getElementById("show-stats2").addEventListener("click", ev => {
 
 document.getElementById("show-info").addEventListener("click", ev => {
     infoContainer.classList.remove("hide");
+    ev.target.blur();
+});
+
+document.getElementById("dismiss-end").addEventListener("click", ev => {
+    endContainer.classList.add("hide");
+    ev.target.blur();
+});
+
+document.getElementById("dismiss-stats").addEventListener("click", ev => {
+    statsContainer.classList.add("hide");
+    ev.target.blur();
+});
+
+document.getElementById("dismiss-info").addEventListener("click", ev => {
+    infoContainer.classList.add("hide");
     ev.target.blur();
 });
 
@@ -227,6 +250,11 @@ function getTodaysTimestamp() {
 }
 
 
+function getTomorowsTimestamp() {
+    return getTodaysTimestamp() + 60*60*24;
+}
+
+
 function getIndex(timestamp) {
     let rand = mulberry32(timestamp);
     let index = Math.floor(rand * words.targets.length);
@@ -251,6 +279,12 @@ function initGame() {
         console.log("Use random word");
         todaysTimestamp = Math.ceil(Math.random() * 2e10);
 //         console.log(todaysTimestamp);
+    }
+
+    // Debug: Append "?tomorrow" to the URL to get the word of tomorrow
+    if (window.location.href.includes("tomorrow")) {
+        console.log("Use word of tomorrow");
+        todaysTimestamp = getTomorowsTimestamp();
     }
 
     if ((targetFromStore != "") && (targetFromStore != null) && 
@@ -585,19 +619,6 @@ window.addEventListener("orientationchange", function(event) {
 if (window.localStorage.getItem("loses") == "NaN") {
     window.localStorage.setItem("loses", 0);
 }
-
-// Debug: Append "?debug" to the URL to show the localstoirage at the bottom
-if (window.location.href.includes("debug")) {
-    let text = "";
-    console.log("local storage");
-    for (let i = 0; i < localStorage.length; i++)   {
-        text = text + "\n" + localStorage.key(i) + " = " + localStorage.getItem(localStorage.key(i));
-    }
-    document.getElementById("debug").innerText = text;
-}
-
-
-// localStorage.clear(); // Testing
 
 initGame();
 updateShownStats();

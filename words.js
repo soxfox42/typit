@@ -798,7 +798,6 @@ targets: [
 "junge",
 "jungs",
 "juror",
-"jutta",
 "juwel",
 "kabel",
 "kabul",

@@ -208,8 +208,6 @@ header {
     border-radius: 8px;
 
     cursor: pointer;
-    
-    
 }
 
 .key.pressed {
@@ -254,6 +252,29 @@ header {
     color: #444;
 }
 
+
+
+.doc-key {
+    width: 30px; 
+    background: #afd8ff;
+    
+    
+    font-size: 20px;
+    color: #444;
+    transition: background-color 0.2s, color 0.2s, transform 50ms;
+    
+    align-items: center;
+    justify-content: center;
+   
+/*     max-width: 80px; */
+
+    display: inline-flex;
+ 
+    border-radius: 8px;
+
+    margin: 4px;
+}
+
 .container {
     position: absolute;
     top: 0;
@@ -265,6 +286,11 @@ header {
 
 .hide {
     display: none;
+}
+
+.close-button {
+    float: right;
+    font-size: 20px;
 }
 
 .popup {

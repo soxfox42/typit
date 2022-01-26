@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="cache-control" content="max-age=86400">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <meta name="description" content="Errate ein Wort in 6 Versuchen. Jeden Tag ein neues R&auml;tsel. Mit Umlauten (&auml;&ouml;&uuml;) und kostenlos.">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
@@ -43,8 +44,9 @@
     <div id="keyboard"></div>
     <div id="end-container" class="container hide">
         <span class="popup center">
-            <h2 id="win">&#129395; Du hast gewonnen! &#129395;</h2>
-            <h2 id="lose">&#128546; Du hast verloren! &#128546;</h2>
+            <div id="dismiss-end" class="close-button">&#10062;</div>
+            <h2 id="win">&#129395; Du hast gewonnen!</h2>
+            <h2 id="lose">&#128546; Du hast verloren!</h2>
             <p>Das Wort ist: <a id="duden-link" href="" target=_blank><span id="word"></a></span></p>
             <p id="letter-map"></p>
             <button id="share"><img src="share.png"></img> Teilen</button>
@@ -55,24 +57,35 @@
 
     <div id="stats-container" class="container hide">
         <span class="popup">
+            <div id="dismiss-stats" class="close-button">&#10062;</div>
+            <div id="god-menu" class="hide">
+                <h2>Godly Options</h2>
+                <p><a href="index.htm?tomorrow">Use the Word of tomorrow</a></p>
+                <p><a href="index.htm?random">Use Random Word</a></p>
+                <p><a href="index.htm?cheat">Show secret word in console</a></p>
+                <p><a href="index.htm?random&cheat">Random Word +  secret word in console</a></p>
+                <p><a href="debug.htm" target=_blank>Show local storage</a></p>
+            </div>
+        
             <h2>Statistik</h2>
             <p><strong>Siege:</strong> <span id="wins"></span> (<span id="wins-percent"></span>%) in <span id="games-total"></span> Spielen.</p>
 
             <p><strong>Siege nach Zeilen:</strong>
             <canvas id="statsChart" width="100%" height="60"></canvas>
             <p></p>
-            <button id="dismiss-stats">Schliessen</button>
         </span>
     </div>
 
     <div id="info-container" class="container hide">
         <span class="popup">
+            <div id="dismiss-info" class="close-button">&#10062;</div>
             <h1><b>WORDLE</b> auf Deutsch mit Umlauten (&auml;&ouml;&uuml;)</h1>
             <details open>
                 <summary><strong>Anleitung</strong></summary>
                 <p>
                     Du hast sechs Versuche, um das geheime Wort zu erraten.
-                    Wenn eine Zeile voll ist, kannst Du <span class="key" style="width: 20px;">➔</span> dr&uuml;cken.
+                    Wenn Du einen Buchstaben wiede rlöschen möchtest, kannst Du <span class="doc-key"><strong>⎌</strong></span> dr&uuml;cken.
+                    Wenn eine Zeile voll ist, kannst Du <span class="doc-key">✔</span> dr&uuml;cken.
                     Wenn das Wort in der Datenbank enthalten ist, wirst Du ein Feedback erhalten, z.B.:<br>
                 </p>
                 <div class="sample-row">
@@ -129,10 +142,8 @@
                 <li><a href=https://www.openthesaurus.de/about/download>https://www.openthesaurus.de/about/download</a></li>
                 </ul>
             </details>
-            <button id="dismiss-info">Schliessen</button>
         </span>
     </div>
-    <span id=debug></span>
     <script src="words.js?cacheid=8" type="module"></script>
     <script src="main.js?cacheid=8" type="module"></script>
 </body>
