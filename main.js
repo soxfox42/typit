@@ -129,14 +129,12 @@ document.getElementById("fast-mode").addEventListener("change", ev => {
     } else {
         animTime = 300;
     }
-    console.log(animTime);
 })
 
 // ==== DAILY STATE ====
 let dayIndex = Math.floor((Date.now() - Date.UTC(2022, 1, 1)) / 86400000);
 let prng = new Math.seedrandom(dayIndex);
 let dailyWord = words.targets[Math.floor(prng() * words.targets.length)];
-console.log(dailyWord);
 
 let dailyHistory = JSON.parse(localStorage.getItem("daily-history")) || {};
 
@@ -252,7 +250,6 @@ document.addEventListener("keydown", e => {
             return;
         }
         guesses.push(curGuess);
-        console.log(guesses);
         scoring = true;
         setTimeout(() => scoring = false, animTime * 4);
         let scores = scoreGuess(target, curGuess);
