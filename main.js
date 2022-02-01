@@ -147,8 +147,7 @@ function saveDaily(guesses) {
 }
 
 // ==== GAME LOGIC ====
-let row, curGuess, win, target, shareData, guesses;
-let isDaily = !(dayIndex in dailyHistory);
+let row, curGuess, win, target, shareData, guesses, isDaily;
 let scoring = false;
 
 function scoreGuess(target, guess) {
@@ -172,11 +171,14 @@ function scoreGuess(target, guess) {
 
 function copyGameResults() {
     let results = "";
-    if (win) {
-        results += `Typit ${row}/6\n`;
-    } else {
-        results += "Typit X/6\n";
-    }
+    if (isDaily)
+        results += `Typit #${dayIndex + 1} -`;
+    else
+        results += "Typit";
+    if (win)
+        results += ` ${row}/6\n`;
+    else
+        results += " X/6\n";
     for (let scores of shareData) {
         for (let score of scores) {
             switch (score) {
@@ -193,7 +195,8 @@ function copyGameResults() {
         }
         results += "\n";
     }
-    results += location.href.split("?")[0] + "?w=" + encode(target);
+    if (!isDaily)
+        results += location.href.split("?")[0] + "?w=" + encode(target);
     navigator.clipboard.writeText(results);
 }
 
@@ -202,6 +205,7 @@ function resetGame() {
     curGuess = "";
     guesses = [];
     win = false;
+    isDaily = !(dayIndex in dailyHistory);
     if (urlParams.has("w")) {
         target = decode(urlParams.get("w"));
         urlParams.delete("w");
@@ -270,7 +274,6 @@ document.addEventListener("keydown", e => {
                 document.getElementById("lose").classList.add("hide");
                 if (isDaily) {
                     saveDaily(guesses);
-                    isDaily = false;
                 }
             }, animTime * 5)
         }
@@ -284,7 +287,6 @@ document.addEventListener("keydown", e => {
                 document.getElementById("lose").classList.remove("hide");
                 if (isDaily) {
                     saveDaily(guesses);
-                    isDaily = false;
                 }
             }, animTime * 5)
         }
