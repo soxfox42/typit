@@ -275,7 +275,7 @@ document.addEventListener("keydown", e => {
                 if (isDaily) {
                     saveDaily(guesses);
                 }
-            }, animTime * 5)
+            }, animTime * 5 + 1000)
         }
         row++;
         curGuess = "";
