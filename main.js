@@ -229,6 +229,10 @@ function resetGame() {
     }
     document.getElementById("end-container").classList.add("hide");
     document.getElementById("results").classList.add("hide");
+    if (isDaily)
+        document.getElementById("play-again").textContent = "Play random";
+    else
+        document.getElementById("play-again").textContent = "Play again";
 }
 
 document.getElementById("play-again").addEventListener("click", resetGame);
