@@ -2,6 +2,7 @@
 import config from './config.js';
 import words from './words.js';
 import { encode, decode } from './encoder.js';
+import "https://cdnjs.cloudflare.com/ajax/libs/seedrandom/3.0.5/seedrandom.min.js";
 
 // ==== PARAMETERS ====
 const urlParams = new URLSearchParams(location.search);
@@ -131,8 +132,25 @@ document.getElementById("fast-mode").addEventListener("change", ev => {
     console.log(animTime);
 })
 
+// ==== DAILY STATE ====
+let dayIndex = Math.floor((Date.now() - Date.UTC(2022, 1, 1)) / 86400000);
+let prng = new Math.seedrandom(dayIndex);
+let dailyWord = words.targets[Math.floor(prng() * words.targets.length)];
+console.log(dailyWord);
+
+let dailyHistory = JSON.parse(localStorage.getItem("daily-history")) || {};
+
+function saveDaily(guesses) {
+    dailyHistory[dayIndex] = {
+        target: dailyWord,
+        guesses
+    };
+    localStorage.setItem("daily-history", JSON.stringify(dailyHistory));
+}
+
 // ==== GAME LOGIC ====
-let row, guess, win, target, shareData;
+let row, curGuess, win, target, shareData, guesses;
+let isDaily = !(dayIndex in dailyHistory);
 let scoring = false;
 
 function scoreGuess(target, guess) {
@@ -183,13 +201,16 @@ function copyGameResults() {
 
 function resetGame() {
     row = 0;
-    guess = "";
+    curGuess = "";
+    guesses = [];
     win = false;
     if (urlParams.has("w")) {
         target = decode(urlParams.get("w"));
         urlParams.delete("w");
-    } else {
+    } else if (dayIndex in dailyHistory) {
         target = words.targets[Math.floor(Math.random() * words.targets.length)];
+    } else {
+        target = dailyWord;
     }
     shareData = [];
     document.getElementById("word").innerText = target.toUpperCase();
@@ -214,24 +235,26 @@ document.getElementById("play-again").addEventListener("click", resetGame);
 
 document.addEventListener("keydown", e => {
     if (!menuContainer.classList.contains("hide") || row >= 6 || win || scoring) return;
-    if (e.key == "Backspace" && guess.length > 0) {
-        guess = guess.slice(0, -1);
-        board.children[row].children[guess.length].classList.remove("filled");
+    if (e.key == "Backspace" && curGuess.length > 0) {
+        curGuess = curGuess.slice(0, -1);
+        board.children[row].children[curGuess.length].classList.remove("filled");
         return;
     }
     if (e.key == "Enter") {
-        let realWord = words.targets.includes(guess) || words.other.includes(guess) || guess == "typit";
-        if (guess.length != 5 || !realWord) {
+        let realWord = words.targets.includes(curGuess) || words.other.includes(curGuess) || curGuess == "typit";
+        if (curGuess.length != 5 || !realWord) {
             board.children[row].classList.add("shake");
             setTimeout(() => board.children[row].classList.remove("shake"), 400);
             return;
         }
+        guesses.push(curGuess);
+        console.log(guesses);
         scoring = true;
         setTimeout(() => scoring = false, animTime * 4);
-        let scores = scoreGuess(target, guess);
+        let scores = scoreGuess(target, curGuess);
         shareData.push(scores);
         for (let i = 0; i < 5; i++) {
-            const savedRow = row, savedGuess = guess;
+            const savedRow = row, savedGuess = curGuess;
             setTimeout(() => {
                 board.children[savedRow].children[i].classList.add(scores[i]);
                 keyboardEls[savedGuess[i]].classList.add(scores[i]);
@@ -244,25 +267,33 @@ document.addEventListener("keydown", e => {
                 document.getElementById("results").classList.remove("hide");
                 document.getElementById("win").classList.remove("hide");
                 document.getElementById("lose").classList.add("hide");
+                if (isDaily) {
+                    saveDaily(guesses);
+                    isDaily = false;
+                }
             }, animTime * 5)
         }
         row++;
-        guess = "";
+        curGuess = "";
         if (row >= 6 && !win) {
             setTimeout(() => {
                 document.getElementById("end-container").classList.remove("hide");
                 document.getElementById("results").classList.remove("hide");
                 document.getElementById("win").classList.add("hide");
                 document.getElementById("lose").classList.remove("hide");
+                if (isDaily) {
+                    saveDaily(guesses);
+                    isDaily = false;
+                }
             }, animTime * 5)
         }
         return;
     }
-    if (!(config.keyboardValidation[config.language]).test(e.key) || guess.length >= 5) return;
-    let cell = board.children[row].children[guess.length];
+    if (!(config.keyboardValidation[config.language]).test(e.key) || curGuess.length >= 5) return;
+    let cell = board.children[row].children[curGuess.length];
     cell.innerText = e.key.toUpperCase();
     cell.classList.add("filled");
-    guess += e.key.toLowerCase();
+    curGuess += e.key.toLowerCase();
 });
 
 resetGame();
