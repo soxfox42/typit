@@ -556,7 +556,6 @@ function evaluate() {
             document.getElementById("end-container").classList.remove("hide");
             document.getElementById("win").classList.remove("hide");
             document.getElementById("lose").classList.add("hide");
-//             document.getElementById("lose2").classList.add("hide");
             timeToNextWord();
             setInterval(timeToNextWord, 1000);
         }, animTime * 5)
@@ -673,11 +672,6 @@ window.addEventListener("orientationchange", function(event) {
     setTimeout(function() { checkPortraitMode(); }, 2000);
 });
 
-
-// Fixup for bad storage
-if (window.localStorage.getItem("loses") == "NaN") {
-    window.localStorage.setItem("loses", 0);
-}
 
 initGame();
 updateShownStats();
