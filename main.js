@@ -308,6 +308,10 @@ function initGame() {
                 window.localStorage.setItem("credit-points", currentCreditPoints - 1);
                 currentCreditPoints -= 1;
                 useRandomWord = true;
+
+                // Change background color
+                document.body.style.backgroundColor = "#779e00";
+
             }
             else {
                 console.log("Use word of today");
