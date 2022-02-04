@@ -72,6 +72,14 @@ for (const [i, row] of KEYBOARD_LAYOUT.entries()) {
 const statsContainer = document.getElementById("stats-container");
 const endContainer = document.getElementById("end-container");
 const infoContainer = document.getElementById("info-container");
+const updateInfoContainer = document.getElementById("update-info-container");
+
+
+console.log(window.localStorage.getItem("read-update-note"))
+if (window.localStorage.getItem("read-update-note") != "2022-02-04") {
+    updateInfoContainer.classList.remove("hide");
+    window.localStorage.setItem("read-update-note", "2022-02-04");
+}
 
 if (!window.localStorage.getItem("read-help")) {
     infoContainer.classList.remove("hide");
@@ -148,9 +156,15 @@ document.getElementById("dismiss-info").addEventListener("click", ev => {
     ev.target.blur();
 });
 
+document.getElementById("dismiss-update-info").addEventListener("click", ev => {
+    updateInfoContainer.classList.add("hide");
+    ev.target.blur();
+});
+
 // ==== OPTIONS ====
 let animTime = 300;
 let todaysTimestamp;
+let currentCreditPoints = 0;
 
 if (window.localStorage.getItem("fast-mode") == "true") {
     document.getElementById("fast-mode").checked = true;
@@ -170,6 +184,7 @@ document.getElementById("fast-mode").addEventListener("change", ev => {
 // ==== GAME LOGIC ====
 let row, guess, win, target;
 let scoring = false;
+let useRandomWord = false
 
 function scoreGuess(target, guess) {
     target = target.split("");
@@ -274,12 +289,39 @@ function initGame() {
     let targetFromStore = localStorage.getItem("target");
     todaysTimestamp = getTodaysTimestamp();
     
+    let currentCreditPoints = window.localStorage.getItem("credit-points");
+    if (currentCreditPoints != null) {
+        currentCreditPoints = parseInt(currentCreditPoints);
+    }
+    else {
+        currentCreditPoints = 0;
+    }
+    console.log("Credit Points: " + currentCreditPoints);
+
     // Debug: Append "?random" to the URL to get a random word on each reload
     if (window.location.href.includes("random")) {
-        console.log("Use random word");
-        todaysTimestamp = Math.ceil(Math.random() * 2e10);
-//         console.log(todaysTimestamp);
+        if (currentCreditPoints > 0) {
+            if (confirm("Willst Du ein zufälliges Wort lösen? Es kostet dich 1 Punkt. Du hst momentan " + currentCreditPoints + " Punkt(e).")) {
+                console.log("Use random word");
+                todaysTimestamp = Math.ceil(Math.random() * 2e10);
+        //         console.log(todaysTimestamp);
+                window.localStorage.setItem("credit-points", currentCreditPoints - 1);
+                currentCreditPoints -= 1;
+                useRandomWord = true;
+            }
+            else {
+                console.log("Use word of today");
+                window.location.href = "index.htm";
+            }
+        }
+        else {
+            alert("Du hast keine Punkte verfügbar, gewinne zuerst ein Wort-des-Tages um Punkte zu kriegen!");
+            window.location.href = "index.htm";
+//             console.log("Use word of today");
+        }
     }
+
+    document.getElementById("credit-points").innerText = currentCreditPoints;
 
     // Debug: Append "?tomorrow" to the URL to get the word of tomorrow
     if (window.location.href.includes("tomorrow")) {
@@ -314,7 +356,6 @@ function resetGame(timestamp) {
     row = 0;
     guess = "";
     win = false;
-
     target = words.targets[getIndex(timestamp)];
 //     console.log("New target: " + target + "(" + timestamp + ")");
 
@@ -467,6 +508,10 @@ function evaluate() {
     scoring = true;
     setTimeout(() => scoring = false, animTime * 4);
     let scores = scoreGuess(target, guess);
+
+    document.getElementById("credit-points-win2").classList.add("hide");
+    document.getElementById("share").classList.add("hide");
+
     for (let i = 0; i < config.wordLength; i++) {
         const savedRow = row, savedGuess = guess;
         setTimeout(() => {
@@ -476,6 +521,8 @@ function evaluate() {
     }
     if (scores.every(s => s == "correct")) { // Win
         win = true;
+        let newCreditPoints = config.maxGuesses - row;
+
         if (todaysTimestamp != window.localStorage.getItem("win-timestamp")) { // Last time we won was before today
             let w = window.localStorage.getItem("win-row" + row);
             if (w != null) {
@@ -484,13 +531,25 @@ function evaluate() {
             else {
                 w = 0;
             }
-            window.localStorage.setItem("win-row" + row, w + 1);
-            window.localStorage.setItem("win-timestamp", todaysTimestamp);
-            updateShownStats();
+
+            /* Add points */
+            if (!useRandomWord) { // Only give points and update the statistic if it is the word-of-the-day (and solved the first time today)
+                console.log("Credit Points: " + currentCreditPoints + " + " + newCreditPoints)
+                window.localStorage.setItem("credit-points", currentCreditPoints + newCreditPoints);
+                document.getElementById("credit-points-win2").classList.remove("hide");
+                document.getElementById("credit-points-win").innerText = newCreditPoints;
+
+                /* Update Statistics */
+                window.localStorage.setItem("win-row" + row, w + 1);
+                window.localStorage.setItem("win-timestamp", todaysTimestamp);
+                updateShownStats();
+
+                document.getElementById("share").classList.remove("hide");
+            }
         }
 
-        document.getElementById("word").innerText = target.toUpperCase();
-        document.getElementById('duden-link').href = "https://www.duden.de/suchen/dudenonline/" + target;
+        document.getElementById("word-win").innerText = target.toUpperCase();
+        document.getElementById('duden-link-win').href = "https://www.duden.de/suchen/dudenonline/" + target;
         document.getElementById("letter-map").innerText = createLetterMap();
 
         setTimeout(() => {
@@ -513,15 +572,14 @@ function evaluate() {
         }
         updateShownStats();
         
-        document.getElementById("word").innerText = target.toUpperCase();
-        document.getElementById('duden-link').href = "https://www.duden.de/suchen/dudenonline/" + target;
+        document.getElementById("word-lose").innerText = target.toUpperCase();
+        document.getElementById('duden-link-lose').href = "https://www.duden.de/suchen/dudenonline/" + target;
         document.getElementById("letter-map").innerText = createLetterMap();
 
         setTimeout(() => {
             document.getElementById("end-container").classList.remove("hide");
             document.getElementById("win").classList.add("hide");
             document.getElementById("lose").classList.remove("hide");
-            document.getElementById("share").classList.add("hide");
             timeToNextWord();
             setInterval(timeToNextWord, 1000);
         }, animTime * 5)
@@ -557,6 +615,7 @@ function timeToNextWord() {
 
 document.addEventListener("keydown", e => {
     if (!infoContainer.classList.contains("hide") || row >= config.maxGuesses || win || scoring) return;
+    if (!updateInfoContainer.classList.contains("hide") || row >= config.maxGuesses || win || scoring) return;
     if (!statsContainer.classList.contains("hide") || row >= config.maxGuesses || win || scoring) return;
     if (e.key == "Backspace" && guess.length > 0) {
         guess = guess.slice(0, -1);
