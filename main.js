@@ -164,7 +164,7 @@ document.getElementById("dismiss-update-info").addEventListener("click", ev => {
 // ==== OPTIONS ====
 let animTime = 300;
 let todaysTimestamp;
-let currentCreditPoints = 0;
+let creditPoints = 0;
 
 if (window.localStorage.getItem("fast-mode") == "true") {
     document.getElementById("fast-mode").checked = true;
@@ -289,24 +289,24 @@ function initGame() {
     let targetFromStore = localStorage.getItem("target");
     todaysTimestamp = getTodaysTimestamp();
     
-    let currentCreditPoints = window.localStorage.getItem("credit-points");
-    if (currentCreditPoints != null) {
-        currentCreditPoints = parseInt(currentCreditPoints);
+    creditPoints = window.localStorage.getItem("credit-points");
+    if (creditPoints != null) {
+        creditPoints = parseInt(creditPoints);
     }
     else {
-        currentCreditPoints = 0;
+        creditPoints = 0;
     }
-    console.log("Credit Points: " + currentCreditPoints);
+    console.log("Credit Points: " + creditPoints);
 
     // Debug: Append "?random" to the URL to get a random word on each reload
     if (window.location.href.includes("random")) {
-        if (currentCreditPoints > 0) {
-            if (confirm("Willst Du ein zufälliges Wort lösen? Es kostet dich 1 Punkt. Du hst momentan " + currentCreditPoints + " Punkt(e).")) {
+        if (creditPoints > 0) {
+            if (confirm("Willst Du ein zufälliges Wort lösen? Es kostet dich 1 Punkt. Du hst momentan " + creditPoints + " Punkt(e).")) {
                 console.log("Use random word");
                 todaysTimestamp = Math.ceil(Math.random() * 2e10);
         //         console.log(todaysTimestamp);
-                window.localStorage.setItem("credit-points", currentCreditPoints - 1);
-                currentCreditPoints -= 1;
+                window.localStorage.setItem("credit-points", creditPoints - 1);
+                creditPoints -= 1;
                 useRandomWord = true;
 
                 // Change background color
@@ -325,7 +325,7 @@ function initGame() {
         }
     }
 
-    document.getElementById("credit-points").innerText = currentCreditPoints;
+    document.getElementById("credit-points").innerText = creditPoints;
 
     // Debug: Append "?tomorrow" to the URL to get the word of tomorrow
     if (window.location.href.includes("tomorrow")) {
@@ -538,10 +538,13 @@ function evaluate() {
 
             /* Add points */
             if (!useRandomWord) { // Only give points and update the statistic if it is the word-of-the-day (and solved the first time today)
-                console.log("Credit Points: " + currentCreditPoints + " + " + newCreditPoints)
-                window.localStorage.setItem("credit-points", currentCreditPoints + newCreditPoints);
                 document.getElementById("credit-points-win2").classList.remove("hide");
                 document.getElementById("credit-points-win").innerText = newCreditPoints;
+                console.log("old Credit Points: " + creditPoints)
+                creditPoints += newCreditPoints
+                console.log("New Credit Points: " + creditPoints)
+                window.localStorage.setItem("credit-points", creditPoints);
+                document.getElementById("credit-points").innerText = creditPoints;
 
                 /* Update Statistics */
                 window.localStorage.setItem("win-row" + row, w + 1);
