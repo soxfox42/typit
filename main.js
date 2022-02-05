@@ -125,6 +125,10 @@ document.getElementById("share").addEventListener("click", ev => {
     document.getElementById("share").innerText = "In die Zwischenablage kopiert";
 })
 
+document.getElementById("back-to-word-of-the-day-button").addEventListener("click", ev => {
+    window.location.href = "index.htm";
+})
+
 // ==== TOOLBAR BUTTONS ====
 document.getElementById("show-stats").addEventListener("click", ev => {
     statsContainer.classList.remove("hide");
@@ -297,11 +301,12 @@ function initGame() {
         creditPoints = 0;
     }
     console.log("Credit Points: " + creditPoints);
+    document.getElementById("back-to-word-of-the-day-button").classList.add("hide");
 
     // Debug: Append "?random" to the URL to get a random word on each reload
     if (window.location.href.includes("random")) {
         if (creditPoints > 0) {
-            if (confirm("Willst Du ein zufälliges Wort lösen? Es kostet dich 1 Punkt. Du hst momentan " + creditPoints + " Punkt(e).")) {
+            if (confirm("Willst Du ein zufälliges Wort lösen? Es kostet dich 1 Punkt. Du hast momentan " + creditPoints + " Punkt(e). Mit 'Abbrechen' kommst Du wieder zum Wort-des-Tages.")) {
                 console.log("Use random word");
                 todaysTimestamp = Math.ceil(Math.random() * 2e10);
         //         console.log(todaysTimestamp);
@@ -311,7 +316,7 @@ function initGame() {
 
                 // Change background color
                 document.body.style.backgroundColor = "#0064ab";
-
+                document.getElementById("back-to-word-of-the-day-button").classList.remove("hide");
             }
             else {
                 console.log("Use word of today");
