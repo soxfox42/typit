@@ -310,7 +310,7 @@ function initGame() {
                 useRandomWord = true;
 
                 // Change background color
-                document.body.style.backgroundColor = "#779e00";
+                document.body.style.backgroundColor = "#0064ab";
 
             }
             else {
