@@ -11,6 +11,23 @@ window.addEventListener("resize", () => {
     document.body.style.height = window.innerHeight + 'px';
 })
 
+
+function getLocalStorageInt(key) {
+    let value = window.localStorage.getItem(key);
+
+    if (value == null) {
+        value = 0;
+    }
+    else {
+        value = parseInt(value);
+        if (isNaN(value)) {
+            value = 0;
+        }
+    }
+    return value;
+}
+
+
 // ==== GAME BOARD ====
 const board = document.getElementById("board");
 for (let r = 0; r < config.maxGuesses; r++) {
@@ -293,13 +310,7 @@ function initGame() {
     let targetFromStore = localStorage.getItem("target");
     todaysTimestamp = getTodaysTimestamp();
     
-    creditPoints = window.localStorage.getItem("credit-points");
-    if (creditPoints != null) {
-        creditPoints = parseInt(creditPoints);
-    }
-    else {
-        creditPoints = 0;
-    }
+    creditPoints = getLocalStorageInt("credit-points");
     console.log("Credit Points: " + creditPoints);
     document.getElementById("back-to-word-of-the-day-button").classList.add("hide");
 
@@ -444,26 +455,13 @@ function updateShownStats() {
     let statsWins = [];
     let statsWinsTotal = 0;
     for (let r = 0; r < config.maxGuesses; r++) {
-        let w = window.localStorage.getItem("win-row" + r);
-        if (w != null) {
-            w = parseInt(w);
-            statsWins.push(w);
-            statsWinsTotal = statsWinsTotal + w;
-        }
-        else {
-            statsWins.push(0);
-        }
+        let winRow = getLocalStorageInt("win-row" + r);
+        statsWins.push(winRow);
+        statsWinsTotal = statsWinsTotal + winRow;
     }
     
     
-    let statsLoses = window.localStorage.getItem("loses");
-    if (statsLoses != null) {
-        statsLoses = parseInt(statsLoses);
-    }
-    else {
-        statsLoses = 0;
-    }
-    
+    let statsLoses = getLocalStorageInt("loses");
     console.log("Wins: " + statsWinsTotal + " (" + statsWins + "), loses: " + statsLoses);
 
     document.getElementById("wins").innerText = statsWinsTotal;
@@ -532,14 +530,8 @@ function evaluate() {
         win = true;
         let newCreditPoints = config.maxGuesses - row;
 
-        if (todaysTimestamp != window.localStorage.getItem("win-timestamp")) { // Last time we won was before today
-            let w = window.localStorage.getItem("win-row" + row);
-            if (w != null) {
-                w = parseInt(w);
-            }
-            else {
-                w = 0;
-            }
+        if (todaysTimestamp != window.localStorage.getItem("win-timestamp")) { // Last time we won was not today
+            let winRow = getLocalStorageInt("win-row" + row);
 
             /* Add points */
             if (!useRandomWord) { // Only give points and update the statistic if it is the word-of-the-day (and solved the first time today)
@@ -552,7 +544,7 @@ function evaluate() {
                 document.getElementById("credit-points").innerText = creditPoints;
 
                 /* Update Statistics */
-                window.localStorage.setItem("win-row" + row, w + 1);
+                window.localStorage.setItem("win-row" + row, winRow + 1);
                 window.localStorage.setItem("win-timestamp", todaysTimestamp);
                 updateShownStats();
 
@@ -577,8 +569,8 @@ function evaluate() {
     guess = "";
 
     if (row >= config.maxGuesses && !win) { // Lose
-        if (todaysTimestamp != window.localStorage.getItem("lose-timestamp")) { // Last time we lost was before today
-            window.localStorage.setItem("loses", parseInt(window.localStorage.getItem("loses")) + 1);
+        if (todaysTimestamp != window.localStorage.getItem("lose-timestamp")) { // Last time we lost was not today
+            window.localStorage.setItem("loses", getLocalStorageInt("loses") + 1);
             window.localStorage.setItem("lose-timestamp", todaysTimestamp);
         }
         updateShownStats();
