@@ -207,21 +207,21 @@ let row, guess, win, target;
 let scoring = false;
 let useRandomWord = false
 
-function scoreGuess(target, guess) {
-    target = target.split("");
+function scoreGuess(t, guess) {
+    t = t.split("");
     let scores = Array(config.wordLength).fill("incorrect");
     for (let i = 0; i < config.wordLength; i++) {
-        if (target[i] == guess[i]) {
+        if (t[i] == guess[i]) {
             scores[i] = "correct";
-            target[i] = " ";
+            t[i] = " ";
         }
     }
     for (let i = 0; i < config.wordLength; i++) {
         if (scores[i] == "correct") continue;
-        let index = target.indexOf(guess[i]);
+        let index = t.indexOf(guess[i]);
         if (index == -1) continue;
         scores[i] = "close";
-        target[index] = " ";
+        t[index] = " ";
     }
     return scores;
 }
@@ -305,52 +305,13 @@ function rot13(message) {
 }
 
 
-function initGame() {
+
+function initWordOfToday() {
+    console.log("Use word of today");
+//         window.location.href = "index.htm";
+    todaysTimestamp = getTodaysTimestamp();
     let timestampFromStore = localStorage.getItem("timestamp");
     let targetFromStore = localStorage.getItem("target");
-    todaysTimestamp = getTodaysTimestamp();
-    
-    creditPoints = getLocalStorageInt("credit-points");
-    console.log("Credit Points: " + creditPoints);
-    document.getElementById("back-to-word-of-the-day-button").classList.add("hide");
-
-    // Debug: Append "?random" to the URL to get a random word on each reload
-    if (window.location.href.includes("random")) {
-        if (creditPoints > 0) {
-            if (confirm("Willst Du ein zufälliges Wort lösen? Es kostet dich 1 Punkt. Du hast momentan " + creditPoints + " Punkt(e). Mit 'Abbrechen' kommst Du wieder zum Wort-des-Tages.")) {
-                console.log("Use random word");
-                todaysTimestamp = Math.ceil(Math.random() * 2e10);
-        //         console.log(todaysTimestamp);
-                window.localStorage.setItem("credit-points", creditPoints - 1);
-                creditPoints -= 1;
-                useRandomWord = true;
-
-                // Change background color
-                document.body.style.backgroundColor = "#0064ab";
-                document.getElementById("back-to-word-of-the-day-button").classList.remove("hide");
-            }
-            else {
-                console.log("Use word of today");
-                window.location.href = "index.htm";
-            }
-        }
-        else {
-            alert("Du hast keine Punkte verfügbar, gewinne zuerst ein Wort-des-Tages um Punkte zu kriegen!");
-            window.location.href = "index.htm";
-//             console.log("Use word of today");
-        }
-    }
-
-    document.getElementById("credit-points").innerText = creditPoints;
-    document.getElementById('duden-link1').href = "https://www.duden.de/suchen/dudenonline/" + target;
-    document.getElementById('duden-link2').href = "https://www.duden.de/suchen/dudenonline/" + target;
-
-    // Debug: Append "?tomorrow" to the URL to get the word of tomorrow
-    if (window.location.href.includes("tomorrow")) {
-        console.log("Use word of tomorrow");
-        todaysTimestamp = getTomorowsTimestamp();
-    }
-
     if ((targetFromStore != "") && (targetFromStore != null) && 
         (timestampFromStore != "") && (timestampFromStore != null)) {
         if (todaysTimestamp != timestampFromStore) {
@@ -366,20 +327,141 @@ function initGame() {
         console.log("No timestamp+target in store");
         resetGame(todaysTimestamp);
     }
+}
+
+
+function initRandomWord() {
+    console.log("Use random word");
+    todaysTimestamp = Math.ceil(Math.random() * 2e10);
+    creditPoints -= 1;
+    window.localStorage.setItem("credit-points", creditPoints);
+    document.getElementById("credit-points").innerText = creditPoints;
+    useRandomWord = true;
+
+    resetGame(todaysTimestamp);
+
+    document.body.style.backgroundColor = "#0064ab"; // Change background color
+    document.getElementById("back-to-word-of-the-day-button").classList.remove("hide");
+}
+
+
+function initWordOfTomorrow() {
+    console.log("Use word of tomorrow");
+    todaysTimestamp = getTomorowsTimestamp();
+    resetGame(todaysTimestamp);
+}
+
+
+function questionBox(text) {
+    var defer = $.Deferred();
+    $( "<div>" + text + "</div>" ).dialog({
+        closeOnEscape: false,
+        closeOnEnter: false,
+        async: false,
+        title: "Wordle auf Deutsch",
+        resizable: false,
+        height: "auto",
+        width: "80%",
+        modal: true,
+        buttons: {
+            Ja: function() {
+                defer.resolve("Ja");
+                $( this ).dialog( "close" );
+            },
+            Nein: function() {
+                defer.resolve("Nein");
+                $( this ).dialog( "close" );
+            }
+        },
+        close: function () {
+            $(this).remove(); //removes this dialog div from DOM
+        }
+    });
+    return defer.promise();
+}
+
+
+function alertBox(text) {
+    var defer = $.Deferred();
+    $( "<div>" + text + "</div>" ).dialog({
+        closeOnEscape: false,
+        async: false,
+        title: "Wordle auf Deutsch",
+        resizable: false,
+        height: "auto",
+        width: "80%",
+        modal: true,
+        buttons: {
+            Ok: function() {
+                defer.resolve("Ok");
+                $( this ).dialog( "close" );
+            }
+        },
+        close: function () {
+            $(this).remove(); //removes this dialog div from DOM
+        }
+    });
+    return defer.promise();
+}
+
+
+function initGame() {
+    console.log("initGame");
+//     let timestampFromStore = localStorage.getItem("timestamp");
+//     let targetFromStore = localStorage.getItem("target");
+    todaysTimestamp = getTodaysTimestamp();
     
-    // Debug: Append "?cheat" to the URL to show the word in the console
-    if (window.location.href.includes("cheat")) {
-        console.log("Target: " + target);
+    creditPoints = getLocalStorageInt("credit-points");
+    console.log("Credit Points: " + creditPoints);
+    document.getElementById("credit-points").innerText = creditPoints;
+    document.getElementById("back-to-word-of-the-day-button").classList.add("hide");
+
+    let selection = "today";
+
+    // Debug: Append "?random" to the URL to get a random word on each reload
+    if (window.location.href.includes("random")) {
+        if (creditPoints > 0) {
+            questionBox("Willst Du ein zufälliges Wort lösen?<br>Es kostet dich <strong>1 Punkt(e)</strong>.<br>Du hast momentan <strong>" + creditPoints + 
+                        " Punkt(e)</strong>.").then(function (answer) {
+                console.log("Answer: " + answer);
+                if (answer == "Ja") {
+                    initRandomWord();
+                }
+                else {
+                    window.location.href = "index.htm"; // reload page with out "random" parameter
+                }
+            });
+        }
+        else {
+            alertBox("Du hast keine Punkte verfügbar, gewinne zuerst ein Wort-des-Tages um Punkte zu kriegen!").then(function () {
+                window.location.href = "index.htm"; // reload page with out "random" parameter
+            });
+        }
+    }    
+    // Debug: Append "?tomorrow" to the URL to get the word of tomorrow
+    else if (window.location.href.includes("tomorrow")) { // Word of tomorrow
+        initWordOfTomorrow();
+    }
+    else { // Today
+        initWordOfToday();
     }
 }
 
 
 function resetGame(timestamp) {
+    console.log("resetGame");
     row = 0;
     guess = "";
     win = false;
     target = words.targets[getIndex(timestamp)];
 //     console.log("New target: " + target + "(" + timestamp + ")");
+
+    document.getElementById('duden-link1').href = "https://www.duden.de/suchen/dudenonline/" + target;
+    document.getElementById('duden-link2').href = "https://www.duden.de/suchen/dudenonline/" + target;
+
+    if (window.location.href.includes("cheat")) {
+        console.log("Target: " + target);
+    }
 
     for (const rowEl of board.children) {
         for (const cell of rowEl.children) {
@@ -402,13 +484,22 @@ function resetGame(timestamp) {
     storeProgess();
 }
 
+
 function loadGame(loadedTarget) {
+    console.log("loadGame");
     row = 0;
     guess = "";
     win = false;
 
     target = loadedTarget;
 //     console.log("Loaded target: " + target);
+
+    document.getElementById('duden-link1').href = "https://www.duden.de/suchen/dudenonline/" + target;
+    document.getElementById('duden-link2').href = "https://www.duden.de/suchen/dudenonline/" + target;
+
+    if (window.location.href.includes("cheat")) {
+        console.log("Target: " + target);
+    }
 
     for (let r = 0; r < config.maxGuesses; r++) {
         if (localStorage.getItem("row" + r) != null && localStorage.getItem("row" + r) != "") {
@@ -436,6 +527,7 @@ function loadGame(loadedTarget) {
     }
     row = localStorage.getItem("row");
 }
+
 
 function storeProgess() {
     for (let r = 0; r < config.maxGuesses; r++) {
@@ -544,8 +636,8 @@ function evaluate() {
                 window.localStorage.setItem("win-timestamp", todaysTimestamp);
                 updateShownStats();
 
-                creditPoints += newCreditPoints
                 console.log("old Credit Points: " + creditPoints)
+                creditPoints += newCreditPoints
                 console.log("New Credit Points: " + creditPoints)
 
                 window.localStorage.setItem("credit-points", creditPoints);
@@ -643,7 +735,9 @@ function timeToNextWord() {
 
 document.addEventListener("keydown", e => {
     let key = e.key;
-    console.log(key);
+//     console.log("Key: " + key);
+//     console.log("Guess: " + guess);
+    if (guess == undefined) return; // Prevent error on pressing enter on questionBox
     if (!infoContainer.classList.contains("hide") || row >= config.maxGuesses || win || scoring) return;
     if (!updateInfoContainer.classList.contains("hide") || row >= config.maxGuesses || win || scoring) return;
     if (!statsContainer.classList.contains("hide") || row >= config.maxGuesses || win || scoring) return;
@@ -703,18 +797,19 @@ details.forEach((targetDetail) => {
 });
 
 
-function checkPortraitMode() {
-        if(window.innerHeight < window.innerWidth) {
-        alert("Das Spiel funktioniert besser im Portrait-Modus!");
-    }
-}
-
-
 window.addEventListener("orientationchange", function(event) {
     setTimeout(function() { checkPortraitMode(); }, 2000);
 });
 
 
-initGame();
-updateShownStats();
-checkPortraitMode();
+if(window.innerHeight < window.innerWidth) {
+    alertBox("Das Spiel funktioniert besser im Portrait-Modus!").then(function () {
+        initGame();
+        updateShownStats();
+    });
+}
+else {
+    console.log("a1");
+    initGame();
+    updateShownStats(); 
+}

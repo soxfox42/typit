@@ -349,3 +349,9 @@ button.minimal {
     height: 50px;
     width: 50px;
 }
+
+
+/* Remove closing x in dialog boxes */
+.ui-dialog-titlebar-close {
+    visibility: hidden;
+}
