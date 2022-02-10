@@ -642,17 +642,19 @@ function timeToNextWord() {
 
 
 document.addEventListener("keydown", e => {
+    let key = e.key;
+    console.log(key);
     if (!infoContainer.classList.contains("hide") || row >= config.maxGuesses || win || scoring) return;
     if (!updateInfoContainer.classList.contains("hide") || row >= config.maxGuesses || win || scoring) return;
     if (!statsContainer.classList.contains("hide") || row >= config.maxGuesses || win || scoring) return;
-    if (e.key == "Backspace" && guess.length > 0) {
+    if (key == "Backspace" && guess.length > 0) {
         guess = guess.slice(0, -1);
         board.children[row].children[guess.length].classList.remove("filled");
         board.children[row].children[guess.length].innerText = "";
         storeProgess();
         return;
     }
-    if (e.key == "Enter") {
+    if (key == "Enter") {
         if (guess.length != config.wordLength || !(words.targets.includes(guess) || words.other.includes(guess))) {
             board.children[row].classList.add("shake");
             setTimeout(() => board.children[row].classList.remove("shake"), 400);
@@ -663,11 +665,22 @@ document.addEventListener("keydown", e => {
         return;
     }
 
-    if (!(config.keyboardValidation[config.language]).test(e.key) || guess.length >= config.wordLength) return;
+    /* The desktop chrome somehow gives odd values for the Umlaute keys when the real keyboard is used */
+    if (key == '\\') {
+        key = 'Ä';
+    }
+    else if (key == '\'') {
+        key = 'Ö';
+    }
+    else if (key == ';') {
+        key = 'Ü';
+    }
+
+    if (!(config.keyboardValidation[config.language]).test(key) || guess.length >= config.wordLength) return;
     let cell = board.children[row].children[guess.length];
-    cell.innerText = e.key.toUpperCase();
+    cell.innerText = key.toUpperCase();
     cell.classList.add("filled");
-    guess += e.key.toLowerCase();
+    guess += key.toLowerCase();
 
     storeProgess();
 });
