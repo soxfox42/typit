@@ -12,8 +12,8 @@
     <link rel="manifest" href="/manifest.json">
 
     <meta property="og:url" content="https://wordle-deutsch.ch">
-    <meta property="og:type" content="Wordle auf Deutsch mit Umlauten (äöü)">
-    <meta property="og:title" content="Wordle auf Deutsch mit Umlauten (äöü)">
+    <meta property="og:type" content="Wordle auf Deutsch mit Umlauten (&auml;&ouml;&uuml;)">
+    <meta property="og:title" content="Wordle auf Deutsch mit Umlauten (&auml;&ouml;&uuml;)">
     <meta property="og:description" content="Errate ein Wort in 6 Versuchen. Jeden Tag ein neues R&auml;tsel. Mit Umlauten (&auml;&ouml;&uuml;) und kostenlos.">
     <meta property="og:image" content="https://wordle-deutsch.ch/logo.png">
 
@@ -50,7 +50,7 @@
                 <h2>&#129395; Du hast gewonnen!</h2>
                 <p>Das Wort ist: <a id="duden-link1" href="" target=_blank><span id="word-win"></span></a></p>
                 <span id="won-word-of-the-day1">
-                    <p>Du kriegst dafür <strong><span id="credit-points-win"></span> neue Punkt(e)!</strong></p>
+                    <p>Du kriegst daf&uuml;r <strong><span id="credit-points-win"></span> neue Punkt(e)!</strong></p>
                 </span>
                 <span id="won-random-word1">
                 </span>
@@ -66,12 +66,12 @@
             <span id="footer-word-of-the-day">
                 <button id="share"><img src="share.png"></img> Teilen</button>
                 <p>N&auml;chstes Wort-des-Tages in: <span id="next-word"></span></p>
-                <button onclick="window.location='?random'">Zufälliges Wort lösen</button><br>
+                <button onclick="window.location='?random'">Zuf&auml;lliges Wort l&ouml;sen</button><br>
             </span>
 
             <span id="footer-random-word">
-            <button onclick="window.location='?random'">Weiteres zufälliges Wort lösen</button><br>
-                <button  onclick="window.location='?'">Zurück zum Wort-des-Tages</button><br>
+            <button onclick="window.location='?random'">Weiteres zuf&auml;lliges Wort l&ouml;sen</button><br>
+                <button  onclick="window.location='?'">Zur&uuml;ck zum Wort-des-Tages</button><br>
             </span>
 
             <button id="show-stats2">&#127937; Statistik</button>
@@ -82,7 +82,7 @@
         <span class="popup">
             <div id="dismiss-stats" class="close-button">&#10062;</div>
             <div id="back-to-word-of-the-day" >
-                <button id="back-to-word-of-the-day-button" onclick="window.location.href='/index.htm'">Zurück zum Wort-des-Tages</button>
+                <button id="back-to-word-of-the-day-button" onclick="window.location.href='/index.htm'">Zur&uuml;ck zum Wort-des-Tages</button>
                 <p></p>
             </div>
             
@@ -94,8 +94,8 @@
             </div>
         
             <h2>Punktestand</h2>
-            <p>Du hast <span id="credit-points"></span> Punkte verfügbar, um ein zufälliges Wort zu lösen!</p>
-            <button onclick="window.location.href='/index.htm?random'">Zufälliges Wort lösen</button>
+            <p>Du hast <span id="credit-points"></span> Punkte verf&uuml;gbar, um ein zuf&auml;lliges Wort zu l&ouml;sen!</p>
+            <button onclick="window.location.href='/index.htm?random'">Zuf&auml;lliges Wort l&ouml;sen</button>
             <p></p>
             <h2>Statistik</h2>
             <p><strong>Siege:</strong> <span id="wins"></span> (<span id="wins-percent"></span>%) in <span id="games-total"></span> Spielen.</p>
@@ -111,7 +111,7 @@
             <div id="dismiss-update-info" class="close-button">&#10062;</div>
             <h2>Neuigkeiten</h2>
             <h3>05. Februar 2022</h3>
-            <p>Ab sofort erhält man Punkte, wenn man das Wort-des-Tages lösen kann. Mit diesen Punkten können zufällige Wörter gelöst werden (Siehe Statistik-Menü oben links: <span class="doc-key">&#127937;</span>).</p>
+            <p>Ab sofort erh&auml;lt man Punkte, wenn man das Wort-des-Tages l&ouml;sen kann. Mit diesen Punkten k&ouml;nnen zuf&auml;llige W&ouml;rter gel&ouml;st werden (Siehe Statistik-Men&uuml; oben links: <span class="doc-key">&#127937;</span>).</p>
         </span>
     </div>
 
@@ -123,7 +123,7 @@
                 <summary><strong>Anleitung</strong></summary>
                 <p>
                     Du hast sechs Versuche, um das Wort-des-Tages zu erraten.
-                    Wenn Du einen Buchstaben wieder löschen möchtest, kannst Du <span class="doc-key"><strong>⎌</strong></span> dr&uuml;cken.
+                    Wenn Du einen Buchstaben wieder l&ouml;schen m&ouml;chtest, kannst Du <span class="doc-key"><strong>⎌</strong></span> dr&uuml;cken.
                     Wenn eine Zeile voll ist, kannst Du <span class="doc-key">✔</span> dr&uuml;cken.
                     Wenn das Wort in der Datenbank enthalten ist, wirst Du ein Feedback erhalten, z.B.:<br>
                 </p>
@@ -144,25 +144,27 @@
                 <p><strong>Im Beispiel lautet das Wort "BRAUN".</strong></p>
             </details>
             <details>
-                <summary><strong>Punkte und Statistik</strong></summary>
-                <p>Für jedes gelöste Wort-des-Tages erhältst Du Punkte. Mit diesen Punkten können zufällige Wörter gelöst werden (Siehe Statistik-Menü oben links: <span class="doc-key">&#127937;</span>).</p>
-                <p>Für die zufälligen Worte gibt es jedoch keine Punkte, auch die Statistik wird nicht nachgeführt.</p>
-            </details>
-            <details>
-                <summary><strong>Hinweise</strong></summary>
-                <ul>
-                <li><p>Buchstaben k&ouml;nnen mehr als einmal im Wort vorkommen.</p></li>
-                <li><p>Umlaute (&auml;&ouml;&uuml;) als Ganzes schreiben (nicht als "ae", "oe" oder "ue").</p></li>
-                <li><p>"ss" anstatt "&szlig;" verwenden.</p></li>                
-                </ul>
-            </details>
-            <details>
                 <summary><strong>Optionen</strong></summary>
                 <p>
                     <label for="fast-mode"><input type="checkbox" id="fast-mode">Animationen auschalten.</label>
                     <br>
                     <span class="small">Zeigt das Feedback schneller an.</span>
                 </p>
+            </details>
+            <details>
+                <summary><strong>Punkte und Statistik</strong></summary>
+                <p>F&uuml;r jedes gel&ouml;ste Wort-des-Tages erh&auml;ltst Du Punkte. Mit diesen Punkten k&ouml;nnen zuf&auml;llige W&ouml;rter gel&ouml;st werden (Siehe Statistik-Men&uuml; oben links: <span class="doc-key">&#127937;</span>).</p>
+                <p>F&uuml;r die zuf&auml;lligen Worte gibt es jedoch keine Punkte, auch die Statistik wird nicht nachgef&uuml;hrt.</p>
+            </details>
+            <details>
+                <summary><strong>Hinweise</strong></summary>
+                <ul>
+                <li><p>Buchstaben k&ouml;nnen mehr als einmal im Wort vorkommen.</p></li>
+                <li><p>Umlaute (&auml;&ouml;&uuml;) als Ganzes schreiben (nicht als "ae", "oe" oder "ue").</p></li>
+                <li><p>"ss" anstatt "&szlig;" verwenden.</p></li>
+                <li><p>Bei Verben wird jeweils nur die Grundform verwenden. Z.B. "GEHEN", aber nicht "GINGE" oder "GEHST".</p></li>
+                <li><p>Es kommen keine Personennamen vor.</p></li>
+                </ul>
             </details>
             <details>
                 <summary><strong>Weiteres</strong></summary>
@@ -175,7 +177,7 @@
             </details>
             <details>
                 <summary><strong>Copyright</strong></summary>
-                <p>Copyright &copy; 2022 by <a href=https://github.com/caco3/wordle-de>George Ruinelli</a>,<br>wordle [at] ruinelli.ch</p>
+                <p>Copyright &copy; 2022 by George Ruinelli,<br><a href="mailto:wordle@ruinelli.ch?subject=wordle-deutsch">wordle@ruinelli.ch</a></p>
                 <p>Source Code: <a href=https://github.com/caco3/wordle-de>https://github.com/caco3/wordle-de</a>, basierend auf der Vorarbeit von <a href=https://github.com/soxfox42/typit>https://github.com/soxfox42/typit</a></p>
                 <p>Lizenz: <a href=https://github.com/caco3/wordle-de/blob/main/LICENSE.md>MIT</a>.</p>
                 <p>Das Spiel ist inspiriert von <a href=https://www.powerlanguage.co.uk/wordle>https://www.powerlanguage.co.uk/wordle</a>.</p>
@@ -188,7 +190,7 @@
         </span>
     </div>
     <script src="words.js?cacheid=22-02-08" type="module"></script>
-    <script src="main.js?cacheid=22-02-05" type="module"></script>
+    <script src="main.js?cacheid=22-02-10" type="module"></script>
 </body>
 
 </html>
