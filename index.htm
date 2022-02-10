@@ -45,18 +45,35 @@
     <div id="end-container" class="container hide">
         <span class="popup center">
             <div id="dismiss-end" class="close-button">&#10062;</div>
+
             <span id="win">
                 <h2>&#129395; Du hast gewonnen!</h2>
-                <p>Das Wort ist: <a id="duden-link-win" href="" target=_blank><span id="word-win"></a></span></p>
-                <p id="credit-points-win2">Du kriegst dafür <strong><span id="credit-points-win"></span> Punkt(e)!</strong></p>
+                <p>Das Wort ist: <a id="duden-link1" href="" target=_blank><span id="word-win"></span></a></p>
+                <span id="won-word-of-the-day1">
+                    <p>Du kriegst dafür <strong><span id="credit-points-win"></span> neue Punkt(e)!</strong></p>
+                </span>
+                <span id="won-random-word1">
+                </span>
             </span>
+
             <span id="lose">
                 <h2>&#128546; Du hast verloren!</h2>
-                <p>Das Wort ist: <a id="duden-link-lose" href="" target=_blank><span id="word-lose"></a></span></p>
+                <p>Das Wort ist: <a id="duden-link2" href="" target=_blank><span id="word-lose"></span></a></p>
             </span>
+
             <p id="letter-map"></p>
-            <button id="share"><img src="share.png"></img> Teilen</button>
-            <p>N&auml;chstes Wort in: <span id="next-word"></span></p>
+
+            <span id="footer-word-of-the-day">
+                <button id="share"><img src="share.png"></img> Teilen</button>
+                <p>N&auml;chstes Wort-des-Tages in: <span id="next-word"></span></p>
+                <button onclick="window.location='?random'">Zufälliges Wort lösen</button><br>
+            </span>
+
+            <span id="footer-random-word">
+            <button onclick="window.location='?random'">Weiteres zufälliges Wort lösen</button><br>
+                <button  onclick="window.location='?'">Zurück zum Wort-des-Tages</button><br>
+            </span>
+
             <button id="show-stats2">&#127937; Statistik</button>
         </span>
     </div>

@@ -342,6 +342,8 @@ function initGame() {
     }
 
     document.getElementById("credit-points").innerText = creditPoints;
+    document.getElementById('duden-link1').href = "https://www.duden.de/suchen/dudenonline/" + target;
+    document.getElementById('duden-link2').href = "https://www.duden.de/suchen/dudenonline/" + target;
 
     // Debug: Append "?tomorrow" to the URL to get the word of tomorrow
     if (window.location.href.includes("tomorrow")) {
@@ -516,9 +518,6 @@ function evaluate() {
     setTimeout(() => scoring = false, animTime * 4);
     let scores = scoreGuess(target, guess);
 
-    document.getElementById("credit-points-win2").classList.add("hide");
-    document.getElementById("share").classList.add("hide");
-
     for (let i = 0; i < config.wordLength; i++) {
         const savedRow = row, savedGuess = guess;
         setTimeout(() => {
@@ -528,32 +527,45 @@ function evaluate() {
     }
     if (scores.every(s => s == "correct")) { // Win
         win = true;
-        let newCreditPoints = config.maxGuesses - row;
+        let newCreditPoints = 0;
 
-        if (todaysTimestamp != window.localStorage.getItem("win-timestamp")) { // Last time we won was not today
-            let winRow = getLocalStorageInt("win-row" + row);
+        if (!useRandomWord) { /* Word of the day */
+            document.getElementById("won-word-of-the-day1").classList.remove("hide");
+            document.getElementById("won-random-word1").classList.add("hide");
+            document.getElementById("footer-word-of-the-day").classList.remove("hide");
+            document.getElementById("footer-random-word").classList.add("hide");
 
-            /* Add points */
-            if (!useRandomWord) { // Only give points and update the statistic if it is the word-of-the-day (and solved the first time today)
-                document.getElementById("credit-points-win2").classList.remove("hide");
-                document.getElementById("credit-points-win").innerText = newCreditPoints;
-                console.log("old Credit Points: " + creditPoints)
-                creditPoints += newCreditPoints
-                console.log("New Credit Points: " + creditPoints)
-                window.localStorage.setItem("credit-points", creditPoints);
-                document.getElementById("credit-points").innerText = creditPoints;
+            if (todaysTimestamp != window.localStorage.getItem("win-timestamp")) { // Last time we won was not today
+                let winRow = getLocalStorageInt("win-row" + row);
+                newCreditPoints = config.maxGuesses - row;
 
                 /* Update Statistics */
                 window.localStorage.setItem("win-row" + row, winRow + 1);
                 window.localStorage.setItem("win-timestamp", todaysTimestamp);
                 updateShownStats();
 
+                creditPoints += newCreditPoints
+                console.log("old Credit Points: " + creditPoints)
+                console.log("New Credit Points: " + creditPoints)
+
+                window.localStorage.setItem("credit-points", creditPoints);
+
+                document.getElementById("credit-points").innerText = creditPoints;
                 document.getElementById("share").classList.remove("hide");
             }
+            else { // we won it already today
+                document.getElementById("share").classList.add("hide");
+            }
+            document.getElementById("credit-points-win").innerText = newCreditPoints;
+        }
+        else { /* Random Word */
+            document.getElementById("won-random-word1").classList.remove("hide");
+            document.getElementById("won-word-of-the-day1").classList.add("hide");
+            document.getElementById("footer-random-word").classList.remove("hide");
+            document.getElementById("footer-word-of-the-day").classList.add("hide");
         }
 
         document.getElementById("word-win").innerText = target.toUpperCase();
-        document.getElementById('duden-link-win').href = "https://www.duden.de/suchen/dudenonline/" + target;
         document.getElementById("letter-map").innerText = createLetterMap();
 
         setTimeout(() => {
@@ -569,14 +581,27 @@ function evaluate() {
     guess = "";
 
     if (row >= config.maxGuesses && !win) { // Lose
-        if (todaysTimestamp != window.localStorage.getItem("lose-timestamp")) { // Last time we lost was not today
-            window.localStorage.setItem("loses", getLocalStorageInt("loses") + 1);
-            window.localStorage.setItem("lose-timestamp", todaysTimestamp);
+        document.getElementById("share").classList.add("hide");
+
+        if (!useRandomWord) { /* Word of the day */
+            document.getElementById("won-word-of-the-day1").classList.add("hide");
+            document.getElementById("won-random-word1").classList.add("hide");
+            document.getElementById("footer-word-of-the-day").classList.remove("hide");
+            document.getElementById("footer-random-word").classList.add("hide");
+
+            if (todaysTimestamp != window.localStorage.getItem("lose-timestamp")) { // Last time we lost was not today
+                window.localStorage.setItem("loses", getLocalStorageInt("loses") + 1);
+                window.localStorage.setItem("lose-timestamp", todaysTimestamp);
+            }
+            updateShownStats();}
+        else { /* Random Word */
+            document.getElementById("won-random-word1").classList.add("hide");
+            document.getElementById("won-word-of-the-day1").classList.add("hide");
+            document.getElementById("footer-random-word").classList.remove("hide");
+            document.getElementById("footer-word-of-the-day").classList.add("hide");
         }
-        updateShownStats();
-        
+
         document.getElementById("word-lose").innerText = target.toUpperCase();
-        document.getElementById('duden-link-lose').href = "https://www.duden.de/suchen/dudenonline/" + target;
         document.getElementById("letter-map").innerText = createLetterMap();
 
         setTimeout(() => {
