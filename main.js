@@ -92,14 +92,15 @@ const infoContainer = document.getElementById("info-container");
 const updateInfoContainer = document.getElementById("update-info-container");
 
 
-console.log(window.localStorage.getItem("read-update-note"))
-if (window.localStorage.getItem("read-update-note") != "2022-02-04") {
+let lastUpdateNote = "2022-02-12"; // Set to today on news updates
+if (window.localStorage.getItem("read-update-note") != lastUpdateNote && window.localStorage.getItem("read-help")) { // Show updates, but only if the help does not get shown
     updateInfoContainer.classList.remove("hide");
-    window.localStorage.setItem("read-update-note", "2022-02-04");
+    window.localStorage.setItem("read-update-note", lastUpdateNote);
 }
 
 if (!window.localStorage.getItem("read-help")) {
     infoContainer.classList.remove("hide");
+    window.localStorage.setItem("read-update-note", lastUpdateNote);
     window.localStorage.setItem("read-help", true);
 }
 
@@ -667,9 +668,11 @@ function evaluate() {
 
                 document.getElementById("credit-points").innerText = creditPoints;
                 document.getElementById("share").classList.remove("hide");
+                document.getElementById("telegram").classList.remove("hide");
             }
             else { // we won it already today
                 document.getElementById("share").classList.add("hide");
+                document.getElementById("telegram").classList.add("hide");
             }
             document.getElementById("credit-points-win").innerText = newCreditPoints;
         }
@@ -697,6 +700,7 @@ function evaluate() {
 
     if (row >= config.maxGuesses && !win) { // Lose
         document.getElementById("share").classList.add("hide");
+        document.getElementById("telegram").classList.add("hide");
 
         if (!useRandomWord) { /* Word of the day */
             document.getElementById("won-word-of-the-day1").classList.add("hide");
