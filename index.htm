@@ -66,14 +66,14 @@
             <p id="letter-map"></p>
 
             <span id="footer-word-of-the-day">
-                <button id="share"><img src="share.png"></img> Teilen</button>
+                <button id="share"><img src="share.png" width=22px></img> Teilen</button>
                 <p>N&auml;chstes Wort-des-Tages in: <span id="next-word"></span></p>
-                <button onclick="window.location='?random'">Zuf&auml;lliges Wort l&ouml;sen</button><br>
+                <button class="random" onclick="window.location='?random'">Zuf&auml;lliges Wort l&ouml;sen</button><br>
             </span>
 
             <span id="footer-random-word">
-            <button onclick="window.location='?random'">Weiteres zuf&auml;lliges Wort l&ouml;sen</button><br>
-                <button  onclick="window.location='?'">Zur&uuml;ck zum Wort-des-Tages</button><br>
+                <button onclick="window.location='?random'">Weiteres zuf&auml;lliges Wort l&ouml;sen</button><br>
+                <button class="day" onclick="window.location='?'">Zur&uuml;ck zum Wort-des-Tages</button><br>
             </span>
 
             <button id="show-stats2">&#127937; Statistik</button>
@@ -83,11 +83,6 @@
     <div id="stats-container" class="container hide">
         <span class="popup">
             <div id="dismiss-stats" class="close-button">&#10062;</div>
-            <div id="back-to-word-of-the-day" >
-                <button id="back-to-word-of-the-day-button" onclick="window.location.href='/index.htm'">Zur&uuml;ck zum Wort-des-Tages</button>
-                <p></p>
-            </div>
-            
             <div id="god-menu" class="hide">
                 <h2>Godly Options</h2>
                 <p><a href="index.htm?tomorrow">Use the Word of tomorrow</a></p>
@@ -95,9 +90,11 @@
                 <p><a href="debug.htm" target=_blank>Show local storage</a></p>
             </div>
         
-            <h2>Punktestand</h2>
+            <h2>Zufälliges Wort</h2>
             <p>Du hast <span id="credit-points"></span> Punkte verf&uuml;gbar, um ein zuf&auml;lliges Wort zu l&ouml;sen!</p>
-            <button onclick="window.location.href='/index.htm?random'">Zuf&auml;lliges Wort l&ouml;sen</button>
+            <button class="random" onclick="window.location.href='/index.htm?random'">Zuf&auml;lliges Wort l&ouml;sen</button>
+            <p></p>
+            <button class="day" id="back-to-word-of-the-day-button" onclick="window.location.href='/index.htm'">Zur&uuml;ck zum Wort-des-Tages</button>
             <p></p>
             <h2>Statistik</h2>
             <p><strong>Siege:</strong> <span id="wins"></span> (<span id="wins-percent"></span>%) in <span id="games-total"></span> Spielen.</p>

@@ -203,7 +203,7 @@ document.getElementById("fast-mode").addEventListener("change", ev => {
 })
 
 // ==== GAME LOGIC ====
-let row, guess, win, target;
+let row, guess, win, target = "";
 let scoring = false;
 let useRandomWord = false
 
@@ -354,6 +354,7 @@ function initWordOfTomorrow() {
 
 function questionBox(text) {
     var defer = $.Deferred();
+    $.ui.dialog.prototype._focusTabbable = function(){}; // Disable focus
     $( "<div>" + text + "</div>" ).dialog({
         closeOnEscape: false,
         closeOnEnter: false,
@@ -363,16 +364,24 @@ function questionBox(text) {
         height: "auto",
         width: "80%",
         modal: true,
-        buttons: {
-            Ja: function() {
-                defer.resolve("Ja");
-                $( this ).dialog( "close" );
+        buttons: [
+            {
+                text: "Zufälliges Wort",
+                "class": "random",
+                click: function() {
+                    defer.resolve("Ja");
+                    $( this ).dialog( "close" );
+                }
             },
-            Nein: function() {
-                defer.resolve("Nein");
-                $( this ).dialog( "close" );
+            {
+                text: "Wort-des-Tages",
+                "class": "day",
+                click: function() {
+                    defer.resolve("Nein");
+                    $( this ).dialog( "close" );
+                }
             }
-        },
+        ],
         close: function () {
             $(this).remove(); //removes this dialog div from DOM
         }
@@ -823,7 +832,6 @@ if(window.innerHeight < window.innerWidth) {
     });
 }
 else {
-    console.log("a1");
     initGame();
     updateShownStats(); 
 }
