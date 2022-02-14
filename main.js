@@ -463,12 +463,8 @@ function initGame() {
     document.getElementById("debug-timestamp").innerText = todaysTimestamp;
     document.getElementById("debug-user-agent").innerText = navigator.userAgent;
 
-    var scripts = document.getElementsByTagName("script");
-    for (var i = 0; i < scripts.length; i++) {
-        if (scripts[i].src.includes("words.js")) {
-            document.getElementById("debug-words-script").innerText = scripts[i].src.split(/[?cacheid=]+/).pop();
-        }
-    }
+    document.getElementById("debug-words-script").innerText = getCacheId("script", "words.js");
+    document.getElementById("footer").innerText = "main: " + getCacheId("script", "main.js") + ", words: " + getCacheId("script", "words.js") + ", index: " + getIndex(todaysTimestamp) + ", ts: " + todaysTimestamp;
 }
 
 
@@ -730,6 +726,16 @@ function evaluate() {
             timeToNextWord();
             setInterval(timeToNextWord, 1000);
         }, animTime * 5)
+    }
+}
+
+
+function getCacheId(tag, file) {
+    var scripts = document.getElementsByTagName(tag);
+    for (var i = 0; i < scripts.length; i++) {
+        if (scripts[i].src.includes(file)) {
+            return scripts[i].src.split(/[?cacheid=]+/).pop();
+        }
     }
 }
 

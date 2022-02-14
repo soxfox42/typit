@@ -131,7 +131,7 @@ header {
 /*     width: calc(100vw / 5 - 5px); */
     width: max(calc(100vw / 5 - 50px), 50px);
     max-width: 80px;
-    min-height: 38px;
+    min-height: 35px;
 
     transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
 }
@@ -177,7 +177,8 @@ header {
     display: grid;
     grid: repeat(3, 1fr) / auto;
     gap: 4px;
-    margin-bottom: 6px;
+/*     margin-bottom: 6px; */
+    margin-bottom: 0px;
 }
 
 .key-row {
@@ -273,6 +274,16 @@ header {
     border-radius: 8px;
 
     margin: 4px;
+}
+
+
+footer {
+    height: 5px;
+    padding: 0;
+    margin: 0;
+    font-size: 5px;
+    text-align: center;
+    color: #BBB;
 }
 
 .container {
