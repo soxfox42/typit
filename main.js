@@ -135,7 +135,15 @@ document.getElementById("share").addEventListener("click", ev => {
     const event = new Date(todaysTimestamp * 1000);
     const options = { weekday: 'short', month: 'short', day: 'numeric' };
     let dateFormated = event.toLocaleDateString('de-CH', options);
-    let text = "Ich habe das heutige Wort auf https://wordle-deutsch.ch mit nur " + row + " Versuchen erraten!\r\n" + dateFormated + "\r\n" + letterMap;
+
+    let textVersuche = ["🏆 Wow! Ich habe das heutige Wort auf https://wordle-deutsch.ch mit nur 1 Versuch erraten!",
+                      "🎉 Genial! Ich habe das heutige Wort auf https://wordle-deutsch.ch mit nur 2 Versuchen erraten!",
+                         "Juhui! Ich habe das heutige Wort auf https://wordle-deutsch.ch mit nur 3 Versuchen erraten!",
+                           "Hmm! Ich habe das heutige Wort auf https://wordle-deutsch.ch mit 4 Versuchen erraten!",
+                                "Ich habe das heutige Wort auf https://wordle-deutsch.ch mit 5 Versuchen erraten!",
+                         "🎈 Uff! Ich habe das heutige Wort auf https://wordle-deutsch.ch gerade noch mit 6 Versuchen erraten!"];
+
+    let text = textVersuche[row-1] + "\r\n" + dateFormated + "\r\n" + letterMap;
 
     var t = document.createElement("textarea");
     t.textContent = text, document.body.appendChild(t), t.select(), document.execCommand("copy"), document.body.removeChild(t)
