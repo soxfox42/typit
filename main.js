@@ -838,18 +838,5 @@ details.forEach((targetDetail) => {
 });
 
 
-window.addEventListener("orientationchange", function(event) {
-    setTimeout(function() { checkPortraitMode(); }, 2000);
-});
-
-
-if(window.innerHeight < window.innerWidth) {
-    alertBox("Das Spiel funktioniert besser im Portrait-Modus!").then(function () {
-        initGame();
-        updateShownStats();
-    });
-}
-else {
-    initGame();
-    updateShownStats(); 
-}
+initGame();
+updateShownStats();

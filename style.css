@@ -108,7 +108,8 @@ header {
 }
 
 .cell {
-    font-size: min(calc(10vh - 30px), calc(18vw - 25px));
+/*     font-size: min(calc(10vh - 30px), calc(18vw - 25px)); */
+    font-size: min(calc(5vh), calc(18vw - 20px));
     font-weight: 600;
     line-height: 0;
     color: transparent;
@@ -131,7 +132,7 @@ header {
 /*     width: calc(100vw / 5 - 5px); */
     width: max(calc(100vw / 5 - 50px), 50px);
     max-width: 80px;
-    min-height: 35px;
+    min-height: 20px;
 
     transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
 }
