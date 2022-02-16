@@ -151,9 +151,33 @@ document.getElementById("share").addEventListener("click", ev => {
     document.getElementById("share").innerText = "In die Zwischenablage kopiert";
 })
 
-document.getElementById("back-to-word-of-the-day-button").addEventListener("click", ev => {
-    window.location.href = "index.htm";
-})
+document.getElementById("start-normal1").addEventListener("click", ev => {
+    localStorage.setItem("random-mode", 0); // Switch to the normal mode on test page load
+    window.location.href = "index.htm"; // Reload page
+});
+
+document.getElementById("start-normal2").addEventListener("click", ev => {
+    localStorage.setItem("random-mode", 0); // Switch to the normal mode on test page load
+    window.location.href = "index.htm"; // Reload page
+});
+
+document.getElementById("start-random1").addEventListener("click", ev => {
+    localStorage.setItem("random-mode", 1); // Switch to the random mode on test page load
+    localStorage.setItem("random-timestamp", 0); // Trigegr selection of a new random word
+    window.location.href = "index.htm"; // Reload page
+});
+
+document.getElementById("start-random2").addEventListener("click", ev => {
+    localStorage.setItem("random-mode", 1); // Switch to the random mode on test page load
+    localStorage.setItem("random-timestamp", 0); // Trigegr selection of a new random word
+    window.location.href = "index.htm"; // Reload page
+});
+
+document.getElementById("start-random3").addEventListener("click", ev => {
+    localStorage.setItem("random-mode", 1); // Switch to the random mode on test page load
+    localStorage.setItem("random-timestamp", 0); // Trigegr selection of a new random word
+    window.location.href = "index.htm"; // Reload page
+});
 
 // ==== TOOLBAR BUTTONS ====
 document.getElementById("show-stats").addEventListener("click", ev => {
@@ -317,7 +341,6 @@ function rot13(message) {
 
 function initWordOfToday() {
     console.log("Use word of today");
-//         window.location.href = "index.htm";
     todaysTimestamp = getTodaysTimestamp();
     let timestampFromStore = localStorage.getItem("timestamp");
     let targetFromStore = localStorage.getItem("target");
@@ -340,17 +363,38 @@ function initWordOfToday() {
 
 
 function initRandomWord() {
-    console.log("Use random word");
-    todaysTimestamp = Math.ceil(Math.random() * 2e10);
-    creditPoints -= 1;
-    window.localStorage.setItem("credit-points", creditPoints);
-    document.getElementById("credit-points").innerText = creditPoints;
+    console.log("initRandomWord");
+
     useRandomWord = true;
 
-    resetGame(todaysTimestamp);
+    let randomTimestamp = getLocalStorageInt("random-timestamp");
+    if (randomTimestamp == 0) {
+        console.log("Use new random word");
 
+        if (creditPoints == 0) {
+            alertBox("Du hast keine Punkte verfügbar, gewinne zuerst ein Wort-des-Tages um Punkte zu kriegen!").then(function () {
+                localStorage.setItem("random-mode", 0); // Switch to the normal mode on test page load
+                window.location.href = "index.htm"; // reload page
+            });
+        }
+        else {
+            creditPoints -= 1;
+            window.localStorage.setItem("credit-points", creditPoints);
+
+            randomTimestamp = Math.ceil(Math.random() * 2e10);
+            window.localStorage.setItem("random-timestamp", randomTimestamp);
+            resetGame(randomTimestamp);
+        }
+    }
+    else {
+        console.log("Use pre-selected random word");
+        let randomTarget = words.targets[getIndex(randomTimestamp)];
+        loadGame(randomTarget);
+    }
+
+    document.getElementById("credit-points").innerText = creditPoints;
     document.body.style.backgroundColor = "#0064ab"; // Change background color
-    document.getElementById("back-to-word-of-the-day-button").classList.remove("hide");
+    document.getElementById("start-normal2").classList.remove("hide");
 }
 
 
@@ -423,37 +467,17 @@ function alertBox(text) {
 }
 
 
-function initGame() {
-    console.log("initGame");
-//     let timestampFromStore = localStorage.getItem("timestamp");
-//     let targetFromStore = localStorage.getItem("target");
-    todaysTimestamp = getTodaysTimestamp();
+function initGame(timestamp) {
+    console.log("initGame", timestamp);
     
     creditPoints = getLocalStorageInt("credit-points");
     console.log("Credit Points: " + creditPoints);
     document.getElementById("credit-points").innerText = creditPoints;
-    document.getElementById("back-to-word-of-the-day-button").classList.add("hide");
+    document.getElementById("start-normal2").classList.add("hide");
     let selection = "today";
 
-    // Debug: Append "?random" to the URL to get a random word on each reload
-    if (window.location.href.includes("random")) {
-        if (creditPoints > 0) {
-            questionBox("Willst Du ein zufälliges Wort lösen?<br>Es kostet dich <strong>1 Punkt(e)</strong>.<br>Du hast momentan <strong>" + creditPoints + 
-                        " Punkt(e)</strong>.").then(function (answer) {
-                console.log("Answer: " + answer);
-                if (answer == "Ja") {
-                    initRandomWord();
-                }
-                else {
-                    window.location.href = "index.htm"; // reload page with out "random" parameter
-                }
-            });
-        }
-        else {
-            alertBox("Du hast keine Punkte verfügbar, gewinne zuerst ein Wort-des-Tages um Punkte zu kriegen!").then(function () {
-                window.location.href = "index.htm"; // reload page with out "random" parameter
-            });
-        }
+    if (getLocalStorageInt("random-mode") == 1) {
+        initRandomWord();
     }    
     // Debug: Append "?tomorrow" to the URL to get the word of tomorrow
     else if (window.location.href.includes("tomorrow")) { // Word of tomorrow
@@ -467,12 +491,12 @@ function initGame() {
     /* Debug */
     document.getElementById("debug-words-count").innerText = words.targets.length;
     document.getElementById("debug-target").innerText = rot13(target);
-    document.getElementById("debug-wordlist-index").innerText = getIndex(todaysTimestamp);
-    document.getElementById("debug-timestamp").innerText = todaysTimestamp;
+    document.getElementById("debug-wordlist-index").innerText = getIndex(timestamp);
+    document.getElementById("debug-timestamp").innerText = timestamp;
     document.getElementById("debug-user-agent").innerText = navigator.userAgent;
 
     document.getElementById("debug-words-script").innerText = getCacheId("script", "words.js");
-    document.getElementById("footer").innerText = "main: " + getCacheId("script", "main.js") + ", words: " + getCacheId("script", "words.js") + ", index: " + getIndex(todaysTimestamp) + ", ts: " + todaysTimestamp;
+    document.getElementById("footer").innerText = "main: " + getCacheId("script", "main.js") + ", words: " + getCacheId("script", "words.js") + ", index: " + getIndex(timestamp) + ", ts: " + timestamp;
 }
 
 
@@ -838,5 +862,5 @@ details.forEach((targetDetail) => {
 });
 
 
-initGame();
+initGame(getTodaysTimestamp());
 updateShownStats();

@@ -76,12 +76,12 @@
                 <p></p>
                 <form action="https://t.me/wordle_deutsch" target=_blank id="telegram"><button><img src="telegram.png" width=22px> Trophäen-Chat</button></form>
                 <p>N&auml;chstes Wort-des-Tages in: <span id="next-word"></span></p>
-                <button class="random" onclick="window.location='?random'">Zuf&auml;lliges Wort l&ouml;sen</button><br>
+                <button class="random" id="start-random1">Zuf&auml;lliges Wort l&ouml;sen</button><br>
             </span>
 
             <span id="footer-random-word">
-                <button class="random" onclick="window.location='?random'">Weiteres zuf&auml;lliges Wort l&ouml;sen</button><br>
-                <button class="day" onclick="window.location='?'">Zur&uuml;ck zum Wort-des-Tages</button><br>
+                <button class="random" id="start-random2">Weiteres zuf&auml;lliges Wort l&ouml;sen</button><br>
+                <button class="day" id="start-normal1">Zur&uuml;ck zum Wort-des-Tages</button><br>
             </span>
 
             <button id="show-stats2">&#127937; Statistik</button>
@@ -101,9 +101,9 @@
         
             <h2>Zufälliges Wort</h2>
             <p>Du hast <span id="credit-points"></span> Punkte verf&uuml;gbar, um ein zuf&auml;lliges Wort zu l&ouml;sen!</p>
-            <button class="random" onclick="window.location.href='/index.htm?random'">Zuf&auml;lliges Wort l&ouml;sen</button>
+            <button class="random" id="start-random3">Zuf&auml;lliges Wort l&ouml;sen</button>
             <p></p>
-            <button class="day" id="back-to-word-of-the-day-button" onclick="window.location.href='/index.htm'">Zur&uuml;ck zum Wort-des-Tages</button>
+            <button class="day" id="start-normal2">Zur&uuml;ck zum Wort-des-Tages</button>
             <p></p>
             <h2>Statistik</h2>
             <p><strong>Siege:</strong> <span id="wins"></span> (<span id="wins-percent"></span>%) in <span id="games-total"></span> Spielen.</p>
