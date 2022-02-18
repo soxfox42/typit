@@ -392,7 +392,9 @@ function initRandomWord() {
         loadGame(randomTarget);
     }
 
-    document.getElementById("credit-points").innerText = creditPoints;
+    document.getElementById("credit-points1").innerText = creditPoints;
+    document.getElementById("credit-points2").innerText = creditPoints;
+    document.getElementById("credit-points3").innerText = creditPoints;
     document.body.style.backgroundColor = "#0064ab"; // Change background color
     document.getElementById("start-normal2").classList.remove("hide");
 }
@@ -472,7 +474,9 @@ function initGame(timestamp) {
     
     creditPoints = getLocalStorageInt("credit-points");
     console.log("Credit Points: " + creditPoints);
-    document.getElementById("credit-points").innerText = creditPoints;
+    document.getElementById("credit-points1").innerText = creditPoints;
+    document.getElementById("credit-points2").innerText = creditPoints;
+    document.getElementById("credit-points3").innerText = creditPoints;
     document.getElementById("start-normal2").classList.add("hide");
     let selection = "today";
 
@@ -694,7 +698,9 @@ function evaluate() {
 
                 window.localStorage.setItem("credit-points", creditPoints);
 
-                document.getElementById("credit-points").innerText = creditPoints;
+                document.getElementById("credit-points1").innerText = creditPoints;
+                document.getElementById("credit-points2").innerText = creditPoints;
+                document.getElementById("credit-points3").innerText = creditPoints;
                 document.getElementById("share").classList.remove("hide");
                 document.getElementById("telegram").classList.remove("hide");
             }
