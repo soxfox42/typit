@@ -698,10 +698,7 @@ function evaluate() {
                 document.getElementById("share").classList.remove("hide");
                 document.getElementById("telegram").classList.remove("hide");
             }
-            else { // we won it already today
-                document.getElementById("share").classList.add("hide");
-                document.getElementById("telegram").classList.add("hide");
-            }
+
             document.getElementById("credit-points-win").innerText = newCreditPoints;
         }
         else { /* Random Word */
