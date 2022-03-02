@@ -604,7 +604,7 @@ function initGame() {
 function get_WordOfTheDay_FromServer(timestamp) {
     console.log("Fetching word of the day from server (timestamp: " + timestamp + ")");
     var request = new XMLHttpRequest();
-    request.open('GET', "https://beta.wordle-deutsch.ch/get-word-of-the-day.php?timestamp=" + timestamp, false);  // `false` makes the request synchronous
+    request.open('GET', "https://wordle-deutsch.ch/get-word-of-the-day.php?timestamp=" + timestamp, false);  // `false` makes the request synchronous
     request.send(null);
 
     // TODO use async
