@@ -10,8 +10,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="style.css?cacheid=2022-02-16">
-    <script src="words.js?cacheid=2022-02-08" type="module" id="script-words"></script>
-    <script src="main.js?cacheid=2022-02-18" type="module"></script>
+    <link rel="stylesheet" href="" id="colorblind-style">
+    <script src="main.js?cacheid=2022-02-26" type="module"></script>
 
     <link rel="manifest" href="/manifest.json">
 
@@ -43,10 +43,9 @@
 
 <body>
     <header>
-        <button id="show-stats" class="minimal">&#127937;</button>
+        <button id="show-settings" class="minimal"><img src=gear.png width=40px height=40px></button>
         <h1><b><span style="font-size: 120%; color: #6abe00;">W</span>OR<span style="color: #fbce31;">DL</span>E</b> auf Deutsch mit Umlauten (&auml;&ouml;&uuml;)</h1>
-<!--         <button id="show-info" class="minimal"><span style="font-size: 200%"><strong>&#8505;&#65039;</strong></span></button> -->
-        <button id="show-info" class="minimal">&#8505;&#65039;</button>
+        <button id="show-info" class="minimal"><img src=info.png width=40px height=40px></button>
     </header>
     <div id="board"></div>
     <div id="keyboard"></div>
@@ -80,37 +79,45 @@
             </span>
 
             <span id="footer-random-word">
-                <button class="random" id="start-random2">Weiteres zuf&auml;lliges Wort l&ouml;sen (<span id="credit-points2"></span> verf&uuml;gbar)</button><br>
+                <button class="random" id="start-random2">Zuf&auml;lliges Wort l&ouml;sen (<span id="credit-points2"></span> verf&uuml;gbar)</button><br>
                 <button class="day" id="start-normal1">Zur&uuml;ck zum Wort-des-Tages</button><br>
             </span>
 
-            <button id="show-stats2">&#127937; Statistik</button>
+            <button id="show-statistics">&#127937; Statistik</button>
         </span>
     </div>
     <footer><span id="footer"></span></footer>
 
-    <div id="stats-container" class="container hide">
+    <div id="settings-container" class="container hide">
         <span class="popup">
-            <div id="dismiss-stats" class="close-button">&#10062;</div>
-            <div id="god-menu" class="hide">
-                <h2>Godly Options</h2>
+            <div id="dismiss-settings" class="close-button">&#10062;</div>
+            <details id="god-menu" class="hide">
+                <summary><strong>Admin Options</strong></summary>
                 <p><a href="index.htm?tomorrow">Use the Word of tomorrow</a></p>
                 <p><a href="index.htm?cheat">Show secret word in console</a></p>
                 <p><a href="debug.htm" target=_blank>Show local storage</a></p>
-            </div>
+            </details>
         
-            <h2>Zufälliges Wort</h2>
-            <p>Du hast <span id="credit-points3"></span> Punkte verf&uuml;gbar, um ein zuf&auml;lliges Wort zu l&ouml;sen!</p>
-            <button class="random" id="start-random3">Zuf&auml;lliges Wort l&ouml;sen</button>
-            <p></p>
-            <button class="day" id="start-normal2">Zur&uuml;ck zum Wort-des-Tages</button>
-            <p></p>
-            <h2>Statistik</h2>
-            <p><strong>Siege:</strong> <span id="wins"></span> (<span id="wins-percent"></span>%) in <span id="games-total"></span> Spielen.</p>
-
-            <p><strong>Siege nach Zeilen:</strong>
-            <canvas id="statsChart" width="100%" height="60"></canvas>
-            <p></p>
+            <details open>
+                <summary><strong>Modus</strong></summary>
+                <p>Aktueller Modus: <strong>"<span id="settings-menu-current-game-mode"></span>"</strong>.</p>
+                <p>Umschalten auf: </p>
+                <button class="day" id="settings-menu-start-wotd">Wort-des-Tages</button>
+                <p></p>
+                <button class="random" id="settings-menu-start-random">Zuf&auml;lliges Wort</button>
+                <p>Du hast <span id="credit-points3"></span> Punkte verf&uuml;gbar, um ein neues zuf&auml;lliges Wort zu l&ouml;sen!</p>
+            </details>
+            <details>
+                <summary><strong>Optionen</strong></summary>
+                <p><label for="fast-mode"><input type="checkbox" id="fast-mode">Animationen auschalten.</label><br><span class="small">Zeigt das Feedback schneller an.</span></p>
+                <p><label for="colorblind-mode"><input type="checkbox" id="colorblind-mode">Alternative Farben</label><br><span class="small">Verwende Farben, die für Farbenblindheit optimiert sind.</span></p>
+            </details>
+            <details>
+                <summary><strong>Statistik</strong></summary>
+                <p><strong>Siege:</strong> <span id="wins"></span> (<span id="wins-percent"></span>%) in <span id="games-total"></span> abgeschlossenen Spielen.</p>
+                <p><strong>Siege nach Zeilen:</strong>
+                <canvas id="statsChart" width="100%" height="60"></canvas>
+            </details>
         </span>
     </div>
 
@@ -118,10 +125,16 @@
         <span class="popup">
             <div id="dismiss-update-info" class="close-button">&#10062;</div>
             <h2>Neuigkeiten</h2>
+            <h3>02. M&auml;rz 2022</h3>
+            <ul>
+                <li><p>Es kann nun jederzeit zwischen dem Wort-des-Tages und dem Zufälligen Wort umgeschaltet werden, ohne, dass etwas verloren geht.</p></li>
+                <li><p>Neuer Farbmodus für Farbenblinde.</p></li>
+<!--                 <li><p> TODO Die Kriterien für mögliche "W&ouml;rter-des-Tages" sind nun dokumentiert (Siehe Info-Mem&uuml;).</p></li> -->
+            </ul>
             <h3>12. Februar 2022</h3>
             <p>Zeige dein super Resultat in der Telegram-Trophäen-Gruppe.</p>
             <h3>05. Februar 2022</h3>
-            <p>Man erh&auml;lt Punkte, wenn man das Wort-des-Tages l&ouml;sen kann. Mit diesen Punkten k&ouml;nnen zuf&auml;llige W&ouml;rter gel&ouml;st werden (Siehe Statistik-Men&uuml; oben links: <span class="doc-key">&#127937;</span>).</p>
+            <p>Man erh&auml;lt Punkte, wenn man das Wort-des-Tages l&ouml;sen kann. Mit diesen Punkten k&ouml;nnen zuf&auml;llige W&ouml;rter gel&ouml;st werden (Siehe Einstellungs-Men&uuml; oben links: <span class="doc-key">&#9881;</span>).</p>
         </span>
     </div>
 
@@ -144,26 +157,18 @@
                     <div class="cell filled incorrect">M</div>
                     <div class="cell filled incorrect">E</div>
                 </div>
-                <p>
-                    <strong>Gr&uuml;ne Buchstaben sich richtig.</strong><br>
-                    Sie sind auch im Wort-des-Tages an dieser Stelle.<br>
-                    <strong>Gelbe Buchstaben sind fast richtig.</strong><br>
-                    Sie sind im Wort-des-Tages enthalten, aber an einer anderen Stelle.<br>
-                    <strong>Graue Buchstaben sind falsch.</strong><br>
+                <p><strong><span class="key correct" style="height:25px; width: 250px;">Diese</span> Buchstaben sich richtig.</strong><br>
+                    Sie sind auch im Wort-des-Tages an dieser Stelle.</p>
+                <p><strong><span class="key close" style="height:25px; width: 250px;">Diese</span> Buchstaben sind fast richtig.</strong><br>
+                    Sie sind im Wort-des-Tages enthalten, aber an einer anderen Stelle.</p>
+                <p><strong><span class="key incorrect" style="height:25px; width: 250px;">Diese</span> Buchstaben sind falsch.</strong><br>
                     Sie kommen im Wort-des-Tages nicht vor.</p>
                 <p><strong>Im Beispiel lautet das Wort "BRAUN".</strong></p>
             </details>
-            <details>
-                <summary><strong>Optionen</strong></summary>
-                <p>
-                    <label for="fast-mode"><input type="checkbox" id="fast-mode">Animationen auschalten.</label>
-                    <br>
-                    <span class="small">Zeigt das Feedback schneller an.</span>
-                </p>
             </details>
             <details>
                 <summary><strong>Punkte und Statistik</strong></summary>
-                <p>F&uuml;r jedes gel&ouml;ste Wort-des-Tages erh&auml;ltst Du Punkte. Mit diesen Punkten k&ouml;nnen zuf&auml;llige W&ouml;rter gel&ouml;st werden (Siehe Statistik-Men&uuml; oben links: <span class="doc-key">&#127937;</span>).</p>
+                <p>F&uuml;r jedes gel&ouml;ste Wort-des-Tages erh&auml;ltst Du Punkte. Mit diesen Punkten k&ouml;nnen zuf&auml;llige W&ouml;rter gel&ouml;st werden (Siehe Einstellungs-Men&uuml; oben links: <span class="doc-key">&#9881;</span>).</p>
                 <p>F&uuml;r die zuf&auml;lligen Worte gibt es jedoch keine Punkte, auch die Statistik wird nicht nachgef&uuml;hrt.</p>
             </details>
             <details>
@@ -174,6 +179,7 @@
                 <li><p>"ss" anstatt "&szlig;" verwenden.</p></li>
                 <li><p>Bei Verben wird jeweils nur die Grundform verwenden. Z.B. "GEHEN", aber nicht "GINGE" oder "GEHST".</p></li>
                 <li><p>Es kommen keine Personennamen vor.</p></li>
+<!--                 TODO Add more details -->
                 </ul>
             </details>
             <details>
@@ -199,9 +205,9 @@
             </details>
             <details>
                 <summary><strong>Debug</strong></summary>
-                <p>Wortliste: <span id="debug-words-count"></span> Wörter, <span id="debug-words-script"></span>, <span id="debug-target"></span>, <span id="debug-wordlist-index"></span>.</p>
-                <p>User Agent: <span id="debug-user-agent"></span>.</p>
+                <p>Wortliste: <span id="debug-words-count"></span> Wörter, <span id="debug-target"></span>.</p>
                 <p>Timestamp: <span id="debug-timestamp"></span>.</p>
+                <p>User Agent: <span id="debug-user-agent"></span>.</p>
             </details>
         </span>
     </div>

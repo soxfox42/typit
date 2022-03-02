@@ -1,0 +1,14 @@
+
+.cell.correct {
+    background: #c0504d;
+    --front: #ac4745;
+    --highlight: #e85f5d;
+    --shadow: #ba4c4a;
+}
+
+
+
+.key.correct {
+    background: #c0504d;
+    color: #444;
+}

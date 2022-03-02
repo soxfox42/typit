@@ -6,8 +6,8 @@
 h1 {
     font-size: 20px;
 /*     font-size: max(2px, 1vh); */
-/*     margin-left: 12px; */
-    right: 12px;
+    margin-left: 4px;
+    margin-right: 4px;
 }
 
 h2 {
@@ -34,7 +34,7 @@ body {
 
     
 /*     grid-template-rows:64px max(1fr, 500px) 150px;  */
-    grid-template-rows:64px 1fr 150px; 
+    grid-template-rows:60px 1fr 150px; 
 
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -51,9 +51,10 @@ header {
 /*     width: calc(100vw - 5px); */
     width: calc(100vw - 8px);
     margin: 4px;
+    margin-bottom: 0px;
     display: grid;
-/*     height: 00px; */
-    grid: auto / 54px auto 54px;
+    height: 44px;
+    grid: auto / 44px auto 44px;
     
     justify-content: center;
     align-items: center;
@@ -80,7 +81,7 @@ header {
     display: flex;
     justify-content: center;
     gap: 4px;
-    height: 35px;
+    height: 50px;
     margin-top: 8px;
     margin-bottom: 20px;
 }
@@ -331,6 +332,10 @@ details {
     margin-bottom: 10px;
 }
 
+summary {
+    font-size: 20px;
+}
+
 input[type="checkbox"] {
     margin-left: 0;
     margin-right: 6px;
@@ -358,8 +363,9 @@ button {
 button.minimal {
     padding: 0;
     margin: 0;
-    height: 50px;
-    width: 50px;
+    padding-top: 2px;
+    height: 44px;
+    width: 44px;
 }
 
 button.random, button.random:active, button.random:hover {
