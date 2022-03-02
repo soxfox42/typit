@@ -814,7 +814,7 @@ function processWinLose() {
 
             if (timestamp != window.localStorage.getItem("win-timestamp")) { // Last time we won was not today
                 let winRow = getLocalStorageInt("win-row" + row);
-                newCreditPoints = config.maxGuesses - row;
+                newCreditPoints = config.maxGuesses - row + 1;
 
                 /* Update Statistics */
                 window.localStorage.setItem("win-row" + row, winRow + 1);
