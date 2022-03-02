@@ -652,6 +652,10 @@ function loadGame() {
 
     for (let r = 0; r < config.maxGuesses; r++) {
         let rowTextFromStore = localStorage.getItem(gameMode + "_" + "row" + r);
+        if (rowTextFromStore == null) {
+            rowTextFromStore = "";
+        }
+      
         console.log("line for row " + r + " loaded from store: '" + rowTextFromStore + "', len: " + rowTextFromStore.length);
         if (rowTextFromStore != null && rowTextFromStore != "") {
             guess = rowTextFromStore.toLowerCase();
