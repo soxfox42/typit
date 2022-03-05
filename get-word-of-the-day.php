@@ -1,5 +1,8 @@
 <?php
 
+    // IP anomizer (set last octet (IPv4) resp the last 80 bytes (IPv6) to zero
+    $_SERVER['REMOTE_ADDR'] = preg_replace(['/\.\d*$/','/[\da-f]*:[\da-f]*$/'],['.0','0000:0000'], $_SERVER['REMOTE_ADDR']);
+
     $LOG_FOLDER = "./logs";
 
     // wordes generated with old (javascript mulberry32) algorithm
@@ -34,9 +37,6 @@
             mkdir($LOG_FOLDER);
         }
 
-        $log  = date("[Y-m-d, H:i:s] ") . $_GET['timestamp'] . ", " . $_SERVER['REMOTE_ADDR'] . ", " . $_SERVER['HTTP_USER_AGENT'] . PHP_EOL;
-        file_put_contents('./logs/word-of-the-day.log', $log, FILE_APPEND);
-
         $words = json_decode(file_get_contents("target-words.json"), true)["data"];
 
         // temporarily use wordes generated with old (javascript mulberry32) algorithm
@@ -54,6 +54,20 @@
         }
 
         echo("{ \"word\": \"$target\", \"index\": $index }");
+        flush();
+
+        // Get Geo-Location based on IP
+        $ch = curl_init('http://ip-api.com/json/' . $_SERVER['REMOTE_ADDR']);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $response = curl_exec($ch);
+        curl_close($ch);
+        $result = json_decode($response, true);
+        $country = $result['country'];
+        $region = $result['regionName'];
+
+        $log  = date("[Y-m-d, H:i:s] ") . $_GET['timestamp'] . ", " .  "$target, " . $_SERVER['REMOTE_ADDR'] . ", " . "$country, $region, " . $_SERVER['HTTP_USER_AGENT'] . PHP_EOL;
+        file_put_contents('./logs/' . date("Y-m-d") . '.log', $log, FILE_APPEND);
+
     }
     else {
         echo("{ \"error\": \"Missing parameter 'timestamp'!\"}");
