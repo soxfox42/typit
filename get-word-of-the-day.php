@@ -8,7 +8,7 @@
 
     // words generated with old (javascript mulberry32) algorithm
     // To be removed a while after we switched to server side words
-    $oldRandomizerAlgorithm = [       
+    $oldRandomizerAlgorithm = [
         "1647298800" => ["vzzre", 754], // Di., 15. März
         "1647385200" => ["jnntr", 1787], // Mi., 16. März
         "1647471600" => ["jbure", 1848], // Do., 17. März
