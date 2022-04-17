@@ -120,12 +120,12 @@ for (const [i, row] of KEYBOARD_LAYOUT.entries()) {
 const statsContainer = document.getElementById("settings-container");
 const endContainer = document.getElementById("end-container");
 const infoContainer = document.getElementById("info-container");
-const updateInfoContainer = document.getElementById("update-info-container");
+const changelogContainer = document.getElementById("update-info-container");
 
 
-let lastUpdateNote = "2022-02-26"; // Set to today on news updates
+let lastUpdateNote = "2022-04-17"; // Set to today on news updates
 if (window.localStorage.getItem("read-update-note") != lastUpdateNote && window.localStorage.getItem("read-help")) { // Show updates, but only if the help does not get shown
-    updateInfoContainer.classList.remove("hide");
+    changelogContainer.classList.remove("hide");
     window.localStorage.setItem("read-update-note", lastUpdateNote);
 }
 
@@ -158,6 +158,11 @@ document.getElementById("dismiss-info").addEventListener("click", ev => {
 
 document.getElementById("dismiss-settings").addEventListener("click", ev => {
     ev.target.parentElement.parentElement.classList.add("hide");
+})
+
+document.getElementById("show-news").addEventListener("click", ev => {
+    infoContainer.classList.add("hide");
+    changelogContainer.classList.remove("hide");
 })
 
 document.getElementById("share").addEventListener("click", ev => {
@@ -242,7 +247,7 @@ document.getElementById("dismiss-info").addEventListener("click", ev => {
 });
 
 document.getElementById("dismiss-update-info").addEventListener("click", ev => {
-    updateInfoContainer.classList.add("hide");
+    changelogContainer.classList.add("hide");
     ev.target.blur();
 });
 
@@ -817,7 +822,7 @@ function processWinLose() {
                 newCreditPoints = config.maxGuesses - row + 1;
 
                 /* Update Statistics */
-                window.localStorage.setItem("win-row" + row, winRow + 1);
+                window.localStorage.setItem("win-row" + (row-1), winRow + 1);
                 window.localStorage.setItem("win-timestamp", timestamp);
                 updateShownStats();
 
@@ -938,7 +943,7 @@ document.addEventListener("keydown", e => {
 //     console.log("Guess: " + guess + ", row: " + row);
     if (guess == undefined) return; // Prevent error on pressing enter on questionBox
     if (!infoContainer.classList.contains("hide") || row >= config.maxGuesses || win || scoring) return;
-    if (!updateInfoContainer.classList.contains("hide") || row >= config.maxGuesses || win || scoring) return;
+    if (!changelogContainer.classList.contains("hide") || row >= config.maxGuesses || win || scoring) return;
     if (!statsContainer.classList.contains("hide") || row >= config.maxGuesses || win || scoring) return;
     if (key == "Backspace" && guess.length > 0) {
         guess = guess.slice(0, -1);
