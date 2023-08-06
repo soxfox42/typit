@@ -71,7 +71,8 @@
             <p id="letter-map"></p>
 
             <span id="footer-word-of-the-day">
-                <button id="share"><img src="share.png" width=22px></img> Teilen</button>
+                <button id="share"><img src="share.png" width=22px></img> Teilen</button></p>
+                <p><button id="share_compact"><img src="share.png" width=22px></img> Teilen (kompakt)</button>
                 <p></p>
                 <form action="https://t.me/wordle_deutsch" target=_blank id="telegram"><button><img src="telegram.png" width=22px> Trophäen-Chat</button></form>
                 <p>N&auml;chstes Wort-des-Tages in: <span id="next-word"></span></p>
@@ -93,9 +94,10 @@
             <div id="dismiss-settings" class="close-button">&#10062;</div>
             <details id="god-menu" class="hide">
                 <summary><strong>Admin Options</strong></summary>
-                <p><a href="index.htm?tomorrow">Use the Word of tomorrow</a></p>
-                <p><a href="index.htm?cheat">Show secret word in console</a></p>
+<!--              NOT implemented   <p><a href="index.htm?tomorrow">Use the Word of tomorrow</a></p> -->
+<!--              NOT implemented   <p><a href="index.htm?cheat">Show secret word in console</a></p> -->
                 <p><a href="debug.htm" target=_blank>Show local storage</a></p>
+                <p>Tip: Add the key 'cheat' with value '1' to the local storage to see the target word in the console.</p>
             </details>
         
             <details open>
@@ -132,14 +134,21 @@
         <span class="popup">
             <div id="dismiss-update-info" class="close-button">&#10062;</div>
             <h2>Neuigkeiten</h2>
-            <!-- Also update date in main.js in 'lastUpdateNote' -->
+<!-- ################ Also update date in main.js in 'lastUpdateNote' ################ -->
+            <h3>6. August 2023</h3>
+            <ul>
+                <li><p>Wort-Listen aktualisiert. Danke für alle Wort-Einreichungen/-Verbesserungen!</p></li>
+                <li><p>Neuen Teilen-Knopf mit kompakterem Text.</p></li>
+                <li><p>Import-/Export-Funktionen hinzugefügt (Siehe Einstellungs-Men&uuml; oben links: <img src=gear.png width=20px height=20px> -> Import/Export)</p></li>
+                <li><p>Alle Einstellungen und die Statistik werden automatisch an die neue Domain <a href=https://wordle.ruinelli.ch target=_blank>wordle.ruinelli.ch</a> übertragen. Du kannst die neue Domain jetzt schon verwenden. Die alte Domain (<a href=wordle-deutsch.ch>wordle-deutsch.ch</a>) wird Ende Jahr abgeschaltet!<br><b>ACHTUNG:</b> Du solltest danach die alte Domain nicht mehr verwenden, denn sie überschreibt jeweils automatisch die Einstellungen/Statistik der neuen Domain!</p></li>
+            </ul>
+<!-- ################ Also update date in main.js in 'lastUpdateNote' ################ -->
             <h3>01. Mai 2022</h3>
             <ul>
                 <li><p>Zugriffsfehler behoben.</p></li>
                 <li><p>Wortlisten aktualisiert.</p></li>
                 <li><p>Feedback-Links hinzugefügt zum einfachen Melden neuer/zu entfernenden Worte (Siehe Info-Menü).</p></li>
             </ul>
-            <!-- Also update date in main.js in 'lastUpdateNote' -->
             <h3>17. April 2022</h3>
             <p>Statistik-Zähler korrigiert (es wurde immer eine Zeile schlechter gepunktet).</p>
             <h3>02. M&auml;rz 2022</h3>
