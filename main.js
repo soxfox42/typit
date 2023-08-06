@@ -207,7 +207,7 @@ document.getElementById("share_compact").addEventListener("click", ev => {
     var t = document.createElement("textarea");
     t.textContent = text, document.body.appendChild(t), t.select(), document.execCommand("copy"), document.body.removeChild(t)
     
-    document.getElementById("share").innerText = "In die Zwischenablage kopiert";
+    document.getElementById("share_compact").innerText = "In die Zwischenablage kopiert";
 });
 
 document.getElementById("start-normal1").addEventListener("click", ev => {
