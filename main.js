@@ -1070,4 +1070,16 @@ function main() {
 //     console.log(others);
     initGame();
     updateShownStats();
+    
+    // Migrate local storage to new domain (wordle.ruinelli.ch)
+    if (window.location.hostname != "wordle.ruinelli.ch") {
+        setTimeout(function() {            
+            var win = document.getElementById('export_ifr').contentWindow;
+//             var data = "hello from " + window.location.hostname;
+            var data = JSON.stringify(JSON.stringify(localStorage));
+            win.postMessage(data, "*");
+            console.log("Sent local storage to new domain wordle.ruinelli.ch");
+        }, 2000);
+    }
+    
 }
