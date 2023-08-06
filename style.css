@@ -368,7 +368,9 @@ button.minimal {
     width: 44px;
 }
 
-button.random, button.random:active, button.random:hover {
+button.random, button.random:active, button.random:hover,
+button.export, button.export:active, button.export:hover,
+button.import, button.import:active, button.import:hover{
     border-radius: 12px;
     background: #0064ab;
     color: white;

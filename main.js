@@ -215,6 +215,52 @@ document.getElementById("settings-menu-start-random").addEventListener("click", 
     window.location.href = "index.htm"; // Reload page
 });
 
+document.getElementById("settings-menu-export").addEventListener("click", ev => {
+    var data = JSON.stringify(JSON.stringify(localStorage));
+    
+    const file = new File([data], 'wordle-deutsch.export', {
+        type: 'text/plain',
+    })
+    
+    const link = document.createElement('a')
+    const url = URL.createObjectURL(file)
+
+    link.href = url
+    link.download = file.name
+    document.body.appendChild(link)
+    link.click()
+
+    document.body.removeChild(link)
+    window.URL.revokeObjectURL(url)
+    
+    console.log("Exported local storage to file")
+});
+
+document.getElementById("settings-menu-import").addEventListener("click", ev => {
+    let input = document.createElement('input');
+    input.type = 'file';
+    input.onchange = _ => {
+        let files =   Array.from(input.files);        
+        
+        const reader = new FileReader();
+        reader.onload = function fileReadCompleted() {
+            // when the reader is done, the content is in reader.result.
+//             console.log(reader.result);            
+            var data = JSON.parse(JSON.parse(reader.result));
+                        
+            // Write to local storage
+            Object.keys(data).forEach(function (k) {
+                localStorage.setItem(k, data[k]);
+            });
+            console.log("Imported local storage from file")
+            alertBox("Deine Enstellungen und Statistik wurden importiert, bitte Seite neu laden!")
+        };
+        reader.readAsText(files[0]);
+    };
+    input.click();
+});
+
+
 // ==== TOOLBAR BUTTONS ====
 document.getElementById("show-settings").addEventListener("click", ev => {
     statsContainer.classList.remove("hide");
