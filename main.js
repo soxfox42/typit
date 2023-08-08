@@ -238,11 +238,28 @@ document.getElementById("settings-menu-start-random").addEventListener("click", 
     window.location.href = "index.htm"; // Reload page
 });
 
+document.getElementById("transfer-settings").addEventListener("click", ev => {
+    transfer_settings();
+});
+
+document.getElementById("transfer-settings2").addEventListener("click", ev => {
+    transfer_settings();
+});
+
+function transfer_settings() {
+    var data = JSON.stringify(JSON.stringify(localStorage));
+    data = btoa(data);
+    var url = "https://wordle.ruinelli.ch/import.php?lc=" + data;
+    window.location.href = url; // Go to new website
+}
+
+
 document.getElementById("settings-menu-export").addEventListener("click", ev => {
     var data = JSON.stringify(JSON.stringify(localStorage));
     
-    const file = new File([data], 'wordle-deutsch.export', {
-        type: 'text/plain',
+    var dateFormated = (new Date()).toISOString().slice(0,19).replace(/:/g,"-");
+    const file = new File([data], "wordle-deutsch_" + dateFormated  + ".export", {
+        type: 'application/json',
     })
     
     const link = document.createElement('a')
@@ -1096,15 +1113,15 @@ function main() {
     initGame();
     updateShownStats();
     
-    // Migrate local storage to new domain (wordle.ruinelli.ch)
-    if (window.location.hostname != "wordle.ruinelli.ch") {
-        setTimeout(function() {            
-            var win = document.getElementById('export_ifr').contentWindow;
-//             var data = "hello from " + window.location.hostname;
-            var data = JSON.stringify(JSON.stringify(localStorage));
-            win.postMessage(data, "*");
-            console.log("Sent local storage to new domain wordle.ruinelli.ch");
-        }, 2000);
-    }
+//     // Migrate local storage to new domain (wordle.ruinelli.ch)
+//     if (window.location.hostname != "wordle.ruinelli.ch") {
+//         setTimeout(function() {            
+//             var win = document.getElementById('export_ifr').contentWindow;
+// //             var data = "hello from " + window.location.hostname;
+//             var data = JSON.stringify(JSON.stringify(localStorage));
+//             win.postMessage(data, "*");
+//             console.log("Sent local storage to new domain wordle.ruinelli.ch");
+//         }, 2000);
+//     }
     
 }

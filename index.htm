@@ -9,9 +9,9 @@
     <meta name="description" content="Errate ein Wort in 6 Versuchen. Jeden Tag ein neues R&auml;tsel. Mit Umlauten (&auml;&ouml;&uuml;) und kostenlos.">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="style.css?cacheid=2022-02-16">
+    <link rel="stylesheet" href="style.css?cacheid=2023-08-09">
     <link rel="stylesheet" href="" id="colorblind-style">
-    <script src="main.js?cacheid=2022-02-26" type="module"></script>
+    <script src="main.js?cacheid=2023-08-09" type="module"></script>
 
     <link rel="manifest" href="/manifest.json">
 
@@ -69,7 +69,6 @@
             </span>
 
             <p id="letter-map"></p>
-
             <span id="footer-word-of-the-day">
                 <button id="share"><img src="share.png" width=22px></img> Teilen</button></p>
                 <p><button id="share_compact"><img src="share.png" width=22px></img> Teilen (kompakt)</button>
@@ -101,6 +100,12 @@
             </details>
         
             <details open>
+                <summary><strong>Einstellungen/Statistik zu neuer Webseite transferieren</strong></summary>
+                <p>Mit dem nachfolgenden Link kannst Du deine aktuellen Einstellungen und Statistik zur neuen Webseite (<a href="https://wordle.ruinelli.ch" target=_blank>wordle.ruinelli.ch</a>) transferieren.</p>
+                <button class="day" id="transfer-settings">Transferieren</button>
+            </details>
+<!--             <details open> -->
+            <details>
                 <summary><strong>Modus</strong></summary>
                 <p>Aktueller Modus: <strong>"<span id="settings-menu-current-game-mode"></span>"</strong>.</p>
                 <p>Umschalten auf: </p>
@@ -123,6 +128,7 @@
             <details>
                 <summary><strong>Import/Export</strong></summary>
                 <p>Hier kannst Du deine Einstellungen und Statistik importieren oder exportieren.</p>
+                <p>Bitte beachte, dass diese Funktionen leider nicht mit jedem Betriebssystem/Webbrowser funktionieren!</p>
                 <button class="export" id="settings-menu-export">Exportieren in Datei</button><p>
                 <button class="import" id="settings-menu-import">Importieren von Datei</button>
                 <p><strong><span style="color:red">Achtung: Beim Import werden die aktuellen Einstellungen und Statistik überschrieben!</span></strong></p>
@@ -135,12 +141,13 @@
             <div id="dismiss-update-info" class="close-button">&#10062;</div>
             <h2>Neuigkeiten</h2>
 <!-- ################ Also update date in main.js in 'lastUpdateNote' ################ -->
-            <h3>6. August 2023</h3>
+            <h3>9. August 2023</h3>
             <ul>
+                <li><p><span style="color:red"><strong>ACHTUNG!</strong> Wordle-Deutsch wird demnächst auf die neue Webseite <a href=https://wordle.ruinelli.ch target=_blank>wordle.ruinelli.ch</a> umziehen! Du kannst jetzt schon zur neuen Webseite wechseln. Damit deine Einstellungen und Statistik mitgenommen werden, muss Du nur auf den nachfolgenden Knopf drücken:</span></p>
+                <button class="day" id="transfer-settings2">Einstellungen/Statistik transferieren</button></li>
                 <li><p>Wort-Listen aktualisiert. Danke für alle Wort-Einreichungen/-Verbesserungen!</p></li>
                 <li><p>Neuen Teilen-Knopf mit kompakterem Text.</p></li>
-                <li><p>Import-/Export-Funktionen hinzugefügt (Siehe Einstellungs-Men&uuml; oben links: <img src=gear.png width=20px height=20px> -> Import/Export)</p></li>
-                <li><p>Alle Einstellungen und die Statistik werden automatisch an die neue Domain <a href=https://wordle.ruinelli.ch target=_blank>wordle.ruinelli.ch</a> übertragen. Du kannst die neue Domain jetzt schon verwenden. Die alte Domain (<a href=wordle-deutsch.ch>wordle-deutsch.ch</a>) wird Ende Jahr abgeschaltet!<br><b>ACHTUNG:</b> Du solltest danach die alte Domain nicht mehr verwenden, denn sie überschreibt jeweils automatisch die Einstellungen/Statistik der neuen Domain!</p></li>
+                <li><p>Import-/Export-Funktionen hinzugefügt (Siehe Einstellungs-Men&uuml; oben links: <img src=gear.png width=20px height=20px> -> Import/Export).</p></li>
             </ul>
 <!-- ################ Also update date in main.js in 'lastUpdateNote' ################ -->
             <h3>01. Mai 2022</h3>
@@ -257,10 +264,10 @@
         </span>
     </div>
     
-    <iframe style="display:none;" src="https://wordle.ruinelli.ch/import-from-old-domain.php" id="export_ifr"></iframe>
+<!--     <iframe style="display:none;" src="https://wordle.ruinelli.ch/import-from-old-domain.php" id="export_ifr"></iframe> -->
 <!--     <iframe width="600" height="200" src="https://wordle.ruinelli.ch/import-from-old-domain.php" id="export_ifr"></iframe> -->
-    <script type="text/javascript">
-    </script>
+<!--     <script type="text/javascript"> -->
+<!--     </script> -->
     
 </body>
 
